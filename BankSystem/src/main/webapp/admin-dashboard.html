@@ -7,22 +7,56 @@
     <title>BankSystem</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="assets/css/Pricing-Free-Paid-badges.css">
 </head>
 
-<body style="background: linear-gradient(0deg, var(--bs-red), white 23%);">
+<body class="text-center" style="background: linear-gradient(0deg, var(--bs-red), white 23%);">
     <nav class="navbar navbar-light navbar-expand-md py-3">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bank">
+        <div class="container"><a class="navbar-brand d-flex align-items-center"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bank">
                         <path d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z"></path>
-                    </svg></span><span>BankSystem</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
+                    </svg></span><span>BankSystem</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Insert someone</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Delete someone</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="admin-dashboard.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin-addaccount.html">Add account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin-accountremover.html">Delete account</a></li>
+                    <li class="nav-item"></li>
                 </ul><a class="btn btn-danger" role="button" href="index.html">Logout</a>
             </div>
         </div>
     </nav>
+    <div class="container py-4 py-xl-5" style="padding-bottom: 0px;padding-top: 6px;margin-bottom: -45px;">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2>What would you like to do?</h2>
+                <p class="w-lg-50">An admin can either insert a new account holder or delete an existing account.<br></p>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a class="btn btn-primary text-center m-auto" role="button" style="background: var(--bs-btn-color);border-width: 0px;border-color: var(--bs-btn-disabled-color);border-left-width: 0px;border-left-color: var(--bs-border-color-translucent);box-shadow: 0px 0px 9px var(--bs-red);height: 200px;width: 200px;padding: 34px 12px;border-radius: 50%;" href="admin-addaccount.html"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-plus-circle-fill text-center" style="font-size: 127px;color: var(--bs-red);padding-top: 0px;padding-bottom: 0px;">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                            </svg></a></td>
+                    <td><a class="btn btn-primary text-center m-auto" role="button" style="background: var(--bs-btn-color);border-width: 0px;border-color: var(--bs-btn-disabled-color);border-left-width: 0px;border-left-color: var(--bs-border-color-translucent);box-shadow: 0px 0px 9px var(--bs-red);height: 200px;width: 200px;padding: 34px 12px;border-radius: 50%;" href="admin-accountremover.html"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-dash-circle-fill" style="font-size: 127px;color: var(--bs-red);">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"></path>
+                            </svg></a></td>
+                </tr>
+                <tr>
+                    <td class="fs-4 fw-semibold text-center">Add account</td>
+                    <td class="fs-4 fw-semibold text-center">Remove account</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
 </body>
