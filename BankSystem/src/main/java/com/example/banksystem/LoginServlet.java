@@ -20,7 +20,7 @@ public class LoginServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        url = this.getClass().getResource("banksystem.sqlite").getPath();
+        url = getClass().getResource("banksystem.sqlite").getPath();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
