@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
+<html lang="en" style="min-height: 100%;">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>BankSystem</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/Pricing-Free-Paid-badges.css">
 </head>
@@ -19,9 +20,9 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link active" href="admin-dashboard.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="admin-addaccount.html">Add account</a></li>
-                    <li class="nav-item"><a class="nav-link" href="admin-accountremover.html">Delete account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin-accountremover.html">Modify account</a></li>
                     <li class="nav-item"></li>
-                </ul><a class="btn btn-danger" role="button" href="index.html">Logout</a>
+                </ul><small class="fs-6" style="margin-right: 18px;">Admin text</small><a class="btn btn-danger" role="button" href="index.html">Logout</a>
             </div>
         </div>
     </nav>
@@ -33,26 +34,20 @@
             </div>
         </div>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive" style="border-style: none;">
         <table class="table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a class="btn btn-primary text-center m-auto" role="button" style="background: var(--bs-btn-color);border-width: 0px;border-color: var(--bs-btn-disabled-color);border-left-width: 0px;border-left-color: var(--bs-border-color-translucent);box-shadow: 0px 0px 9px var(--bs-red);height: 200px;width: 200px;padding: 34px 12px;border-radius: 50%;" href="admin-addaccount.html"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-plus-circle-fill text-center" style="font-size: 127px;color: var(--bs-red);padding-top: 0px;padding-bottom: 0px;">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+            <tbody style="border-style: none;">
+                <tr style="border-style: none;">
+                    <td style="border-style: none;"><a class="btn btn-primary text-center m-auto" role="button" data-bss-hover-animate="pulse" style="background: var(--bs-btn-color);border-width: 0px;border-color: var(--bs-btn-disabled-color);border-left-width: 0px;border-left-color: var(--bs-border-color-translucent);box-shadow: 0px 0px 9px var(--bs-red);height: 200px;width: 200px;padding: 34px 12px;border-radius: 50%;" href="admin-addaccount.html"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-plus-lg text-center" style="font-size: 127px;color: var(--bs-red);padding-top: 0px;padding-bottom: 0px;">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"></path>
                             </svg></a></td>
-                    <td><a class="btn btn-primary text-center m-auto" role="button" style="background: var(--bs-btn-color);border-width: 0px;border-color: var(--bs-btn-disabled-color);border-left-width: 0px;border-left-color: var(--bs-border-color-translucent);box-shadow: 0px 0px 9px var(--bs-red);height: 200px;width: 200px;padding: 34px 12px;border-radius: 50%;" href="admin-accountremover.html"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-dash-circle-fill" style="font-size: 127px;color: var(--bs-red);">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"></path>
+                    <td style="border-style: none;"><a class="btn btn-primary text-center m-auto" role="button" data-bss-hover-animate="pulse" style="background: var(--bs-btn-color);border-width: 0px;border-color: var(--bs-btn-disabled-color);border-left-width: 0px;border-left-color: var(--bs-border-color-translucent);box-shadow: 0px 0px 9px var(--bs-red);height: 200px;width: 200px;padding: 34px 12px;border-radius: 50%;" href="admin-accountremover.html"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-pencil-fill" style="font-size: 127px;color: var(--bs-red);">
+                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"></path>
                             </svg></a></td>
                 </tr>
-                <tr>
-                    <td class="fs-4 fw-semibold text-center">Add account</td>
-                    <td class="fs-4 fw-semibold text-center">Remove account</td>
+                <tr style="border-style: none;">
+                    <td class="fs-4 fw-semibold text-center" style="border-style: none;">Add account</td>
+                    <td class="fs-4 fw-semibold text-center" style="border-style: none;">Modify account</td>
                 </tr>
             </tbody>
         </table>
