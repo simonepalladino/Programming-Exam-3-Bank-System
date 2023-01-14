@@ -18,35 +18,33 @@
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="admin-dashboard.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="admin-addaccount.html">Add account</a></li>
-                    <li class="nav-item"><a class="nav-link" href="admin-accountchooser.html">Modify account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin-addaccount.html">Add account</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="admin-accountchooser.html">Modify account</a></li>
                     <li class="nav-item"></li>
                 </ul><small class="fs-6" style="margin-right: 18px;">Admin text</small><a class="btn btn-danger" role="button" href="index.html">Logout</a>
             </div>
         </div>
     </nav>
-    <section class="position-relative py-4 py-xl-5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-circle text-center d-flex d-sm-flex d-md-flex d-lg-flex justify-content-center mx-auto justify-content-sm-center justify-content-md-center justify-content-lg-center align-items-lg-center" style="font-size: 209px;padding-top: 0px;padding-bottom: 0px;margin-bottom: 13px;margin-top: 8px;color: var(--bs-red);">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"></path>
+    <section class="position-relative py-4 py-xl-5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-credit-card-2-back-fill text-center d-flex d-sm-flex d-md-flex d-lg-flex justify-content-center mx-auto justify-content-sm-center justify-content-md-center justify-content-lg-center align-items-lg-center" style="font-size: 209px;padding-top: 0px;padding-bottom: 0px;margin-bottom: 13px;margin-top: 8px;color: var(--bs-red);">
+            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0V4zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-2zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1H0z"></path>
         </svg>
         <div class="container position-relative">
             <div class="row d-flex justify-content-center align-items-lg-center" style="margin-bottom: 88px;margin-top: 19px;">
                 <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4">
                     <div class="card mb-5">
                         <div class="card-body p-sm-5" style="margin-bottom: -17px;padding-top: 91px;padding-bottom: 91px;margin-top: 3px;">
-                            <h2 class="text-center mb-4" style="margin-top: -29px;">Register</h2>
+                            <h2 class="text-center mb-4" style="margin-top: -29px;">Add card</h2>
                             <form method="post">
-                                <div class="mb-3"><input class="form-control" type="text" id="name-2" name="firstname" placeholder="Insert firstname"></div>
-                                <div class="mb-3"><input class="form-control" type="text" id="email-2" name="lastname" placeholder="Insert lastname"></div>
-                                <div class="mb-3"><input class="form-control" type="text" id="email-1" name="bank_id" placeholder="Insert bank id"></div>
-                                <div class="mb-3"><select class="form-select" style="margin-top: 12px;" name="accounttype">
-                                        <optgroup label="Account type">
-                                            <option value="12" selected="">Basic account</option>
-                                            <option value="13">Premium account</option>
-                                            <option value="14">Enterprise account</option>
+                                <div class="mb-3"><input class="form-control" type="text" id="name-2" name="cardname" placeholder="Insert card name"></div>
+                                <div class="mb-3"><input class="form-control" type="text" id="name-3" name="cardnumber" placeholder="Insert card number" inputmode="numeric"></div>
+                                <div class="mb-3"><select class="form-select" name="cardtype">
+                                        <optgroup label="Card type">
+                                            <option value="12" selected="">Prepaid card</option>
+                                            <option value="13">Credit card</option>
                                         </optgroup>
                                     </select></div>
-                                <div class="mb-3"></div>
+                                <div class="mb-3"><input class="form-control" type="month" name="carddeadline"></div>
+                                <div class="mb-3"><input class="form-control" type="text" id="name-1" name="cardcvv" placeholder="Insert cvv" inputmode="numeric"></div>
                                 <div><button class="btn btn-primary d-block w-100" type="submit" style="background: var(--bs-red);border-color: var(--bs-red);">Create</button></div>
                             </form>
                         </div>

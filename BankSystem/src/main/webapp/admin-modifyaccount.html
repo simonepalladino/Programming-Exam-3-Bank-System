@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>BankSystem</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/Pricing-Free-Paid-badges.css">
 </head>
@@ -19,9 +20,9 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="admin-dashboard.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="admin-addaccount.html">Add account</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="admin-accountremover.html">Modify account</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="admin-accountchooser.html">Modify account</a></li>
                     <li class="nav-item"></li>
-                </ul><a class="btn btn-danger" role="button" href="index.html">Logout</a>
+                </ul><small class="fs-6" style="margin-right: 18px;">Admin text</small><a class="btn btn-danger" role="button" href="index.html">Logout</a>
             </div>
         </div>
     </nav>
@@ -29,7 +30,7 @@
         <table class="table table-borderless">
             <tbody>
                 <tr>
-                    <td style="border-radius: 20px;background: linear-gradient(rgba(220,53,69,0.57), white 76%);width: 50%;">
+                    <td style="border-radius: 20px;background: linear-gradient(rgba(220,53,69,0.57), white 76%);width: 45%;">
                         <div class="row mb-5">
                             <div class="col-md-8 col-xl-6 text-center mx-auto">
                                 <h2 style="font-weight: bold;color: var(--bs-body-bg);">Account info</h2>
@@ -38,10 +39,11 @@
                         </div>
                         <div class="row mb-5" style="margin-bottom: 0px;padding-bottom: 0px;">
                             <div class="col-md-8 col-xl-6 text-center mx-auto">
-                                <h2 style="font-weight: bold;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-speaker-fill" style="font-size: 130px;">
-                                        <path d="M9 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-2.5 6.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0z"></path>
-                                        <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm6 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 7a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7z"></path>
+                                <h2 style="font-weight: bold;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-badge" style="font-size: 130px;">
+                                        <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+                                        <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"></path>
                                     </svg></h2>
+                                <p class="fs-5 fw-semibold text-dark w-lg-50" style="color: var(--bs-body-bg);">Luca Tartaglia<br></p>
                             </div>
                         </div>
                         <div class="row mb-5">
@@ -64,7 +66,7 @@
                                             <div class="col">
                                                 <div class="p-3">
                                                     <h4 class="display-5 fw-bold text-white mb-0" style="padding-left: 0px;padding-right: 0px;margin-left: -10px;margin-right: -10px;">1000.00€</h4>
-                                                    <p class="mb-0">Balance</p>
+                                                    <p class="mb-0">Total Balance</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,9 +79,59 @@
                     <td style="background: linear-gradient(180deg, rgba(220,53,69,0.52), white 79%);border-radius: 20px;">
                         <div class="row mb-5">
                             <div class="col-md-8 col-xl-6 text-center mx-auto">
-                                <h2 style="font-weight: bold;color: var(--bs-body-bg);">Add card</h2>
-                                <p class="w-lg-50" style="color: var(--bs-body-bg);">Pussy tight pussy clean pussy fresh<br></p>
+                                <h2 style="font-weight: bold;color: var(--bs-body-bg);padding-right: 0px;">Manage credit cards</h2>
+                                <p class="w-lg-50" style="color: var(--bs-body-bg);">Too many? Less than expected?<br></p><button class="btn btn-light" type="submit" style="padding-left: 66px;padding-right: 66px;">Add new card</button>
                             </div>
+                        </div>
+                        <div class="table-responsive d-flex float-start" style="overflow: auto;margin-top: 20px;max-width: 620px;">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="text-center d-flex flex-column flex-wrap justify-content-lg-start align-items-lg-center align-items-xl-center" data-bss-hover-animate="pulse" style="background: linear-gradient(39deg, var(--bs-gray-400), white), var(--bs-table-border-color);border-radius: 12px;width: 258.469px;">
+                                                <div class="bs-icon-lg bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon lg" style="background: linear-gradient(-5deg, var(--bs-gray-dark), var(--bs-gray) 77%), var(--bs-gray);margin-left: 5px;margin-top: 3px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-credit-card" style="font-size: 41px;">
+                                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"></path>
+                                                        <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"></path>
+                                                    </svg></div>
+                                                <div class="px-3">
+                                                    <h5 class="text-center" style="margin-top: 6px;">Primary Card</h5>
+                                                    <p class="fs-6">3028XXXXXXXXXXXX</p>
+                                                    <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
+                                                    <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;">1000.00€</p><button class="btn btn-danger" type="button" style="margin-bottom: 5px;margin-top: -9px;">Remove card</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center d-flex flex-column flex-wrap justify-content-lg-start align-items-lg-center align-items-xl-center" data-bss-hover-animate="pulse" style="background: linear-gradient(39deg, var(--bs-gray-400), white), var(--bs-table-border-color);border-radius: 12px;width: 258.469px;">
+                                                <div class="bs-icon-lg bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon lg" style="background: linear-gradient(-5deg, var(--bs-gray-dark), var(--bs-gray) 77%), var(--bs-gray);margin-left: 5px;margin-top: 3px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-credit-card" style="font-size: 41px;">
+                                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"></path>
+                                                        <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"></path>
+                                                    </svg></div>
+                                                <div class="px-3">
+                                                    <h5 class="text-center" style="margin-top: 6px;">Secondary Card</h5>
+                                                    <p class="fs-6">3028XXXXXXXXXXXX</p>
+                                                    <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
+                                                    <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;">0.00€</p><button class="btn btn-danger" type="button" style="margin-bottom: 5px;margin-top: -9px;">Remove card</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center d-flex flex-column flex-wrap justify-content-lg-start align-items-lg-center align-items-xl-center" data-bss-hover-animate="pulse" style="background: linear-gradient(39deg, var(--bs-gray-400), white), var(--bs-table-border-color);border-radius: 12px;width: 258.469px;">
+                                                <div class="bs-icon-lg bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon lg" style="background: linear-gradient(-5deg, var(--bs-gray-dark), var(--bs-gray) 77%), var(--bs-gray);margin-left: 5px;margin-top: 3px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-credit-card" style="font-size: 41px;">
+                                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"></path>
+                                                        <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"></path>
+                                                    </svg></div>
+                                                <div class="px-3">
+                                                    <h5 class="text-center" style="margin-top: 6px;">Third Card</h5>
+                                                    <p class="fs-6">3028XXXXXXXXXXXX</p>
+                                                    <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
+                                                    <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;">0.00€</p><button class="btn btn-danger" type="button" style="margin-bottom: 5px;margin-top: -9px;">Remove card</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </td>
                 </tr>

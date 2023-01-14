@@ -54,7 +54,7 @@
                                         <small class="text-danger">Invalid credentials!</small>
                                     </c:when>
                                 </c:choose>
-                                <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: var(<c:out value = "${logincolor}"/>);">Login</button></div>
+                                <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: var(<c:out value = "${logincolor}"/>); border-style: none;">Login</button></div>
                             </form>
                         </div>
                     </div>
