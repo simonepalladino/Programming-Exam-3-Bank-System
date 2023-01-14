@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="assets/css/Pricing-Free-Paid-badges.css">
 </head>
 
+<c:url value="user-deposit.jsp" var="displayURL">
+    <c:param name="view"   value="${param.view}" />
+</c:url>
+
 <body style="background: linear-gradient(0deg, var(--bs-blue), white 23%);">
     <nav class="navbar navbar-light navbar-expand-md py-3">
         <div class="container"><a class="navbar-brand d-flex align-items-center"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bank">
@@ -20,11 +24,21 @@
                     </svg></span><span>BankSystem</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="user-dashboard.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="user-deposit.html">Deposit</a></li>
-                    <li class="nav-item"><a class="nav-link" href="user-buy.html">Withdraw or Buy</a></li>
+                    <li class="nav-item">
+                        <form method="get" action="user-dashboard.jsp">
+                            <input type="submit" value="Home" style="background:none; border-width:0px;" class="nav-link"/></form></li>
+                    <li class="nav-item">
+                        <form method="get" action="user-deposit">
+                            <input type="submit" value="Deposit" style="background:none; border-width:0px;" class="nav-link active"/></form></li>
+                    <li class="nav-item">
+                        <form method="get" action="user-buy">
+                            <input type="submit" value="Withdraw or Buy" style="background:none; border-width:0px;" class="nav-link"/></form></li>
                     <li class="nav-item"></li>
-                </ul><small class="fs-6" style="margin-right: 18px;">User text</small><a class="btn btn-primary" role="button" href="user-plan.html" style="margin-right: 10px;background: rgb(253,186,13);border-style: none;box-shadow: 0px 0px 5px 2px var(--bs-orange);">Change plan</a><a class="btn btn-primary" role="button" href="index.html">Logout</a>
+                </ul><small class="fs-6" style="margin-right: 18px;">User text</small>
+                <form method="get" action="user-plan">
+                    <button type="submit" class="btn btn-primary" role="button" href="user-plan.jsp" style="margin-right: 10px;background: rgb(253,186,13);border-style: none;box-shadow: 0px 0px 5px 2px var(--bs-orange);">Change plan</button>
+                </form>
+                <a class="btn btn-primary" role="button" href="index.html">Logout</a>
             </div>
         </div>
     </nav>
@@ -95,7 +109,9 @@
                                                     <h5 class="text-center" style="margin-top: 6px;">Primary Card</h5>
                                                     <p class="fs-6">3033XXXXXXXXXXXX</p>
                                                     <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
-                                                    <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;">1000.00€</p><button class="btn btn-primary" type="button" style="margin-bottom: 5px;margin-top: -9px;">Deposit</button>
+                                                    <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;">1000.00€</p>
+                                                    <form method="get" action="user-depositoncard.jsp">
+                                                    <button class="btn btn-primary" type="submit" style="margin-bottom: 5px;margin-top: -9px;">Deposit</button></form>
                                                 </div>
                                             </div>
                                         </td>
@@ -109,7 +125,9 @@
                                                     <h5 class="text-center" style="margin-top: 6px;">Secondary Card</h5>
                                                     <p class="fs-6">3028XXXXXXXXXXXX</p>
                                                     <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
-                                                    <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;">0.00€</p><button class="btn btn-primary" type="button" style="margin-bottom: 5px;margin-top: -9px;">Deposit</button>
+                                                    <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;">0.00€</p>
+                                                    <form method="get" action="user-depositoncard.jsp">
+                                                        <button class="btn btn-primary" type="submit" style="margin-bottom: 5px;margin-top: -9px;">Deposit</button></form>
                                                 </div>
                                             </div>
                                         </td>
@@ -119,168 +137,290 @@
                         </div>
                     </td>
                     <td></td>
-                    <td style="background: linear-gradient(180deg, rgba(25,110,247,0.61), white 79%);border-radius: 20px;">
-                        <div class="row mb-5" style="margin-bottom: 38px;margin-top: 0px;">
-                            <div class="col-md-8 col-xl-8 text-center mx-auto" style="margin-bottom: -48px;">
-                                <h2 class="text-black-50" style="font-weight: bold;color: var(--bs-body-bg);">Operations</h2>
-                                <p class="text-black-50 w-lg-50" style="color: var(--bs-body-bg);">Here is quick view of your incomings and outcomings.</p>
-                                <div class="table-responsive" style="padding-bottom: 0px;margin-bottom: -17px;margin-left: -40px;margin-right: -40px;margin-top: -8px;">
+                    <c:choose>
+                        <c:when test="${param.view == 'all'}">
+                            <td style="background: linear-gradient(180deg, rgba(25,110,247,0.61), white 79%);border-radius: 20px;">
+                                <div class="row mb-5" style="margin-bottom: 38px;margin-top: 0px;">
+                                    <div class="col-md-8 col-xl-8 text-center mx-auto" style="margin-bottom: -48px;">
+                                        <h2 class="text-black-50" style="font-weight: bold;color: var(--bs-body-bg);">Operations</h2>
+                                        <p class="text-black-50 w-lg-50" style="color: var(--bs-body-bg);">Here is quick view of your incomings and outcomings.</p>
+                                        <div class="table-responsive" style="padding-bottom: 0px;margin-bottom: -17px;margin-left: -40px;margin-right: -40px;margin-top: -8px;">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr>
+                                                    <td style="border-style: none;padding-top: 0px;padding-bottom: 0px;padding-right: 0px;padding-left: 0px;">
+                                                        <div class="btn-group" role="group">
+                                                            <form method="get" action="user-deposit"><button class="btn btn-primary" type="submit" name="view" value="cards">View by cards</button></form>
+                                                            <form method="get" action="user-deposit"><button class="btn btn-light" type="submit" name="view" value="all">View all</button></form></div>
+                                                    </td>
+                                                    <td style="border-style: none;"><form method="get" action="user-canceloperation.jsp"><button class="btn btn-primary text-center" type="submit" style="background: var(--bs-danger);border-color: var(--bs-danger);margin-bottom: 0px;margin-top: -8px;">Cancel latest operation</button></form></td>
+                                                </tr>
+                                                <tr></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive d-flex" style="max-height: 115vh;border-style: none;">
                                     <table class="table">
                                         <tbody>
-                                            <tr>
-                                                <td style="border-style: none;padding-top: 0px;padding-bottom: 0px;padding-right: 0px;padding-left: 0px;">
-                                                    <div class="btn-group" role="group"><button class="btn btn-primary" type="button">View by cards</button><button class="btn btn-light" type="button">View all</button></div>
-                                                </td>
-                                                <td style="border-style: none;"><button class="btn btn-primary text-center" type="submit" style="background: var(--bs-danger);border-color: var(--bs-danger);margin-bottom: 0px;margin-top: -8px;">Cancel latest operation</button></td>
-                                            </tr>
-                                            <tr></tr>
+                                        <tr></tr>
+                                        <tr>
+                                            <td style="border-style: none;"><strong class="text-start text-black-50" style="margin-left: 10px;">All operations</strong>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
+                                                </svg>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="table-responsive d-flex" style="max-height: 115vh;border-style: none;">
-                            <table class="table">
-                                <tbody>
-                                    <tr></tr>
-                                    <tr>
-                                        <td style="border-style: none;"><strong class="text-start text-black-50" style="margin-left: 10px;">All operations</strong>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                            </td>
+                        </c:when>
+                        <c:otherwise>
+                            <td style="background: linear-gradient(180deg, rgba(25,110,247,0.61), white 79%);border-radius: 20px;">
+                                <div class="row mb-5" style="margin-bottom: 38px;margin-top: 0px;">
+                                    <div class="col-md-8 col-xl-8 text-center mx-auto" style="margin-bottom: -48px;">
+                                        <h2 class="text-black-50" style="font-weight: bold;color: var(--bs-body-bg);">Operations</h2>
+                                        <p class="text-black-50 w-lg-50" style="color: var(--bs-body-bg);">Here is quick view of your incomings and outcomings.</p>
+                                        <div class="table-responsive" style="padding-bottom: 0px;margin-bottom: -17px;margin-left: -40px;margin-right: -40px;margin-top: -8px;">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr>
+                                                    <td style="border-style: none;padding-top: 0px;padding-bottom: 0px;padding-right: 0px;padding-left: 0px;">
+                                                        <div class="btn-group" role="group">
+                                                            <form method="get" action="user-deposit"><button class="btn btn-light" type="submit" name="view" value="cards">View by cards</button></form>
+                                                            <form method="get" action="user-deposit"><button class="btn btn-primary" type="submit" name="view" value="all">View all</button></form></div>
+                                                    </td>
+                                                    <td style="border-style: none;"><form method="get" action="user-canceloperation.jsp"><button class="btn btn-primary text-center" type="submit" style="background: var(--bs-danger);border-color: var(--bs-danger);margin-bottom: 0px;margin-top: -8px;">Cancel latest operation</button></form></td>
+                                                </tr>
+                                                <tr></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive d-flex" style="max-height: 115vh;border-style: none;">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr></tr>
+                                        <tr>
+                                            <td style="border-style: none;"><strong class="text-start text-black-50" style="margin-left: 10px;">Primary Card</strong>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
                                                     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                                     <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
                                                 </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
                                                 </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
                                                     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                                     <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
                                                 </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
                                                 </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
                                                     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                                     <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
                                                 </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
                                                 </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="table-responsive d-flex" style="max-height: 115vh;border-style: none;">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr></tr>
+                                        <tr>
+                                            <td style="border-style: none;"><strong class="text-start text-black-50" style="margin-left: 10px;">Secondary Card</strong>
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
                                                     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                                     <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
                                                 </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
                                                 </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
                                                     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                                     <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
                                                 </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
                                                 </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
                                                     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                                     <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
                                                 </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    <div>
+                                                        <p class="fw-bold text-primary mb-0">Deposit</p>
+                                                        <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
+                                                    </div>
+                                                    <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
                                                 </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
-                                                </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
-                                                </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
-                                                </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
-                                                </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
-                                                </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
-                                                </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
-                                                </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
-                                                </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
-                                                </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
-                                                </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
-                                                </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
-                                                </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
-                                                </svg>
-                                                <div>
-                                                    <p class="fw-bold text-primary mb-0">Deposit</p>
-                                                    <p class="text-muted mb-0">3028XXXXXXXXXXX</p>
-                                                </div>
-                                                <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;">13/01/2021 21:41</span>+50€</small>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </td>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="table-responsive d-flex" style="max-height: 115vh;border-style: none;">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr></tr>
+                                        <tr></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </c:otherwise>
+                    </c:choose>
+
                 </tr>
             </tbody>
         </table>

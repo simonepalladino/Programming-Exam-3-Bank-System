@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en" style="min-height: 100%;">
 
@@ -17,11 +19,21 @@
                     </svg></span><span>BankSystem</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="user-dashboard.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="user-deposit.html">Deposit</a></li>
-                    <li class="nav-item"><a class="nav-link" href="user-buy.html">Withdraw or Buy</a></li>
+                    <li class="nav-item">
+                        <form method="get" action="user-dashboard.jsp">
+                            <input type="submit" value="Home" style="background:none; border-width:0px;" class="nav-link"/></form></li>
+                    <li class="nav-item">
+                        <form method="get" action="user-deposit">
+                            <input type="submit" value="Deposit" style="background:none; border-width:0px;" class="nav-link active"/></form></li>
+                    <li class="nav-item">
+                        <form method="get" action="user-buy">
+                            <input type="submit" value="Withdraw or Buy" style="background:none; border-width:0px;" class="nav-link"/></form></li>
                     <li class="nav-item"></li>
-                </ul><small class="fs-6" style="margin-right: 18px;">User text</small><a class="btn btn-primary" role="button" href="user-plan.html" style="margin-right: 10px;background: rgb(253,186,13);border-style: none;box-shadow: 0px 0px 5px 2px var(--bs-orange);">Change plan</a><a class="btn btn-primary" role="button" href="index.html">Logout</a>
+                </ul><small class="fs-6" style="margin-right: 18px;">User text</small>
+                <form method="get" action="user-plan">
+                    <button type="submit" class="btn btn-primary" role="button" href="user-plan.jsp" style="margin-right: 10px;background: rgb(253,186,13);border-style: none;box-shadow: 0px 0px 5px 2px var(--bs-orange);">Change plan</button>
+                </form>
+                <a class="btn btn-primary" role="button" href="index.html">Logout</a>
             </div>
         </div>
     </nav>

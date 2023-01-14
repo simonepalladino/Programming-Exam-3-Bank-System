@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en" style="min-height: 100%;">
 
@@ -16,13 +18,20 @@
         <div class="container"><a class="navbar-brand d-flex align-items-center"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bank">
                         <path d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z"></path>
                     </svg></span><span>BankSystem</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-2">
+            <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="admin-dashboard.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="admin-addaccount.html">Add account</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="admin-accountchooser.html">Modify account</a></li>
+                    <li class="nav-item">
+                        <form method="get" action="admin-dashboard.jsp">
+                            <input type="submit" value="Home" style="background:none; border-width:0px;" class="nav-link"/></form></li>
+                    <li class="nav-item">
+                        <form method="get" action="admin-addaccount">
+                            <input type="submit" value="Add account" style="background:none; border-width:0px;" class="nav-link"/></form></li>
+                    <li class="nav-item">
+                        <form method="get" action="admin-accountchooser">
+                            <input type="submit" value="Modify account" style="background:none; border-width:0px;" class="nav-link active"/></form></li>
                     <li class="nav-item"></li>
-                </ul><small class="fs-6" style="margin-right: 18px;">Admin text</small><a class="btn btn-danger" role="button" href="index.html">Logout</a>
+                </ul><small class="fs-6" style="margin-right: 18px;">Admin text</small>
+                <a class="btn btn-danger" role="button" href="index.html">Logout</a>
             </div>
         </div>
     </nav>
@@ -80,7 +89,10 @@
                         <div class="row mb-5">
                             <div class="col-md-8 col-xl-6 text-center mx-auto">
                                 <h2 style="font-weight: bold;color: var(--bs-body-bg);padding-right: 0px;">Manage credit cards</h2>
-                                <p class="w-lg-50" style="color: var(--bs-body-bg);">Too many? Less than expected?<br></p><button class="btn btn-light" type="submit" style="padding-left: 66px;padding-right: 66px;">Add new card</button>
+                                <p class="w-lg-50" style="color: var(--bs-body-bg);">Too many? Less than expected?<br></p>
+                                <form method="get" action="admin-addcard.jsp">
+                                    <button class="btn btn-light" type="submit" style="padding-left: 66px;padding-right: 66px;">Add new card</button>
+                                </form>
                             </div>
                         </div>
                         <div class="table-responsive d-flex float-start" style="overflow: auto;margin-top: 20px;max-width: 620px;">

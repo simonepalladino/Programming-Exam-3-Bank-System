@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
         Boolean done = false;
 
         if (logintype.equals("user"))
-            request.getRequestDispatcher("user-dashboard.html").forward(request, response);
+            request.getRequestDispatcher("user-dashboard.jsp").forward(request, response);
         else {
             try {
                 System.out.println(url);
@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
 
             if (done) {
                 //request.getRequestDispatcher("admin-dashboard.html").forward(request, response);
-                response.sendRedirect("admin-dashboard.html");
+                response.sendRedirect("admin-dashboard.jsp");
             } else {
                 response.sendRedirect("login?logintype=admin&error=errore");
             }
