@@ -44,15 +44,15 @@
                     <div class="card mb-5">
                         <div class="card-body p-sm-5" style="margin-bottom: -17px;padding-top: 91px;padding-bottom: 91px;margin-top: 3px;">
                             <h2 class="text-center mb-4" style="margin-top: -29px;">Register</h2>
-                            <form method="post">
+                            <form method="post" action="admin-addaccount">
                                 <div class="mb-3"><input class="form-control" type="text" id="name-2" name="firstname" placeholder="Insert firstname"></div>
                                 <div class="mb-3"><input class="form-control" type="text" id="email-2" name="lastname" placeholder="Insert lastname"></div>
-                                <div class="mb-3"><input class="form-control" type="text" id="email-1" name="bank_id" placeholder="Insert bank id"></div>
+                                <div class="mb-3"><input class="form-control" type="text" id="cf" name="cf" placeholder="Insert fiscal code"></div>
                                 <div class="mb-3"><select class="form-select" style="margin-top: 12px;" name="accounttype">
                                         <optgroup label="Account type">
-                                            <option value="12" selected="">Basic account</option>
-                                            <option value="13">Premium account</option>
-                                            <option value="14">Enterprise account</option>
+                                            <option value="Basic" selected="">Basic account</option>
+                                            <option value="Premium">Premium account</option>
+                                            <option value="Enterprise">Enterprise account</option>
                                         </optgroup>
                                     </select></div>
                                 <div class="mb-3"></div>
