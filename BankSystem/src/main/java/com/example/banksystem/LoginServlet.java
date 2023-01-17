@@ -3,6 +3,10 @@ package com.example.banksystem;
 import java.io.*;
 import java.sql.*;
 
+import com.example.banksystem.holders.Holder;
+import com.example.banksystem.holders.HolderOperation;
+import com.example.banksystem.holders.Operation;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -13,6 +17,7 @@ public class LoginServlet extends HttpServlet {
     Connection con;
     String logintype;
     String error;
+    public static Operation<Holder> holderOperation = new HolderOperation();
 
     public void init() {
         try {
@@ -21,6 +26,11 @@ public class LoginServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         url = getClass().getResource("banksystem.sqlite").getPath();
+    }
+
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        //request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -41,9 +51,10 @@ public class LoginServlet extends HttpServlet {
         if (logintype.equals("user"))
             request.getRequestDispatcher("user-dashboard.jsp").forward(request, response);
         else {
-            try {
+        try {
+
                 System.out.println(url);
-                con = DriverManager.getConnection("jdbc:sqlite:"+url);
+                con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
 
