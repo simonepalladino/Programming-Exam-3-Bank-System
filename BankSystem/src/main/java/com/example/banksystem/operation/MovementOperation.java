@@ -1,6 +1,8 @@
 package com.example.banksystem.operation;
 
 import com.example.banksystem.model.Movement;
+import com.example.banksystem.observer.CardObserver;
+import com.example.banksystem.observer.MovementObserver;
 
 import java.sql.*;
 
@@ -18,6 +20,9 @@ public class MovementOperation implements Operation<Movement> {
     private List<Movement> movements = new ArrayList<>();
 
     public MovementOperation(){
+        //Ogni volta che si inizializza senza parametro, aggiorna l'Observer Singleton
+        MovementObserver.getInstance().setMovementOperation(this);
+
         try {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -30,20 +35,21 @@ public class MovementOperation implements Operation<Movement> {
             ResultSet rs;
 
 
-            int Id_mov;
-            String Mov_type;
-            LocalDate Mov_date;
-            String Number_card;
+            int id_mov;
+            String mov_type;
+            LocalDate mov_date;
+            String card_number;
 
             rs = stmt.executeQuery("SELECT * FROM movements");
             while (rs.next()) {
 
-                Id_mov = rs.getInt("Id_mov");
-                Mov_type = rs.getString("Mov_type");
-                Number_card = rs.getString("Number_card");
-                Mov_date = rs.getDate("Mov_date").toLocalDate();
+                id_mov = rs.getInt("Id_mov");
+                mov_type = rs.getString("Mov_type");
+                card_number = rs.getString("card_number_FK");
+                mov_date = rs.getDate("Mov_date").toLocalDate();
 
-                movements.add(new Movement(String.valueOf(Id_mov), Mov_type, Mov_date, Number_card));
+                System.out.println("@ Movimento caricato: " +  id_mov + " " + card_number + " " + mov_type + " " + mov_date);
+                movements.add(new Movement(String.valueOf(id_mov), mov_type, mov_date, card_number));
             }
 
         }catch (SQLException e) {
@@ -58,6 +64,50 @@ public class MovementOperation implements Operation<Movement> {
         }
     }
 
+    public MovementOperation(String card_number_fk){
+        //Ogni volta che si inizializza senza parametro, aggiorna l'Observer Singleton
+        MovementObserver.getInstance().setMovementOperation(this);
+
+        try {
+            try {
+                Class.forName("org.sqlite.JDBC");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            con = DriverManager.getConnection(url);
+            Statement stmt = con.createStatement();
+            ResultSet rs;
+
+
+            int id_mov;
+            String mov_type;
+            LocalDate mov_date;
+            String card_number;
+
+            rs = stmt.executeQuery("SELECT * FROM movements WHERE card_number_FK = '" + card_number_fk + "'");
+            while (rs.next()) {
+
+                id_mov = rs.getInt("Id_mov");
+                mov_type = rs.getString("Mov_type");
+                card_number = rs.getString("card_number_FK");
+                mov_date = rs.getDate("Mov_date").toLocalDate();
+
+                System.out.println(" @+ Movimento assegnato alla carta: " + card_number);
+                movements.add(new Movement(String.valueOf(id_mov), mov_type, mov_date, card_number));
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (con != null)
+                    con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 
@@ -97,9 +147,10 @@ public class MovementOperation implements Operation<Movement> {
             pstmt.setString(1, m.getId_mov());
             pstmt.setString(2, m.getMov_type());
             pstmt.setDate(3, Date.valueOf(m.getMov_date()));
-            pstmt.setString(4, m.getNumber_card());
+            pstmt.setString(4, m.getCard_number_FK());
             pstmt.executeUpdate();
 
+            System.out.println("@ Movimento caricato: " +  m.getId_mov() + " " + m.getCard_number_FK() + " " + m.getMov_type() + " " + m.getMov_date());
             movements.add(m);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -111,7 +162,6 @@ public class MovementOperation implements Operation<Movement> {
                 e.printStackTrace();
             }
         }
-
     }
 
 
@@ -124,6 +174,7 @@ public class MovementOperation implements Operation<Movement> {
             stmt.setInt(1, Integer.parseInt(m.getId_mov()));
             stmt.execute();
 
+            System.out.println("@- Movimento eliminato: " +  m.getId_mov() + " " + m.getCard_number_FK() + " " + m.getMov_type() + " " + m.getMov_date());
             movements.remove(m);
         } catch (SQLException e) {
             e.printStackTrace();

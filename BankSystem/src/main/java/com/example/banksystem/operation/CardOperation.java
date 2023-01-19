@@ -1,12 +1,9 @@
 package com.example.banksystem.operation;
 
 import com.example.banksystem.model.Card;
+import com.example.banksystem.observer.CardObserver;
 
 import java.sql.*;
-
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +15,9 @@ public class CardOperation implements Operation<Card> {
     private List<Card> cards = new ArrayList<>();
 
     public CardOperation() {
+        //Ogni volta che si inizializza senza parametro, aggiorna l'Observer Singleton
+        CardObserver.getInstance().setCardOperation(this);
+
         try {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -48,11 +48,10 @@ public class CardOperation implements Operation<Card> {
                 expiration_date = rs.getDate("expiration_date").toLocalDate();
                 balance = rs.getDouble("balance");
 
-                System.out.println("Carta caricata: " +  card_name + " " + card_number + " " + expiration_date + " balance:" + balance);
+                System.out.println("* Carta caricata: " +  card_name + " " + card_number + " " + expiration_date + " balance:" + balance);
 
                 cards.add(new Card(card_name, card_number, CF_FK, cvv, card_type, expiration_date, balance));
             }
-
         }catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -96,10 +95,12 @@ public class CardOperation implements Operation<Card> {
                 expiration_date = rs.getDate("expiration_date").toLocalDate();
                 balance = rs.getDouble("balance");
 
-                System.out.println("Carta " + card_number + " assegnata all'utente " + cf);
+                System.out.println(" = Carta " + card_number + " assegnata all'utente " + cf);
 
                 cards.add(new Card(card_name, card_number, CF_FK, cvv, card_type, expiration_date, balance));
             }
+
+
 
         }catch (SQLException e) {
             e.printStackTrace();
@@ -145,19 +146,22 @@ public class CardOperation implements Operation<Card> {
             PreparedStatement pstmt;
             stmt = con.createStatement();
 
-
             pstmt = con.prepareStatement("INSERT INTO Cards (card_number, CF_FK, cvv, card_type, expiration_date, card_name, balance) VALUES (?,?,?,?,?,?,?)");
 
             pstmt.setString(1, c.getCard_number());
             pstmt.setString(2, c.getCF_FK());
             pstmt.setInt(3, c.getCVV());
             pstmt.setString(4, c.getCard_type());
-            pstmt.setDate(5, Date.valueOf(c.getDate()));
+            try {
+                pstmt.setDate(5, Date.valueOf(c.getDate()));
+            } catch (Exception e) {
+                pstmt.setDate(5, Date.valueOf(LocalDate.now()));
+            }
             pstmt.setString(6, c.getCard_name());
             pstmt.setDouble(7, c.getBalance());
             pstmt.executeUpdate();
 
-            System.out.println("Carta aggiunta: " +  c.getCard_name() + " " + c.getCard_number() + " " + c.getDate());
+            System.out.println("+ Carta aggiunta: " +  c.getCard_name() + " " + c.getCard_number() + " " + c.getDate());
             cards.add(c);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -182,6 +186,7 @@ public class CardOperation implements Operation<Card> {
             stmt.setString(1, c.getCard_number());
             stmt.execute();
 
+            System.out.println("- Carta rimossa: " +  c.getCard_name() + " " + c.getCard_number() + " " + c.getDate());
             cards.remove(c);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -206,22 +211,22 @@ public class CardOperation implements Operation<Card> {
     }
 
     public void updateBalance(Card c, double newBalance) {
-                try {
-                    con = DriverManager.getConnection(url);
-                    PreparedStatement stmt = con.prepareStatement("UPDATE Cards SET balance = (?) where card_number = (?)");
+        try {
+            con = DriverManager.getConnection(url);
+            PreparedStatement stmt = con.prepareStatement("UPDATE Cards SET balance = (?) where card_number = (?)");
 
-                    stmt.setDouble(1, newBalance);
-                    stmt.setString(2, c.getCard_number());
-                    stmt.execute();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        if (con != null)
-                            con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
+            stmt.setDouble(1, newBalance);
+            stmt.setString(2, c.getCard_number());
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (con != null)
+                    con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

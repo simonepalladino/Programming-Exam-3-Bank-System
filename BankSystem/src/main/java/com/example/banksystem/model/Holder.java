@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Holder {
+public class Holder implements Observer {
     private String username;
     private String firstname;
     private String lastname;
@@ -29,6 +29,10 @@ public class Holder {
         this.username = username;
         this.contract_cost = contract_cost;
 
+        //Aggiunge l'Holder alla lista di Observers
+        CardObserver.getInstance().addObserver(this);
+
+        //Aggiorna le carte associate al conto all'interno di un CardOperation
         cards = new CardOperation(cf);
     }
 
@@ -125,10 +129,10 @@ public class Holder {
         }
     }
 
-    public void depositCard (Card c, double x){
+    public void depositCard (String cardNumber, double x){
         for (Object cardObject : cards.getAll() ){
             Card card = (Card) cardObject;
-            if (card.getCard_number().equals(c.getCard_number())){
+            if (card.getCard_number().equals(cardNumber)){
                 switch (this.contract_type){
                     case ("Basic"):
                         card.withDraw(x - 1);
@@ -142,5 +146,10 @@ public class Holder {
                 }
             }
         }
+    }
+
+    public void update() {
+        System.out.println("?! Aggiorno la lista delle carte di " + cf);
+        cards = new CardOperation(cf);
     }
 }

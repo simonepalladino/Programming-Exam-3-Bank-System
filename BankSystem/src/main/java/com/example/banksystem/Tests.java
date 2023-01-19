@@ -9,17 +9,20 @@ public class Tests {
     public static void main(String[] args) {
         Factory factory = new Factory();
         Iterator<Holder> iterator = factory.getIterator(Factory.OperationType.HOLDER);
+        CardOperation cards = new CardOperation();
+
         //HolderOperation holderOperation = new HolderOperation();
 
         //Oppure senza il Factory:
         //MovementsOperation movementsOperation = new MovementsOperation();
         //Iterator<Movements> iterator = movementsOperation.iterator();
 
+        /*
         while (iterator.hasNext()) {
             Holder holder = iterator.next();
-            //Fa qualcosa...
-            //System.out.println("Trovato: " + holder.getCf() + " " + holder.getFirstname() + " " + holder.getLastname());
-
         }
+         */
+
+        CardObserver.getInstance().add(new Card("Bancomat", "101010101018", "trtlcublabla7",300, "Bancomat", null, 0));
     }
 }

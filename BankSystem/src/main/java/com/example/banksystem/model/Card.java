@@ -1,23 +1,34 @@
 package com.example.banksystem.model;
+import com.example.banksystem.observer.MovementObserver;
+import com.example.banksystem.observer.Observer;
+import com.example.banksystem.operation.MovementOperation;
+
 import java.time.LocalDate;
 
-public class Card {
-    private String Number_Card;
+public class Card implements Observer {
+    private String card_number;
     private String CF_FK;
     private int CVV;
     private String Card_type;
     LocalDate expiration_date;
     private String card_name;
     private double balance;
+    private MovementOperation movements;
 
-    public Card(String card_name, String number_Card, String CF_FK, int cvv, String card_type, LocalDate expiration_date, double balance) {
+    public Card(String card_name, String cardnumber, String CF_FK, int cvv, String card_type, LocalDate expiration_date, double balance) {
         this.card_name = card_name;
-        this.Number_Card = number_Card;
+        this.card_number = cardnumber;
         this.CF_FK = CF_FK;
         this.CVV = cvv;
         this.Card_type = card_type;
         this.expiration_date = expiration_date;
         this.balance = balance;
+
+        //Aggiunge l'Holder alla lista di Movements
+        MovementObserver.getInstance().addObserver(this);
+
+        //Aggiorna le carte associate al conto all'interno di un CardOperation
+        movements = new MovementOperation(card_number);
     }
 
     public String getCard_name() {
@@ -29,11 +40,11 @@ public class Card {
     }
 
     public String getCard_number() {
-        return Number_Card;
+        return card_number;
     }
 
     public void setCard_number(String number_Card) {
-        Number_Card = number_Card;
+        card_number = number_Card;
     }
 
     public String getCF_FK() {
@@ -82,5 +93,10 @@ public class Card {
 
     public void deposit(double balance){
         this.balance = this.balance + balance;
+    }
+
+    public void update() {
+        System.out.println("?! Aggiorno la lista dei movimenti della carta " + card_number);
+        movements = new MovementOperation(card_number);
     }
 }

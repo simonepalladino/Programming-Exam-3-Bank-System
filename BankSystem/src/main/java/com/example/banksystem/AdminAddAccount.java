@@ -2,6 +2,7 @@ package com.example.banksystem;
 
 import com.example.banksystem.model.Card;
 import com.example.banksystem.model.Holder;
+import com.example.banksystem.observer.CardObserver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -62,13 +63,13 @@ public class AdminAddAccount extends HttpServlet {
 
         switch (account_type) {
             case "Basic" :
-                LoginServlet.cardOperation.add(new Card(card_type + " of " + firstname, card_number.toString(), cf, cvv,card_type, x, 0));
+                CardObserver.getInstance().add(new Card(card_type + " of " + firstname, card_number.toString(), cf, cvv,card_type, x, 0));
                 break;
             case "Premium" :
-                LoginServlet.cardOperation.add(new Card(card_type + " of " + firstname, card_number.toString(), cf, cvv,card_type, x, 10));
+                CardObserver.getInstance().add(new Card(card_type + " of " + firstname, card_number.toString(), cf, cvv,card_type, x, 10));
                 break;
             case "Enterprise":
-                LoginServlet.cardOperation.add(new Card(card_type + " of " + firstname, card_number.toString(), cf, cvv,card_type, x, 20));
+                CardObserver.getInstance().add(new Card(card_type + " of " + firstname, card_number.toString(), cf, cvv,card_type, x, 20));
                 break;
         }
 

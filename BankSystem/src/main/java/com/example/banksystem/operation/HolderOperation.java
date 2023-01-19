@@ -11,22 +11,21 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class HolderOperation implements Operation<Holder>{
     String url = "jdbc:sqlite:banksystem.sqlite";
     Connection con;
     private List<Holder> holders = new ArrayList<>();
 
+
     public HolderOperation() {
         //Carica tutti gli utenti salvati
         try {
-
             try {
                 Class.forName("org.sqlite.JDBC");
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
+
             con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
             Statement stmt = con.createStatement();
             ResultSet rs;
@@ -39,8 +38,8 @@ public class HolderOperation implements Operation<Holder>{
             String residence;
             int contract_cost;
             rs = stmt.executeQuery("SELECT * FROM Holders");
-            while ( rs.next() ) {
 
+            while ( rs.next() ) {
                 username = rs.getString("username");
                 firstname = rs.getString("firstname");
                 lastname = rs.getString("lastname");
@@ -50,8 +49,8 @@ public class HolderOperation implements Operation<Holder>{
                 residence = rs.getString("residence");
                 contract_cost = rs.getInt("contract_cost");
 
+                System.out.println("! Caricato utente: " + firstname + " " + lastname + " " + cf);
                 holders.add(new Holder(username, firstname, lastname, cf, date_of_birth, contract_type, residence, contract_cost));
-                System.out.println("Caricato utente: " + firstname + " " + lastname + " " + cf);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,6 +95,7 @@ public class HolderOperation implements Operation<Holder>{
             stmt.setInt(8, holder.getContract_cost());
             stmt.execute();
 
+            System.out.println("!+ Aggiunto utente: " + holder.getFirstname() + " " + holder.getLastname() + " " + holder.getCf());
             holders.add(holder);
 
             switch (holder.getContract_type()){
@@ -133,6 +133,7 @@ public class HolderOperation implements Operation<Holder>{
             stmt.setString(1, holder.getCf());
             stmt.execute();
 
+            System.out.println("!- Eliminato utente: " + holder.getFirstname() + " " + holder.getLastname() + " " + holder.getCf());
             holders.remove(holder);
         } catch (SQLException e) {
             e.printStackTrace();
