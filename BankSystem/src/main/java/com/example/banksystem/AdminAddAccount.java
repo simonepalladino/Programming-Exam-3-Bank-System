@@ -40,7 +40,7 @@ public class AdminAddAccount extends HttpServlet {
 
         LoginServlet.holderOperation.add(new Holder(username, firstname, lastname, cf, null, account_type, residence, 0));
 
-
+        System.out.println("prova commit");
         //Aggiungiamo la carta in modo autonomo
         String numeri = "0123456789";
         String perRandom = numeri;
