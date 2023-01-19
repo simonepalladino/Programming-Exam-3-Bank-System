@@ -8,14 +8,16 @@ public class Card {
     private String Card_type;
     LocalDate expiration_date;
     private String card_name;
+    private double balance;
 
-    public Card(String card_name, String number_Card, String CF_FK, int cvv, String card_type, LocalDate expiration_date) {
+    public Card(String card_name, String number_Card, String CF_FK, int cvv, String card_type, LocalDate expiration_date, double balance) {
         this.card_name = card_name;
         this.Number_Card = number_Card;
         this.CF_FK = CF_FK;
         this.CVV = cvv;
         this.Card_type = card_type;
         this.expiration_date = expiration_date;
+        this.balance = balance;
     }
 
     public String getCard_name() {
@@ -64,5 +66,21 @@ public class Card {
 
     public void setDate(LocalDate date) {
         expiration_date = date;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void withDraw(double balance){
+        this.balance = this.balance - balance;
+    }
+
+    public void deposit(double balance){
+        this.balance = this.balance + balance;
     }
 }

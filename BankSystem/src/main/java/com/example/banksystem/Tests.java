@@ -13,10 +13,11 @@ public class Tests {
         //MovementsOperation movementsOperation = new MovementsOperation();
         //Iterator<Movements> iterator = movementsOperation.iterator();
 
-        while (iterator.hasNext(null)) {
-            Holder holder = iterator.next(null);
+        while (iterator.hasNext()) {
+            Holder holder = iterator.next();
             //Fa qualcosa...
-            System.out.println("Trovato: " + holder.getCf() + " " + holder.getFirstname() + " " + holder.getLastname());
+            //System.out.println("Trovato: " + holder.getCf() + " " + holder.getFirstname() + " " + holder.getLastname());
+
         }
     }
 }

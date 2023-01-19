@@ -21,6 +21,8 @@ public class Holder {
         this.residence = residence;
         this.username = username;
         this.contract_cost = contract_cost;
+
+        cards = new CardOperation(cf);
     }
 
     public String getUsername() {

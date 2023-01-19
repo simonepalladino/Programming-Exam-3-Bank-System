@@ -15,7 +15,7 @@ import java.util.Optional;
 public class MovementOperation implements Operation<Movement> {
     private final String url = "jdbc:sqlite:banksystem.sqlite";
     private Connection con;
-    private  List<Movement> movements = new ArrayList<>();
+    private List<Movement> movements = new ArrayList<>();
 
     public MovementOperation(){
         try {

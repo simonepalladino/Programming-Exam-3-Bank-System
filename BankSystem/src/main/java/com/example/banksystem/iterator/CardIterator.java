@@ -17,11 +17,11 @@ public class CardIterator implements Iterator<Card> {
         this.cards = cards;
     }
     @Override
-    public boolean hasNext(String key) {
+    public boolean hasNext() {
         return index < cards.size();
     }
     @Override
-    public Card next(String key) {
+    public Card next() {
         return cards.get(index++);
     }
 }

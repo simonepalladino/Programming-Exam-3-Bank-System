@@ -8,7 +8,5 @@ public interface Operation<T> {
     Optional<T> get(String toFind);
     List<T> getAll();
     void add(T t);
-    void update(T t, String[] params);
     void delete(T t);
-    //Iterator<T> createIterator();
 }

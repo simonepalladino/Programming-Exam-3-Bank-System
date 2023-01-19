@@ -57,7 +57,19 @@ public class AdminAddAccount extends HttpServlet {
 
         cvv = r.nextInt(999) + 100;
         LocalDate x = LocalDate.now().plusYears(10);
-        LoginServlet.cardOperation.add(new Card("Bancomat primario", card_number.toString(), cf, cvv,"Bancomat", x));
+
+
+        switch (account_type) {
+            case "Basic" :
+                LoginServlet.cardOperation.add(new Card(card_type + " of " + firstname, card_number.toString(), cf, cvv,card_type, x, 0));
+                break;
+            case "Premium" :
+                LoginServlet.cardOperation.add(new Card(card_type + " of " + firstname, card_number.toString(), cf, cvv,card_type, x, 10));
+                break;
+            case "Enterprise":
+                LoginServlet.cardOperation.add(new Card(card_type + " of " + firstname, card_number.toString(), cf, cvv,card_type, x, 20));
+                break;
+        }
 
 
         request.getRequestDispatcher("admin-dashboard.jsp").forward(request, response);

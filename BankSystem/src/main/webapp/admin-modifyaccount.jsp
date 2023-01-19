@@ -30,7 +30,7 @@
                         <form method="get" action="admin-accountchooser">
                             <input type="submit" value="Modify account" style="background:none; border-width:0px;" class="nav-link active"/></form></li>
                     <li class="nav-item"></li>
-                </ul><small class="fs-6" style="margin-right: 18px;">Admin text</small>
+                </ul><small class="fs-6" style="margin-right: 18px;"> <c:out value="${sessionScope.usertext}"/> </small>
                 <a class="btn btn-danger" role="button" href="index.html">Logout</a>
             </div>
         </div>

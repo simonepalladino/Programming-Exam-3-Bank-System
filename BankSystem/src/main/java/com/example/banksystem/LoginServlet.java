@@ -51,23 +51,24 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html");
         Boolean done = false;
 
-        if (logintype.equals("user"))
-            request.getRequestDispatcher("user-dashboard.jsp").forward(request, response);
-        else {
-        try {
+        HttpSession session = request.getSession();
+        session.setAttribute("usertext", request.getParameter("username").toString());
 
+        if (logintype.equals("user")) {
+            response.sendRedirect("dashboard?logintype=user");
+        } else {
+            try {
+                    con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
+                    Statement stmt = con.createStatement();
+                    ResultSet rs;
 
-                con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
-                Statement stmt = con.createStatement();
-                ResultSet rs;
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("password");
+                    rs = stmt.executeQuery("SELECT * FROM Admins WHERE username='" + username + "' AND password='" + password + "'");
 
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-                rs = stmt.executeQuery("SELECT * FROM Admins WHERE username='" + username + "' AND password='" + password + "'");
-
-                if (rs.next()) {
-                    done = true;
-                }
+                    if (rs.next()) {
+                        done = true;
+                    }
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -81,8 +82,7 @@ public class LoginServlet extends HttpServlet {
             }
 
             if (done) {
-                //request.getRequestDispatcher("admin-dashboard.html").forward(request, response);
-                response.sendRedirect("admin-dashboard.jsp");
+                response.sendRedirect("dashboard?logintype=admin");
             } else {
                 response.sendRedirect("login?logintype=admin&error=errore");
             }

@@ -17,11 +17,11 @@ public class HolderIterator implements Iterator<Holder> {
         this.holders = holders;
     }
     @Override
-    public boolean hasNext(String key) {
+    public boolean hasNext() {
         return index < holders.size();
     }
     @Override
-    public Holder next(String key) {
+    public Holder next() {
         return holders.get(index++);
     }
 }

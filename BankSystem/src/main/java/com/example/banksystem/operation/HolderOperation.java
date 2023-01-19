@@ -105,10 +105,6 @@ public class HolderOperation implements Operation<Holder> {
         }
     }
 
-    @Override
-    public void update(Holder holder, String[] params) {
-
-    }
 
     @Override
     public void delete(Holder holder) {

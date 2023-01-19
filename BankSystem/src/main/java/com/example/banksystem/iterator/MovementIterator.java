@@ -17,11 +17,11 @@ public class MovementIterator implements Iterator<Movement> {
         this.movements = movements;
     }
     @Override
-    public boolean hasNext(String key) {
+    public boolean hasNext() {
         return index < movements.size();
     }
     @Override
-    public Movement next(String key) {
+    public Movement next() {
         return movements.get(index++);
     }
 }

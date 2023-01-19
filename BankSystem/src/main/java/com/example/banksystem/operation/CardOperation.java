@@ -35,6 +35,7 @@ public class CardOperation implements Operation<Card> {
             int cvv;
             String card_type;
             LocalDate expiration_date;
+            double balance;
 
             rs = stmt.executeQuery("SELECT * FROM Cards");
             while (rs.next()) {
@@ -45,9 +46,59 @@ public class CardOperation implements Operation<Card> {
                 cvv = rs.getInt("cvv");
                 card_type = rs.getString("card_type");
                 expiration_date = rs.getDate("expiration_date").toLocalDate();
-                System.out.println("Carta caricata: " +  card_name + " " + card_number + " " + expiration_date);
+                balance = rs.getDouble("balance");
 
-                cards.add(new Card(card_name, card_number, CF_FK, cvv, card_type, expiration_date));
+                System.out.println("Carta caricata: " +  card_name + " " + card_number + " " + expiration_date + " balance:" + balance);
+
+                cards.add(new Card(card_name, card_number, CF_FK, cvv, card_type, expiration_date, balance));
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (con != null)
+                    con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public CardOperation(String cf) {
+        try {
+            try {
+                Class.forName("org.sqlite.JDBC");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            con = DriverManager.getConnection(url);
+            Statement stmt = con.createStatement();
+            ResultSet rs;
+
+            String card_name;
+            String card_number;
+            String CF_FK;
+            int cvv;
+            String card_type;
+            LocalDate expiration_date;
+            double balance;
+
+            rs = stmt.executeQuery("SELECT * FROM Cards WHERE CF_FK = '" + cf + "'");
+            while (rs.next()) {
+
+                card_name = rs.getString("card_name");
+                card_number = rs.getString("card_number");
+                CF_FK = rs.getString("CF_FK");
+                cvv = rs.getInt("cvv");
+                card_type = rs.getString("card_type");
+                expiration_date = rs.getDate("expiration_date").toLocalDate();
+                balance = rs.getDouble("balance");
+
+                System.out.println("Carta " + card_number + " assegnata all'utente " + cf);
+
+                cards.add(new Card(card_name, card_number, CF_FK, cvv, card_type, expiration_date, balance));
             }
 
         }catch (SQLException e) {
@@ -93,7 +144,7 @@ public class CardOperation implements Operation<Card> {
             stmt = con.createStatement();
 
 
-            pstmt = con.prepareStatement("INSERT INTO Cards (card_number, CF_FK, cvv, card_type, expiration_date, card_name) VALUES (?,?,?,?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO Cards (card_number, CF_FK, cvv, card_type, expiration_date, card_name, balance) VALUES (?,?,?,?,?,?,?)");
 
             pstmt.setString(1, c.getCard_number());
             pstmt.setString(2, c.getCF_FK());
@@ -101,6 +152,7 @@ public class CardOperation implements Operation<Card> {
             pstmt.setString(4, c.getCard_type());
             pstmt.setDate(5, Date.valueOf(c.getDate()));
             pstmt.setString(6, c.getCard_name());
+            pstmt.setDouble(7, c.getBalance());
             pstmt.executeUpdate();
 
             System.out.println("Carta aggiunta: " +  c.getCard_name() + " " + c.getCard_number() + " " + c.getDate());
@@ -118,10 +170,6 @@ public class CardOperation implements Operation<Card> {
 
     }
 
-    @Override
-    public void update(Card c, String[] params) {
-
-    }
 
     @Override
     public void delete(Card c) {
@@ -144,4 +192,35 @@ public class CardOperation implements Operation<Card> {
             }
         }
     }
+
+    public void deposit(Card c, double money) {
+        c.deposit(money);
+        updateBalance(c, c.getBalance() + money);
+    }
+
+    public void withdraw(Card c, double money) {
+        c.withDraw(money);
+        updateBalance(c, c.getBalance() - money);
+    }
+
+    public void updateBalance(Card c, double newBalance) {
+                try {
+                    con = DriverManager.getConnection(url);
+                    PreparedStatement stmt = con.prepareStatement("UPDATE Cards SET balance = (?) where card_number = (?)");
+
+                    stmt.setDouble(1, newBalance);
+                    stmt.setString(2, c.getCard_number());
+                    stmt.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (con != null)
+                            con.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+    }
+
 }
