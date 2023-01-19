@@ -15,7 +15,7 @@ import java.util.Optional;
 public class CardOperation implements Operation<Card> {
     private final String url = "jdbc:sqlite:banksystem.sqlite";
     private Connection con;
-    private  List<Card> cards = new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
 
     public CardOperation() {
         try {
@@ -224,5 +224,4 @@ public class CardOperation implements Operation<Card> {
                     }
                 }
     }
-
 }

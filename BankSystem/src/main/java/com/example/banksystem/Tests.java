@@ -2,6 +2,8 @@ package com.example.banksystem;
 
 import com.example.banksystem.iterator.Iterator;
 import com.example.banksystem.model.*;
+import com.example.banksystem.observer.CardObserver;
+import com.example.banksystem.operation.*;
 
 public class Tests {
     public static void main(String[] args) {
