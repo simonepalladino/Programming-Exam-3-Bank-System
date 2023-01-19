@@ -124,10 +124,12 @@ public class CardOperation implements Operation<Card> {
         return Optional.empty();
     }
 
+
     @Override
     public List getAll() {
         return cards;
     }
+
 
     @Override
     public void add(Card c) {

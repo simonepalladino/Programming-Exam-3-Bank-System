@@ -52,9 +52,15 @@
                             <div class="mb-3"><input class="form-control" type="text" id="address" name="address" placeholder="Insert address"></div>
                             <div class="mb-3"><select class="form-select" style="margin-top: 12px;" name="accounttype">
                                 <optgroup label="Account type">
-                                    <option value="Basic"  name = "Basic" selected="">Basic</option>
+                                    <option value="Basic"  name ="Basic" selected="">Basic</option>
                                     <option value="Premium" name="Premium">Premium</option>
                                     <option value="Enterprise" name="Enterprise">Enterprise</option>
+                                </optgroup>
+                            </select></div>
+                            <div class="mb-3"><select class="form-select" style="margin-top: 12px;" name="cardtype">
+                                <optgroup label="Card Type">
+                                    <option value="Bancomat"  name ="Bancomat" selected="">Bancomat</option>
+                                    <option value="Credit Card" name="Credit Card">Credit Card</option>
                                 </optgroup>
                             </select></div>
                             <div class="mb-3"></div>

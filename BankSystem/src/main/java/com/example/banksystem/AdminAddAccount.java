@@ -40,22 +40,22 @@ public class AdminAddAccount extends HttpServlet {
 
         LoginServlet.holderOperation.add(new Holder(username, firstname, lastname, cf, null, account_type, residence, 0));
 
-        System.out.println("prova commit");
         //Aggiungiamo la carta in modo autonomo
-        String numeri = "0123456789";
-        String perRandom = numeri;
+        String numbers = "0123456789";
+        String FRandom = numbers;
         SecureRandom sr = new SecureRandom();
         StringBuilder card_number = new StringBuilder(12);
         int cvv;
         Random r = new Random();
 
         for (int i = 0; i < 12; i++) {
-            int randomInt = sr.nextInt(perRandom.length());
-            char randomChar = perRandom.charAt(randomInt);
+            int randomInt = sr.nextInt(FRandom.length());
+            char randomChar = FRandom.charAt(randomInt);
             card_number.append(randomChar);
         }
 
         cvv = r.nextInt(999) + 100;
+
         LocalDate x = LocalDate.now().plusYears(10);
 
 

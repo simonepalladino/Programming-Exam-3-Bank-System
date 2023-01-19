@@ -88,4 +88,52 @@ public class Holder {
     public void setContract_cost(int contract_cost){
         this.contract_cost = contract_cost;
     }
+
+    public List getCards() {
+        return cards.getAll();
+    }
+
+    public void addCard(Card c){
+        this.cards.add(c);
+    }
+
+    public void withDrawCard(String cardNumber, double x) {
+        for (Object cardObject : cards.getAll() ){
+            Card card = (Card) cardObject;
+            if (card.getCard_number().equals(cardNumber)){
+                switch (this.contract_type){
+                    case("Basic"):
+                        card.withDraw(x - 1);
+                        break;
+                    case("Premium"):
+                        card.withDraw(x - 0.50);
+                        break;
+                    case("Enterprise"):
+                        card.withDraw(x - 0.25);
+                        break;
+                }
+            }
+            else
+                System.out.println("There are no cards");
+        }
+    }
+
+    public void depositCard (Card c, double x){
+        for (Object cardObject : cards.getAll() ){
+            Card card = (Card) cardObject;
+            if (card.getCard_number().equals(c.getCard_number())){
+                switch (this.contract_type){
+                    case ("Basic"):
+                        card.withDraw(x - 1);
+                        break;
+                    case ("Premium"):
+                        card.withDraw(x - 0.50);
+                        break;
+                    case ("Enterprise"):
+                        card.withDraw(x - 0.25);
+                        break;
+                }
+            }
+        }
+    }
 }

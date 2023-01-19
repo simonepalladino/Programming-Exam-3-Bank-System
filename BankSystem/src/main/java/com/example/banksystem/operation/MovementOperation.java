@@ -114,10 +114,6 @@ public class MovementOperation implements Operation<Movement> {
 
     }
 
-    @Override
-    public void update(Movement m, String[] params) {
-
-    }
 
     @Override
     public void delete(Movement m) {
