@@ -126,7 +126,7 @@ public class CardDao implements Operation<Cards>{
     public void delete(Cards c) {
         try {
             con = DriverManager.getConnection(url);
-            PreparedStatement stmt = con.prepareStatement("DELETE FROM Cards WHERE Number_card=(?)");
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM Cards WHERE card_number=(?)");
 
             stmt.setString(1, c.getNumber_Card());
             stmt.execute();
