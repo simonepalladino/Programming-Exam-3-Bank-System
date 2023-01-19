@@ -2,22 +2,20 @@ package com.example.banksystem;
 
 import java.io.*;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
 
-import com.example.banksystem.Dao.HolderOperation;
-import com.example.banksystem.Dao.Operation;
-import com.example.banksystem.model.Holder;
+import com.example.banksystem.operation.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginServlet extends HttpServlet {
-    public static Operation<Holder> holderOperation = new HolderOperation();
-    String url;
+    public static Factory factory = new Factory();
+    public static HolderOperation holderOperation = null;
+    public static CardOperation cardOperation = null;
+    public static MovementOperation movementOperation = null;
+    //public static Iterator<Movements> movementsIterator = null;
+
     Connection con;
     String logintype;
     String error;
@@ -34,9 +32,17 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html");
 
         logintype = request.getParameter("logintype");
-        //request.setAttribute("logintype", logintype);
         error = request.getParameter("error");
-        //request.setAttribute("error", error);
+
+        if (holderOperation == null)
+            holderOperation = (HolderOperation) factory.getOperation(Factory.OperationType.HOLDER);
+        if (cardOperation == null)
+            cardOperation = (CardOperation) factory.getOperation(Factory.OperationType.CARD);
+        if (movementOperation == null)
+            movementOperation = (MovementOperation) factory.getOperation(Factory.OperationType.MOVEMENTS);
+        //if (movementsIterator == null)
+          //  movementsIterator = operationFactory.getIterator(OperationFactory.OperationType.MOVEMENTS);
+        //Iterator<Movements> iterator = operationFactory.getIterator(OperationFactory.OperationType.MOVEMENTS);
 
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }

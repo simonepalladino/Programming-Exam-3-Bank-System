@@ -1,6 +1,6 @@
 package com.example.banksystem.operation;
 
-import com.example.banksystem.model.Card;
+import com.example.banksystem.model.Movement;
 
 import java.sql.*;
 
@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CardOperation implements Operation<Card> {
+public class MovementOperation implements Operation<Movement> {
     private final String url = "jdbc:sqlite:banksystem.sqlite";
     private Connection con;
-    private  List<Card> cards = new ArrayList<>();
+    private  List<Movement> movements = new ArrayList<>();
 
-    public CardOperation() {
+    public MovementOperation(){
         try {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -29,25 +29,21 @@ public class CardOperation implements Operation<Card> {
             Statement stmt = con.createStatement();
             ResultSet rs;
 
-            String card_name;
-            String card_number;
-            String CF_FK;
-            int cvv;
-            String card_type;
-            LocalDate expiration_date;
 
-            rs = stmt.executeQuery("SELECT * FROM Cards");
+            int Id_mov;
+            String Mov_type;
+            LocalDate Mov_date;
+            String Number_card;
+
+            rs = stmt.executeQuery("SELECT * FROM movements");
             while (rs.next()) {
 
-                card_name = rs.getString("card_name");
-                card_number = rs.getString("card_number");
-                CF_FK = rs.getString("CF_FK");
-                cvv = rs.getInt("cvv");
-                card_type = rs.getString("card_type");
-                expiration_date = rs.getDate("expiration_date").toLocalDate();
-                System.out.println("Carta caricata: " +  card_name + " " + card_number + " " + expiration_date);
+                Id_mov = rs.getInt("Id_mov");
+                Mov_type = rs.getString("Mov_type");
+                Number_card = rs.getString("Number_card");
+                Mov_date = rs.getDate("Mov_date").toLocalDate();
 
-                cards.add(new Card(card_name, card_number, CF_FK, cvv, card_type, expiration_date));
+                movements.add(new Movement(String.valueOf(Id_mov), Mov_type, Mov_date, Number_card));
             }
 
         }catch (SQLException e) {
@@ -63,23 +59,26 @@ public class CardOperation implements Operation<Card> {
     }
 
 
+
+
     @Override
     public Optional get(String toFind) {
-        for (Card card : cards) {
-            if (card.getCard_number().equals(toFind))
-                return Optional.ofNullable(card);
+        for (Movement move : movements) {
+            if (String.valueOf(move.getId_mov()).equals(toFind))
+                return Optional.ofNullable(movements);
         }
 
         return Optional.empty();
     }
 
+
     @Override
     public List getAll() {
-        return cards;
+        return movements;
     }
 
     @Override
-    public void add(Card c) {
+    public void add(Movement m) {
         try {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -93,18 +92,15 @@ public class CardOperation implements Operation<Card> {
             stmt = con.createStatement();
 
 
-            pstmt = con.prepareStatement("INSERT INTO Cards (card_number, CF_FK, cvv, card_type, expiration_date, card_name) VALUES (?,?,?,?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO movements (Id_mov, Mov_type, Mov_date, card_number_FK) VALUES (?,?,?,?)");
 
-            pstmt.setString(1, c.getCard_number());
-            pstmt.setString(2, c.getCF_FK());
-            pstmt.setInt(3, c.getCVV());
-            pstmt.setString(4, c.getCard_type());
-            pstmt.setDate(5, Date.valueOf(c.getDate()));
-            pstmt.setString(6, c.getCard_name());
+            pstmt.setString(1, m.getId_mov());
+            pstmt.setString(2, m.getMov_type());
+            pstmt.setDate(3, Date.valueOf(m.getMov_date()));
+            pstmt.setString(4, m.getNumber_card());
             pstmt.executeUpdate();
 
-            System.out.println("Carta aggiunta: " +  c.getCard_name() + " " + c.getCard_number() + " " + c.getDate());
-            cards.add(c);
+            movements.add(m);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -119,20 +115,20 @@ public class CardOperation implements Operation<Card> {
     }
 
     @Override
-    public void update(Card c, String[] params) {
+    public void update(Movement m, String[] params) {
 
     }
 
     @Override
-    public void delete(Card c) {
+    public void delete(Movement m) {
         try {
             con = DriverManager.getConnection(url);
-            PreparedStatement stmt = con.prepareStatement("DELETE FROM Cards WHERE card_number=(?)");
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM movements WHERE Id_Mov=(?)");
 
-            stmt.setString(1, c.getCard_number());
+            stmt.setInt(1, Integer.parseInt(m.getId_mov()));
             stmt.execute();
 
-            cards.remove(c);
+            movements.remove(m);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -145,3 +141,4 @@ public class CardOperation implements Operation<Card> {
         }
     }
 }
+

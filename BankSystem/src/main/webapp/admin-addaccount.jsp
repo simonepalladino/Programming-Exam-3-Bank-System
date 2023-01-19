@@ -45,6 +45,7 @@
                     <div class="card-body p-sm-5" style="margin-bottom: -17px;padding-top: 91px;padding-bottom: 91px;margin-top: 3px;">
                         <h2 class="text-center mb-4" style="margin-top: -29px;">Register</h2>
                         <form method="post" action="admin-addaccount">
+                            <div class="mb-3"><input class="form-control" type="text" id="name-1" name="username" placeholder="Insert username"></div>
                             <div class="mb-3"><input class="form-control" type="text" id="name-2" name="firstname" placeholder="Insert firstname"></div>
                             <div class="mb-3"><input class="form-control" type="text" id="email-2" name="lastname" placeholder="Insert lastname"></div>
                             <div class="mb-3"><input class="form-control" type="text" id="cf" name="cf" placeholder="Insert fiscal code"></div>

@@ -1,13 +1,9 @@
-package com.example.banksystem.Dao;
+package com.example.banksystem.operation;
 
-import com.example.banksystem.model.Cards;
 import com.example.banksystem.model.Holder;
 
-import java.security.SecureRandom;
 import java.sql.*;
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -35,16 +31,18 @@ public class HolderOperation implements Operation<Holder> {
             Date date_of_birth;
             String contract_type;
             String residence;
-            rs = stmt.executeQuery("SELECT * FROM Users");
+            int contract_cost;
+            rs = stmt.executeQuery("SELECT * FROM Holders");
             while ( rs.next() ) {
 
-                username = rs.getString("Username");
-                firstname = rs.getString("Name");
-                lastname = rs.getString("Surname");
-                cf = rs.getString("CF");
-                date_of_birth = rs.getDate("Date_of_birth");
-                contract_type = rs.getString("Contract_type");
-                residence = rs.getString("Residence");
+                username = rs.getString("username");
+                firstname = rs.getString("firstname");
+                lastname = rs.getString("lastname");
+                cf = rs.getString("cf");
+                date_of_birth = rs.getDate("date_of_birth");
+                contract_type = rs.getString("contract_type");
+                residence = rs.getString("residence");
+                contract_cost = rs.getInt("contract_cost");
 
                 holders.add(new Holder(username, firstname, lastname, cf, date_of_birth, contract_type, residence, contract_cost));
                 System.out.println("Caricato utente: " + firstname + " " + lastname + " " + cf);
@@ -80,7 +78,7 @@ public class HolderOperation implements Operation<Holder> {
     public void add(Holder holder) {
         try {
             con = DriverManager.getConnection(url);
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO Users values (?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO Holders values (?, ?, ?, ?, ?, ?, ?, ?)");
 
             stmt.setString(1, holder.getCf());
             stmt.setString(2, holder.getFirstname());
@@ -93,31 +91,7 @@ public class HolderOperation implements Operation<Holder> {
             stmt.execute();
 
             holders.add(holder);
-            CardDao c = new CardDao();
-            String theAlphaNumericS;
-            StringBuilder builder;
-            String numeri = "0123456789";
-            String perRandom = numeri;
-            SecureRandom sr = new SecureRandom();
-            StringBuilder cartnumber = new StringBuilder(12);
-            int cvv;
-            Random r = new Random();
 
-            for (int i = 0; i< 12; i++) {
-                int randomInt = sr.nextInt(perRandom.length());
-                char randomChar = perRandom.charAt(randomInt);
-                cartnumber.append(randomChar);
-            }
-           cvv = r.nextInt(999)+100;
-            LocalDate x = LocalDate.now();
-            DateTimeFormatter y = DateTimeFormatter.ofPattern("dd/MM/yy");
-           LocalDate scadenza_carta = x.plusYears(10);
-            x.format(y).toString();
-            System.out.println(x.format(y));
-            //String Number_Card, String CF_FK, int CVV, String Card_type, String expiration_date
-            c.add(new Cards(cartnumber.toString(),holder.getCf(),cvv,"Bancomat","21/21/21"));
-
-            System.out.println("inserito user e carta");
             //connessione al database
         } catch (SQLException e) {
             e.printStackTrace();
@@ -140,7 +114,7 @@ public class HolderOperation implements Operation<Holder> {
     public void delete(Holder holder) {
         try {
             con = DriverManager.getConnection(url);
-            PreparedStatement stmt = con.prepareStatement("DELETE FROM Users WHERE CF=(?)");
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM Holders WHERE CF=(?)");
 
             stmt.setString(1, holder.getCf());
             stmt.execute();
