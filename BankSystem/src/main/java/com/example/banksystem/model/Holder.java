@@ -10,8 +10,9 @@ public class Holder {
     private Date date_of_birth;
     private String contract_type;
     private String residence;
+    private int contract_cost;
 
-    public Holder(String username, String firstname, String lastname, String cf, Date date_of_birth, String contract_type, String residence) {
+    public Holder(String username, String firstname, String lastname, String cf, Date date_of_birth, String contract_type, String residence, int contract_cost) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.cf = cf;
@@ -19,6 +20,7 @@ public class Holder {
         this.contract_type = contract_type;
         this.residence = residence;
         this.username = username;
+        this.contract_cost = contract_cost;
     }
 
     public String getUsername() {
@@ -75,5 +77,13 @@ public class Holder {
 
     public void setResidence(String residence) {
         this.residence = residence;
+    }
+
+    public int getContract_cost(){
+        return contract_cost;
+    }
+
+    public void setContract_cost(int contract_cost){
+        this.contract_cost = contract_cost;
     }
 }
