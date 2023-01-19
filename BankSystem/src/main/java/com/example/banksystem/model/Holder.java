@@ -1,6 +1,10 @@
 package com.example.banksystem.model;
 
+import com.example.banksystem.operation.CardOperation;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Holder {
     private String username;
@@ -11,6 +15,7 @@ public class Holder {
     private String contract_type;
     private String residence;
     private int contract_cost;
+    private CardOperation cards;
 
     public Holder(String username, String firstname, String lastname, String cf, Date date_of_birth, String contract_type, String residence, int contract_cost) {
         this.firstname = firstname;

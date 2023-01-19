@@ -97,6 +97,18 @@ public class HolderOperation implements Operation<Holder> {
 
             holders.add(holder);
 
+            switch (holder.getContract_type()){
+                case ("Basic"):
+                    holder.setContract_cost(0);
+                    break;
+                case ("Premium"):
+                    holder.setContract_cost(100);
+                    break;
+                case("Enterprise"):
+                    holder.setContract_cost(1000);
+                    break;
+            }
+
             //connessione al database
         } catch (SQLException e) {
             e.printStackTrace();

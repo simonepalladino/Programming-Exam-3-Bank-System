@@ -37,6 +37,7 @@ public class AdminAddAccount extends HttpServlet {
         String account_type = request.getParameter("accounttype");
         String residence = request.getParameter("address");
         String username =  request.getParameter("username");
+        String card_type = request.getParameter("cardtype");
 
         LoginServlet.holderOperation.add(new Holder(username, firstname, lastname, cf, null, account_type, residence, 0));
 
