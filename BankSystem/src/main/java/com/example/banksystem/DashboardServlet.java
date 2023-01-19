@@ -24,7 +24,7 @@ public class DashboardServlet extends HttpServlet {
         if (logintype.equals("admin"))
             request.getRequestDispatcher("admin-dashboard.jsp").forward(request, response);
         else
-            request.getRequestDispatcher("admin-dashboard.jsp").forward(request, response);
+            request.getRequestDispatcher("user-dashboard.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
