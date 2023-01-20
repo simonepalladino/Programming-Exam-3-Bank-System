@@ -4,7 +4,6 @@ import com.example.banksystem.observer.CardObserver;
 import com.example.banksystem.observer.Observer;
 import com.example.banksystem.operation.CardOperation;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

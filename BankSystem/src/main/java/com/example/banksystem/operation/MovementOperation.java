@@ -1,8 +1,6 @@
 package com.example.banksystem.operation;
 
 import com.example.banksystem.model.Movement;
-import com.example.banksystem.observer.CardObserver;
-import com.example.banksystem.observer.MovementObserver;
 
 import java.sql.*;
 
@@ -20,54 +18,14 @@ public class MovementOperation implements Operation<Movement> {
     private List<Movement> movements = new ArrayList<>();
 
     public MovementOperation(){
-        //Ogni volta che si inizializza senza parametro, aggiorna l'Observer Singleton
-        MovementObserver.getInstance().setMovementOperation(this);
-
-        try {
-            try {
-                Class.forName("org.sqlite.JDBC");
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-            con = DriverManager.getConnection(url);
-            Statement stmt = con.createStatement();
-            ResultSet rs;
-
-
-            int id_mov;
-            String mov_type;
-            LocalDate mov_date;
-            String card_number;
-
-            rs = stmt.executeQuery("SELECT * FROM movements");
-            while (rs.next()) {
-
-                id_mov = rs.getInt("Id_mov");
-                mov_type = rs.getString("Mov_type");
-                card_number = rs.getString("card_number_FK");
-                mov_date = rs.getDate("Mov_date").toLocalDate();
-
-                System.out.println("@ Movimento caricato: " +  id_mov + " " + card_number + " " + mov_type + " " + mov_date);
-                movements.add(new Movement(String.valueOf(id_mov), mov_type, mov_date, card_number));
-            }
-
-        }catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (con != null)
-                    con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        initialization("SELECT * FROM movements");
     }
 
     public MovementOperation(String card_number_fk){
-        //Ogni volta che si inizializza senza parametro, aggiorna l'Observer Singleton
-        MovementObserver.getInstance().setMovementOperation(this);
+        initialization("SELECT * FROM movements WHERE card_number_FK = '" + card_number_fk + "'");
+    }
 
+    private void initialization(String query) {
         try {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -78,25 +36,26 @@ public class MovementOperation implements Operation<Movement> {
             con = DriverManager.getConnection(url);
             Statement stmt = con.createStatement();
             ResultSet rs;
-
-
             int id_mov;
             String mov_type;
             LocalDate mov_date;
             String card_number;
 
-            rs = stmt.executeQuery("SELECT * FROM movements WHERE card_number_FK = '" + card_number_fk + "'");
-            while (rs.next()) {
+            rs = stmt.executeQuery(query);
 
+            while (rs.next()) {
                 id_mov = rs.getInt("Id_mov");
                 mov_type = rs.getString("Mov_type");
                 card_number = rs.getString("card_number_FK");
                 mov_date = rs.getDate("Mov_date").toLocalDate();
 
-                System.out.println(" @+ Movimento assegnato alla carta: " + card_number);
+                if (query.contains("WHERE"))
+                    System.out.println(" @+ Movimento assegnato alla carta: " + card_number);
+                else
+                    System.out.println("@ Movimento caricato: " +  id_mov + " " + card_number + " " + mov_type + " " + mov_date);
+
                 movements.add(new Movement(String.valueOf(id_mov), mov_type, mov_date, card_number));
             }
-
         }catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -110,15 +69,14 @@ public class MovementOperation implements Operation<Movement> {
     }
 
 
-
     @Override
-    public Optional get(String toFind) {
+    public Movement get(String toFind) {
         for (Movement move : movements) {
             if (String.valueOf(move.getId_mov()).equals(toFind))
-                return Optional.ofNullable(movements);
+                return move;
         }
 
-        return Optional.empty();
+        return null;
     }
 
 

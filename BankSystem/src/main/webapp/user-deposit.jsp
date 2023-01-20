@@ -161,7 +161,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="table-responsive d-flex" style="max-height: 115vh;border-style: none;">
+                                <div class="table-responsive d-flex" style="max-height: 90vh;border-style: none;">
                                     <table class="table">
                                         <tbody>
                                         <tr></tr>

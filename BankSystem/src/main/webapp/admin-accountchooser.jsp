@@ -40,60 +40,30 @@
                 <h2>Edit an account</h2>
                 <p class="w-lg-50">Want to add some cards or remove a person?<br></p>
             </div>
-        </div><input class="border rounded" type="search" style="width: 574.333px;height: 40px;box-shadow: 0px 0px 20px 3px var(--bs-red);border-radius: 10px;text-align: center;padding-top: 0px;" placeholder="Search by account name or by holder's name" name="searchname"><button class="btn btn-primary text-center" type="submit" style="margin-left: 20px;background: var(--bs-btn-color);border-width: 0px;border-color: var(--bs-btn-disabled-color);border-left-width: 0px;border-left-color: var(--bs-border-color-translucent);box-shadow: 0px 0px 9px var(--bs-red);height: 45.1667px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-search" style="font-size: 27px;color: var(--bs-red);">
+        </div>
+        <form method="get" action="admin-accountchooser">
+        <input class="border rounded" type="search" style="width: 574.333px;height: 40px;box-shadow: 0px 0px 20px 3px var(--bs-red);border-radius: 10px;text-align: center;padding-top: 0px;" placeholder="Search by account name or by holder's name" name="searchname">
+        <button class="btn btn-primary text-center" type="submit" style="margin-left: 20px;background: var(--bs-btn-color);border-width: 0px;border-color: var(--bs-btn-disabled-color);border-left-width: 0px;border-left-color: var(--bs-border-color-translucent);box-shadow: 0px 0px 9px var(--bs-red);height: 45.1667px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-search" style="font-size: 27px;color: var(--bs-red);">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
             </svg></button>
+        </form>
     </div>
-    <form method="get" action="admin-modifyaccount.jsp">
-    <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 159px;margin-right: 159px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-badge text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-            <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
-            <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"></path>
-        </svg>
-        <div></div>
-        <div class="col">
-            <p class="fs-5 fw-bold text-primary mb-0">Luca Tartaglia</p>
-            <p class="fs-6 fw-bold text-primary mb-0">account01</p>
-        </div>
-        <div class="d-md-flex d-lg-flex d-xl-flex flex-fill justify-content-md-end justify-content-lg-end justify-content-xl-end">
-            <button class="btn btn-primary text-end d-xl-flex flex-row justify-content-xl-center align-items-xl-center" type="submit" style="padding-left: 105px;padding-right: 105px;background: var(--bs-red);border-color: var(--bs-red);margin-right: 8px;">Edit</button></div>
-        <div></div>
-    </div>
-    <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 159px;margin-right: 159px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-badge text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-            <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
-            <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"></path>
-        </svg>
-        <div></div>
-        <div class="col">
-            <p class="fs-5 fw-bold text-primary mb-0">Simone Palladino</p>
-            <p class="fs-6 fw-bold text-primary mb-0">account02</p>
-        </div>
-        <div class="d-md-flex d-lg-flex d-xl-flex flex-fill justify-content-md-end justify-content-lg-end justify-content-xl-end"><button class="btn btn-primary text-end d-xl-flex flex-row justify-content-xl-center align-items-xl-center" type="submit" style="padding-left: 105px;padding-right: 105px;border-color: var(--bs-red);background: var(--bs-red);margin-right: 8px;">Edit</button></div>
-        <div></div>
-    </div>
-    <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 159px;margin-right: 159px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-badge text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-            <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
-            <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"></path>
-        </svg>
-        <div></div>
-        <div class="col">
-            <p class="text-break fs-5 fw-bold text-primary mb-0">Mattia di Palma</p>
-            <p class="fs-6 fw-bold text-primary mb-0">account03</p>
-        </div>
-        <div class="d-md-flex d-lg-flex d-xl-flex flex-fill justify-content-md-end justify-content-lg-end justify-content-xl-end"><button class="btn btn-primary text-end d-xl-flex flex-row justify-content-xl-center align-items-xl-center" type="submit" style="padding-left: 105px;padding-right: 105px;border-color: var(--bs-red);background: var(--bs-red);margin-right: 8px;">Edit</button></div>
-        <div></div>
-    </div>
-    <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 159px;margin-right: 159px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-badge text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
-            <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
-            <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"></path>
-        </svg>
-        <div></div>
-        <div class="col">
-            <p class="text-break fs-5 fw-bold text-primary mb-0">Mattia di Palma</p>
-            <p class="fs-6 fw-bold text-primary mb-0">account03</p>
-        </div>
-        <div class="d-md-flex d-lg-flex d-xl-flex flex-fill justify-content-md-end justify-content-lg-end justify-content-xl-end"><button class="btn btn-primary text-end d-xl-flex flex-row justify-content-xl-center align-items-xl-center" type="submit" style="padding-left: 105px;padding-right: 105px;border-color: var(--bs-red);background: var(--bs-red);margin-right: 8px;">Edit</button></div>
-        <div></div>
-    </div>
+    <form method="get" action="admin-modifyaccount">
+        <c:forEach var="accounts" items="${accounts}">
+            <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 159px;margin-right: 159px;margin-top: 10px;margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-badge text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+                <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"></path>
+            </svg>
+                <div></div>
+                <div class="col">
+                    <p class="fs-5 fw-bold text-primary mb-0"><c:out value="${accounts.firstname}"/> <c:out value="${accounts.lastname}"/></p>
+                    <p class="fs-6 fw-bold text-primary mb-0"><c:out value="${accounts.username}"/></p>
+                </div>
+                <div class="d-md-flex d-lg-flex d-xl-flex flex-fill justify-content-md-end justify-content-lg-end justify-content-xl-end">
+                    <button class="btn btn-primary text-end d-xl-flex flex-row justify-content-xl-center align-items-xl-center" type="submit" name="selectedAccount" value='<c:out value="${accounts.cf}"/>' style="padding-left: 105px;padding-right: 105px;background: var(--bs-red);border-color: var(--bs-red);margin-right: 8px;">Edit</button></div>
+                <div></div>
+            </div>
+        </c:forEach>
     </form>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>

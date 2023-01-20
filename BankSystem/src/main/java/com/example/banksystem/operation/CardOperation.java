@@ -1,7 +1,6 @@
 package com.example.banksystem.operation;
 
 import com.example.banksystem.model.Card;
-import com.example.banksystem.observer.CardObserver;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -15,56 +14,14 @@ public class CardOperation implements Operation<Card> {
     private List<Card> cards = new ArrayList<>();
 
     public CardOperation() {
-        //Ogni volta che si inizializza senza parametro, aggiorna l'Observer Singleton
-        CardObserver.getInstance().setCardOperation(this);
-
-        try {
-            try {
-                Class.forName("org.sqlite.JDBC");
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-            con = DriverManager.getConnection(url);
-            Statement stmt = con.createStatement();
-            ResultSet rs;
-
-            String card_name;
-            String card_number;
-            String CF_FK;
-            int cvv;
-            String card_type;
-            LocalDate expiration_date;
-            double balance;
-
-            rs = stmt.executeQuery("SELECT * FROM Cards");
-            while (rs.next()) {
-
-                card_name = rs.getString("card_name");
-                card_number = rs.getString("card_number");
-                CF_FK = rs.getString("CF_FK");
-                cvv = rs.getInt("cvv");
-                card_type = rs.getString("card_type");
-                expiration_date = rs.getDate("expiration_date").toLocalDate();
-                balance = rs.getDouble("balance");
-
-                System.out.println("* Carta caricata: " +  card_name + " " + card_number + " " + expiration_date + " balance:" + balance);
-
-                cards.add(new Card(card_name, card_number, CF_FK, cvv, card_type, expiration_date, balance));
-            }
-        }catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (con != null)
-                    con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        initialization("SELECT * FROM Cards");
     }
 
     public CardOperation(String cf) {
+        initialization("SELECT * FROM Cards WHERE CF_FK = '" + cf + "'");
+    }
+
+    private void initialization(String query) {
         try {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -84,7 +41,7 @@ public class CardOperation implements Operation<Card> {
             LocalDate expiration_date;
             double balance;
 
-            rs = stmt.executeQuery("SELECT * FROM Cards WHERE CF_FK = '" + cf + "'");
+            rs = stmt.executeQuery(query);
             while (rs.next()) {
 
                 card_name = rs.getString("card_name");
@@ -95,7 +52,10 @@ public class CardOperation implements Operation<Card> {
                 expiration_date = rs.getDate("expiration_date").toLocalDate();
                 balance = rs.getDouble("balance");
 
-                System.out.println(" = Carta " + card_number + " assegnata all'utente " + cf);
+                if (query.contains("WHERE"))
+                    System.out.println(" = Carta " + card_number + " assegnata all'utente " + CF_FK);
+                else
+                    System.out.println("* Carta caricata: " +  card_name + " " + card_number + " " + expiration_date + " balance:" + balance);
 
                 cards.add(new Card(card_name, card_number, CF_FK, cvv, card_type, expiration_date, balance));
             }
@@ -116,13 +76,13 @@ public class CardOperation implements Operation<Card> {
 
 
     @Override
-    public Optional get(String toFind) {
+    public Card get(String toFind) {
         for (Card card : cards) {
             if (card.getCard_number().equals(toFind))
-                return Optional.ofNullable(card);
+                return card;
         }
 
-        return Optional.empty();
+        return null;
     }
 
 

@@ -10,12 +10,9 @@ import jakarta.servlet.annotation.*;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginServlet extends HttpServlet {
-    public static Factory factory = new Factory();
     public static HolderOperation holderOperation = null;
     public static CardOperation cardOperation = null;
     public static MovementOperation movementOperation = null;
-    //public static Iterator<Movements> movementsIterator = null;
-
     Connection con;
     String logintype;
     String error;
@@ -30,19 +27,25 @@ public class LoginServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
+        HttpSession session = request.getSession();
 
         logintype = request.getParameter("logintype");
         error = request.getParameter("error");
 
-        if (holderOperation == null)
-            holderOperation = (HolderOperation) factory.getOperation(Factory.OperationType.HOLDER);
-        if (cardOperation == null)
-            cardOperation = (CardOperation) factory.getOperation(Factory.OperationType.CARD);
-        if (movementOperation == null)
-            movementOperation = (MovementOperation) factory.getOperation(Factory.OperationType.MOVEMENTS);
-        //if (movementsIterator == null)
-          //  movementsIterator = operationFactory.getIterator(OperationFactory.OperationType.MOVEMENTS);
-        //Iterator<Movements> iterator = operationFactory.getIterator(OperationFactory.OperationType.MOVEMENTS);
+        if (holderOperation == null) {
+            holderOperation = (HolderOperation) Factory.getNewOperation(Factory.OperationType.HOLDER);
+            session.setAttribute("holderOperation", holderOperation);
+        }
+
+        if (cardOperation == null) {
+            cardOperation = (CardOperation) Factory.getNewOperation(Factory.OperationType.CARD);
+            session.setAttribute("cardOperation", cardOperation);
+        }
+
+        if (movementOperation == null) {
+            movementOperation = (MovementOperation) Factory.getNewOperation(Factory.OperationType.MOVEMENTS);
+            session.setAttribute("movementOperation", movementOperation);
+        }
 
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }

@@ -3,11 +3,13 @@ package com.example.banksystem;
 import com.example.banksystem.model.Card;
 import com.example.banksystem.model.Holder;
 import com.example.banksystem.observer.CardObserver;
+import com.example.banksystem.operation.HolderOperation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -16,7 +18,7 @@ import java.time.LocalDate;
 import java.util.Random;
 
 @WebServlet(name = "adminAddAccount", value = "/admin-addaccount")
-public class AdminAddAccount extends HttpServlet {
+public class AdminAddAccountServlet extends HttpServlet {
     String url;
     Connection con;
 
@@ -32,6 +34,9 @@ public class AdminAddAccount extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
+        HttpSession session = request.getSession();
+        HolderOperation holderOperation = (HolderOperation) session.getAttribute("holderOperation");
+
         String cf = request.getParameter("cf");
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
@@ -40,7 +45,7 @@ public class AdminAddAccount extends HttpServlet {
         String username =  request.getParameter("username");
         String card_type = request.getParameter("cardtype");
 
-        LoginServlet.holderOperation.add(new Holder(username, firstname, lastname, cf, null, account_type, residence, 0));
+        holderOperation.add(new Holder(username, firstname, lastname, cf, null, account_type, residence, 0));
 
         //Aggiungiamo la carta in modo autonomo
         String numbers = "0123456789";
@@ -57,9 +62,7 @@ public class AdminAddAccount extends HttpServlet {
         }
 
         cvv = r.nextInt(999) + 100;
-
         LocalDate x = LocalDate.now().plusYears(10);
-
 
         switch (account_type) {
             case "Basic" :
@@ -72,7 +75,6 @@ public class AdminAddAccount extends HttpServlet {
                 CardObserver.getInstance().add(new Card(card_type + " of " + firstname, card_number.toString(), cf, cvv,card_type, x, 20));
                 break;
         }
-
 
         request.getRequestDispatcher("admin-dashboard.jsp").forward(request, response);
     }

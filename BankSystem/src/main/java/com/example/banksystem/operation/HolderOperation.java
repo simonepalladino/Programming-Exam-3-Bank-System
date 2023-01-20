@@ -1,6 +1,5 @@
 package com.example.banksystem.operation;
 
-import com.example.banksystem.LoginServlet;
 import com.example.banksystem.model.Holder;
 
 
@@ -19,6 +18,15 @@ public class HolderOperation implements Operation<Holder>{
 
     public HolderOperation() {
         //Carica tutti gli utenti salvati
+        initialization("SELECT * FROM Holders");
+    }
+
+    public HolderOperation(String toFind) {
+        //Carica alcuni utenti salvati
+        initialization("SELECT * FROM Holders WHERE (firstname || ' ' || lastname) LIKE '" + toFind + "%' OR username LIKE '" + toFind + "%'");
+    }
+
+    private void initialization(String query) {
         try {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -37,7 +45,7 @@ public class HolderOperation implements Operation<Holder>{
             String contract_type;
             String residence;
             int contract_cost;
-            rs = stmt.executeQuery("SELECT * FROM Holders");
+            rs = stmt.executeQuery(query);
 
             while ( rs.next() ) {
                 username = rs.getString("username");
@@ -49,7 +57,10 @@ public class HolderOperation implements Operation<Holder>{
                 residence = rs.getString("residence");
                 contract_cost = rs.getInt("contract_cost");
 
-                System.out.println("! Caricato utente: " + firstname + " " + lastname + " " + cf);
+                if (query.contains("WHERE"))
+                    System.out.println(" ! Trovato utente: " + firstname + " " + lastname + " " + cf);
+                else
+                    System.out.println("! Aggiunto utente: " + firstname + " " + lastname + " " + cf);
                 holders.add(new Holder(username, firstname, lastname, cf, date_of_birth, contract_type, residence, contract_cost));
             }
         } catch (SQLException e) {
@@ -65,13 +76,13 @@ public class HolderOperation implements Operation<Holder>{
     }
 
     @Override
-    public Optional<Holder> get(String toFind) {
+    public Holder get(String toFind) {
         for (Holder holder : holders) {
             if (holder.getCf().equals(toFind))
-                return Optional.ofNullable(holder);
+                return holder;
         }
 
-        return Optional.empty();
+        return null;
     }
 
     @Override

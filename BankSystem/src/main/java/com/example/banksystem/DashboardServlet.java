@@ -16,7 +16,6 @@ public class DashboardServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-
         HttpSession session = request.getSession();
 
         logintype = request.getParameter("logintype");

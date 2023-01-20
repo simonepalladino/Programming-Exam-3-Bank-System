@@ -7,8 +7,8 @@ import com.example.banksystem.operation.*;
 
 public class Tests {
     public static void main(String[] args) {
-        Factory factory = new Factory();
-        Iterator<Holder> iterator = factory.getIterator(Factory.OperationType.HOLDER);
+        Iterator<Holder> iterator = Factory.getIterator(Factory.OperationType.HOLDER);
+
         CardOperation cards = new CardOperation();
 
         //HolderOperation holderOperation = new HolderOperation();
