@@ -58,7 +58,38 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("usertext", request.getParameter("username").toString());
 
         if (logintype.equals("user")) {
-            response.sendRedirect("dashboard?logintype=user");
+            try {
+                con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
+                Statement stmt = con.createStatement();
+                ResultSet rs;
+                username = request.getParameter("username");
+                password = request.getParameter("password");
+                rs = stmt.executeQuery("SELECT * FROM Holders WHERE username='" + username + "' AND password='" + password + "'");
+
+                if (rs.next()) {
+                    cf = rs.getString("cf");
+                    done = true;
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (con != null)
+                        con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (done) {
+                if (password.equals(cf))
+                    response.sendRedirect("user-setpassword?cf=" + cf);
+                else
+                    response.sendRedirect("dashboard?logintype=user");
+            } else {
+                response.sendRedirect("login?logintype=user&error=errore");
+            }
         } else {
             try {
                     con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
