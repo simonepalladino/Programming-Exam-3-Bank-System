@@ -14,12 +14,13 @@ public class ProductOperation {
 
     public ProductOperation() {
         try {
-            try {
-                Class.forName("org.sqlite.JDBC");
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        initializeDefaults();
 
+        try {
             con = DriverManager.getConnection(url);
             Statement stmt = con.createStatement();
             ResultSet rs;
@@ -65,6 +66,70 @@ public class ProductOperation {
 
     public List getAll() {
         return products;
+    }
+
+    private void initializeDefaults() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = DriverManager.getConnection(url);
+            conn.setAutoCommit(false);
+
+            stmt = conn.prepareStatement("INSERT OR REPLACE INTO Products (product_name, product_id, price, quote, type) VALUES (?, ?, ?, ?, ?)");
+
+            // Aggiunge prodotti predefiniti necessari per il funzionamento corretto
+            stmt.setString(1, "Welcome Bonus");
+            stmt.setString(2, "welcomepremium");
+            stmt.setInt(3, 10);
+            stmt.setString(4, "A \"Premium\" welcome!");
+            stmt.setString(5, "deposit");
+            stmt.addBatch();
+
+            stmt.setString(1, "Welcome Bonus");
+            stmt.setString(2, "welcomeenterprise");
+            stmt.setInt(3, 20);
+            stmt.setString(4, "An \"Enterprise\" welcome!");
+            stmt.setString(5, "deposit");
+            stmt.addBatch();
+
+            stmt.setString(1, "Deposit");
+            stmt.setString(2, "deposit");
+            stmt.setInt(3, 0);
+            stmt.setString(4, "Account deposit");
+            stmt.setString(5, "deposit");
+            stmt.addBatch();
+
+            stmt.setString(1, "Withdraw");
+            stmt.setString(2, "withdraw");
+            stmt.setInt(3, 0);
+            stmt.setString(4, "Account withdraw");
+            stmt.setString(5, "withdraw");
+            stmt.addBatch();
+
+            // Execute the batch
+            stmt.executeBatch();
+
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the statement and connection
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
 

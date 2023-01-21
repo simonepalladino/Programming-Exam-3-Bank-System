@@ -20,8 +20,8 @@
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <form method="get" action="dashboard?logintype=user">
-                            <input type="submit" value="Home" style="background:none; border-width:0px;" class="nav-link"/></form></li>
+                        <form method="get" action="dashboard">
+                            <input type="submit" value="Home" style="background:none; border-width:0px;" class="nav-link" name="logintype" value="user"/></form></li>
                     <li class="nav-item">
                         <form method="get" action="user-deposit">
                             <input type="submit" value="Deposit" style="background:none; border-width:0px;" class="nav-link"/></form></li>
