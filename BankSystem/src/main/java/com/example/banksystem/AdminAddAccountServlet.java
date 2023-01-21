@@ -76,10 +76,10 @@ public class AdminAddAccountServlet extends HttpServlet {
 
         switch (account_type) {
             case "Premium" :
-                MovementObserver.getInstance().add(new Movement("welcomebonus", LocalDate.now(), randomCard[0], 10));
+                MovementObserver.getInstance().add(new Movement("welcomepremium", LocalDate.now(), randomCard[0]));
                 break;
             case "Enterprise":
-                MovementObserver.getInstance().add(new Movement("welcomebonus", LocalDate.now(), randomCard[0], 20));
+                MovementObserver.getInstance().add(new Movement("welcomeenterprise", LocalDate.now(), randomCard[0]));
                 break;
         }
 

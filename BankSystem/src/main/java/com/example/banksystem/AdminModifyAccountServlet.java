@@ -39,7 +39,7 @@ public class AdminModifyAccountServlet extends HttpServlet {
             cardArrayList.add(card);
             totalBalance += card.getBalance();
 
-            Iterator<Movement> iterator2 = Factory.getIterator(Factory.OperationType.MOVEMENTS, card.getCard_number());
+            Iterator<Movement> iterator2 = Factory.getIterator(Factory.OperationType.MOVEMENT, card.getCard_number());
             while (iterator2.hasNext()) {
                 Movement movement = iterator2.next();
                 if (movement.getPrice() >= 0)

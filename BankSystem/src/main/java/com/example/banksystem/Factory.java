@@ -4,18 +4,16 @@ import com.example.banksystem.iterator.CardIterator;
 import com.example.banksystem.iterator.HolderIterator;
 import com.example.banksystem.iterator.Iterator;
 import com.example.banksystem.iterator.MovementIterator;
+import com.example.banksystem.model.Product;
 import com.example.banksystem.observer.CardObserver;
 import com.example.banksystem.observer.MovementObserver;
-import com.example.banksystem.operation.CardOperation;
-import com.example.banksystem.operation.HolderOperation;
-import com.example.banksystem.operation.MovementOperation;
-import com.example.banksystem.operation.Operation;
+import com.example.banksystem.operation.*;
 
 public class Factory {
     public enum OperationType {
         HOLDER,
         CARD,
-        MOVEMENTS
+        MOVEMENT
     }
 
     public static Operation getNewOperation(OperationType type) {
@@ -27,7 +25,7 @@ public class Factory {
                 //Ogni volta che si inizializza senza parametro, aggiorna l'Observer Singleton
                 CardObserver.getInstance().setCardOperation(cardOperation);
                 return cardOperation;
-            case MOVEMENTS:
+            case MOVEMENT:
                 MovementOperation movementOperation = new MovementOperation();
                 //Ogni volta che si inizializza senza parametro, aggiorna l'Observer Singleton
                 MovementObserver.getInstance().setMovementOperation(movementOperation);
@@ -43,7 +41,7 @@ public class Factory {
                 return new HolderOperation();
             case CARD:
                 return new CardOperation();
-            case MOVEMENTS:
+            case MOVEMENT:
                 return new MovementOperation();
         }
 
@@ -56,8 +54,8 @@ public class Factory {
                 return new HolderOperation(toFind);
             case CARD:
                 return new CardOperation(toFind);
-            case MOVEMENTS:
-                return new MovementOperation(toFind);
+            case MOVEMENT:
+                return new MovementOperation(toFind, true);
         }
 
         return null;
@@ -69,7 +67,7 @@ public class Factory {
                 return new HolderIterator(new HolderOperation().getAll());
             case CARD:
                 return new CardIterator(new CardOperation().getAll());
-            case MOVEMENTS:
+            case MOVEMENT:
                 return new MovementIterator(new MovementOperation().getAll());
         }
         return null;
@@ -81,9 +79,17 @@ public class Factory {
                 return new HolderIterator(new HolderOperation(toFind).getAll());
             case CARD:
                 return new CardIterator(new CardOperation(toFind).getAll());
-            case MOVEMENTS:
-                return new MovementIterator(new MovementOperation(toFind).getAll());
+            case MOVEMENT:
+                return new MovementIterator(new MovementOperation(toFind, true).getAll());
         }
         return null;
+    }
+
+    public static Operation getMovementUserOperation(String toFind) {
+        return new MovementOperation(toFind, false);
+    }
+
+    public static Iterator getMovementUserIterator(String toFind) {
+        return new MovementIterator(new MovementOperation(toFind, false).getAll());
     }
 }

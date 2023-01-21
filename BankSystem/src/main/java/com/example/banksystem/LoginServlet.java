@@ -10,7 +10,6 @@ import jakarta.servlet.annotation.*;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginServlet extends HttpServlet {
-
     Connection con;
     String logintype;
     String error;
@@ -71,6 +70,8 @@ public class LoginServlet extends HttpServlet {
             }
 
             if (done) {
+                session.setAttribute("selectedHolder", Actions.getInstance().holderOperation.get(cf));
+
                 if (password.equals(cf))
                     response.sendRedirect("user-setpassword?cf=" + cf);
                 else
@@ -91,7 +92,6 @@ public class LoginServlet extends HttpServlet {
                     if (rs.next()) {
                         done = true;
                     }
-
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {

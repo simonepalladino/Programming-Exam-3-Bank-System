@@ -29,7 +29,7 @@ public class Card implements Observer {
         MovementObserver.getInstance().addObserver(this);
 
         //Aggiorna le carte associate al conto all'interno di un CardOperation
-        movements = new MovementOperation(card_number);
+        movements = new MovementOperation(card_number, true);
     }
 
     public String getCard_name() {
@@ -98,6 +98,6 @@ public class Card implements Observer {
 
     public void update() {
         System.out.println("?! Aggiorno la lista dei movimenti della carta " + card_number);
-        movements = new MovementOperation(card_number);
+        movements = new MovementOperation(card_number, true);
     }
 }
