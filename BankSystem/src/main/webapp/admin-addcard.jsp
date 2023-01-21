@@ -44,16 +44,16 @@
                         <div class="card-body p-sm-5" style="margin-bottom: -17px;padding-top: 91px;padding-bottom: 91px;margin-top: 3px;">
                             <h2 class="text-center mb-4" style="margin-top: -29px;">Add card</h2>
                             <form method="post">
-                                <div class="mb-3"><input class="form-control" type="text" id="name-2" name="cardname" placeholder="Insert card name"></div>
-                                <div class="mb-3"><input class="form-control" type="text" id="name-3" name="cardnumber" placeholder="Insert card number" inputmode="numeric"></div>
+                                <div class="mb-3"><input class="form-control" type="text" id="name-2" name="cardname" placeholder="Insert card name" value='<c:out value="${requestScope.card_name}"/>' required></div>
+                                <div class="mb-3"><input class="form-control" type="text" id="name-3" name="cardnumber" placeholder="Insert card number" value='<c:out value="${requestScope.random_card}"/>' inputmode="numeric" required></div>
                                 <div class="mb-3"><select class="form-select" name="cardtype">
                                         <optgroup label="Card type">
-                                            <option value="12" selected="">Prepaid card</option>
-                                            <option value="13">Credit card</option>
+                                            <option value="Bancomat" selected="">Bancomat</option>
+                                            <option value="Credit Card">Credit Card</option>
                                         </optgroup>
                                     </select></div>
                                 <div class="mb-3"><input class="form-control" type="month" name="carddeadline"></div>
-                                <div class="mb-3"><input class="form-control" type="text" id="name-1" name="cardcvv" placeholder="Insert cvv" inputmode="numeric"></div>
+                                <div class="mb-3"><input class="form-control" type="text" id="name-1" name="cardcvv" placeholder="Insert cvv" inputmode="numeric" value='<c:out value="${requestScope.random_cvv}"/>' required></div>
                                 <div><button class="btn btn-primary d-block w-100" type="submit" style="background: var(--bs-red);border-color: var(--bs-red);">Create</button></div>
                             </form>
                         </div>

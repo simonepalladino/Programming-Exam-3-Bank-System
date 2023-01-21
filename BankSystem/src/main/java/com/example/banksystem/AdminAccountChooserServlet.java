@@ -28,7 +28,7 @@ public class AdminAccountChooserServlet extends HttpServlet {
             while (iterator.hasNext())
                 holderArrayList.add(iterator.next());
         } else {
-            holderArrayList = LoginServlet.holderOperation.getAll();
+            holderArrayList = Actions.getInstance().holderOperation.getAll();
         }
 
         request.setAttribute("accounts", holderArrayList);

@@ -14,6 +14,7 @@ public class Card implements Observer {
     private String card_name;
     private double balance;
     private MovementOperation movements;
+    private int lastMovementID;
 
     public Card(String card_name, String cardnumber, String CF_FK, int cvv, String card_type, LocalDate expiration_date, double balance) {
         this.card_name = card_name;

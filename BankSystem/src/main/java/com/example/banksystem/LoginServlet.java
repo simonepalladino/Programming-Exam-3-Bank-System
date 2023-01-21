@@ -10,9 +10,7 @@ import jakarta.servlet.annotation.*;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginServlet extends HttpServlet {
-    public static HolderOperation holderOperation = null;
-    public static CardOperation cardOperation = null;
-    public static MovementOperation movementOperation = null;
+
     Connection con;
     String logintype;
     String error;
@@ -32,20 +30,9 @@ public class LoginServlet extends HttpServlet {
         logintype = request.getParameter("logintype");
         error = request.getParameter("error");
 
-        if (holderOperation == null) {
-            holderOperation = (HolderOperation) Factory.getNewOperation(Factory.OperationType.HOLDER);
-            session.setAttribute("holderOperation", holderOperation);
-        }
-
-        if (cardOperation == null) {
-            cardOperation = (CardOperation) Factory.getNewOperation(Factory.OperationType.CARD);
-            session.setAttribute("cardOperation", cardOperation);
-        }
-
-        if (movementOperation == null) {
-            movementOperation = (MovementOperation) Factory.getNewOperation(Factory.OperationType.MOVEMENTS);
-            session.setAttribute("movementOperation", movementOperation);
-        }
+        session.setAttribute("holderOperation", Actions.getInstance().holderOperation);
+        session.setAttribute("cardOperation", Actions.getInstance().cardOperation);
+        session.setAttribute("movementOperation", Actions.getInstance().movementOperation);
 
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
@@ -56,6 +43,7 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.setAttribute("usertext", request.getParameter("username").toString());
+        String username = null, password = null, cf = null;
 
         if (logintype.equals("user")) {
             try {
@@ -96,8 +84,8 @@ public class LoginServlet extends HttpServlet {
                     Statement stmt = con.createStatement();
                     ResultSet rs;
 
-                    String username = request.getParameter("username");
-                    String password = request.getParameter("password");
+                    username = request.getParameter("username");
+                    password = request.getParameter("password");
                     rs = stmt.executeQuery("SELECT * FROM Admins WHERE username='" + username + "' AND password='" + password + "'");
 
                     if (rs.next()) {

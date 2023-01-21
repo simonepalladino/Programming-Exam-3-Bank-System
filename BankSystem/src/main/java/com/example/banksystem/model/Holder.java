@@ -16,9 +16,11 @@ public class Holder implements Observer {
     private String contract_type;
     private String residence;
     private int contract_cost;
+    private String password;
     private CardOperation cards;
 
-    public Holder(String username, String firstname, String lastname, String cf, Date date_of_birth, String contract_type, String residence, int contract_cost) {
+
+    public Holder(String username, String firstname, String lastname, String cf, Date date_of_birth, String contract_type, String residence, int contract_cost, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.cf = cf;
@@ -27,6 +29,7 @@ public class Holder implements Observer {
         this.residence = residence;
         this.username = username;
         this.contract_cost = contract_cost;
+        this.password = password;
 
         //Aggiunge l'Holder alla lista di Observers
         CardObserver.getInstance().addObserver(this);
@@ -103,48 +106,18 @@ public class Holder implements Observer {
         return cards.getAll();
     }
 
+    public CardOperation getCardOperation() {return cards;}
+
     public void addCard(Card c){
         this.cards.add(c);
     }
 
-    public void withDrawCard(String cardNumber, double x) {
-        for (Object cardObject : cards.getAll() ){
-            Card card = (Card) cardObject;
-            if (card.getCard_number().equals(cardNumber)){
-                switch (this.contract_type){
-                    case("Basic"):
-                        card.withDraw(x - 1);
-                        break;
-                    case("Premium"):
-                        card.withDraw(x - 0.50);
-                        break;
-                    case("Enterprise"):
-                        card.withDraw(x - 0.25);
-                        break;
-                }
-            }
-            else
-                System.out.println("There are no cards");
-        }
+    public String getPassword() {
+        return password;
     }
 
-    public void depositCard (String cardNumber, double x){
-        for (Object cardObject : cards.getAll() ){
-            Card card = (Card) cardObject;
-            if (card.getCard_number().equals(cardNumber)){
-                switch (this.contract_type){
-                    case ("Basic"):
-                        card.withDraw(x - 1);
-                        break;
-                    case ("Premium"):
-                        card.withDraw(x - 0.50);
-                        break;
-                    case ("Enterprise"):
-                        card.withDraw(x - 0.25);
-                        break;
-                }
-            }
-        }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void update() {

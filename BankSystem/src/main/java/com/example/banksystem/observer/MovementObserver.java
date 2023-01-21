@@ -10,8 +10,8 @@ import java.util.List;
 
 public class MovementObserver {
     private static final MovementObserver instance = new MovementObserver();
-    private static List<Card> observers = new ArrayList<>();
-    private static MovementOperation movementOperation = null;
+    private List<Card> observers = new ArrayList<>();
+    private MovementOperation movementOperation = null;
 
     //Singleton, previene l'istanziazione da parte di altre classi
     private MovementObserver() {}
@@ -21,10 +21,10 @@ public class MovementObserver {
     }
 
     public void setMovementOperation(MovementOperation movementOperation) {
-        if (MovementObserver.movementOperation != null)
+        if (this.movementOperation != null)
             observers.clear();
 
-        MovementObserver.movementOperation = movementOperation;
+        this.movementOperation = movementOperation;
     }
 
     public void addObserver(Card card) {

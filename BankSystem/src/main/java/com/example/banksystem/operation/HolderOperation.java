@@ -2,7 +2,6 @@ package com.example.banksystem.operation;
 
 import com.example.banksystem.model.Holder;
 
-
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
@@ -44,6 +43,7 @@ public class HolderOperation implements Operation<Holder>{
             Date date_of_birth;
             String contract_type;
             String residence;
+            String password;
             int contract_cost;
             rs = stmt.executeQuery(query);
 
@@ -56,12 +56,13 @@ public class HolderOperation implements Operation<Holder>{
                 contract_type = rs.getString("contract_type");
                 residence = rs.getString("residence");
                 contract_cost = rs.getInt("contract_cost");
+                password = rs.getString("password");
 
                 if (query.contains("WHERE"))
                     System.out.println(" ! Trovato utente: " + firstname + " " + lastname + " " + cf);
                 else
                     System.out.println("! Aggiunto utente: " + firstname + " " + lastname + " " + cf);
-                holders.add(new Holder(username, firstname, lastname, cf, date_of_birth, contract_type, residence, contract_cost));
+                holders.add(new Holder(username, firstname, lastname, cf, date_of_birth, contract_type, residence, contract_cost, password));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,7 +95,7 @@ public class HolderOperation implements Operation<Holder>{
     public void add(Holder holder) {
         try {
             con = DriverManager.getConnection(url);
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO Holders values (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO Holders values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             stmt.setString(1, holder.getCf());
             stmt.setString(2, holder.getFirstname());
@@ -104,6 +105,7 @@ public class HolderOperation implements Operation<Holder>{
             stmt.setString(6, holder.getContract_type());
             stmt.setString(7, holder.getResidence());
             stmt.setInt(8, holder.getContract_cost());
+            stmt.setString(9, holder.getPassword());
             stmt.execute();
 
             System.out.println("!+ Aggiunto utente: " + holder.getFirstname() + " " + holder.getLastname() + " " + holder.getCf());
@@ -138,14 +140,39 @@ public class HolderOperation implements Operation<Holder>{
     @Override
     public void delete(Holder holder) {
         try {
-            con = DriverManager.getConnection(url);
+            Properties properties = new Properties();
+            properties.setProperty("foreign_keys", "true");
+
+            con = DriverManager.getConnection(url, properties);
             PreparedStatement stmt = con.prepareStatement("DELETE FROM Holders WHERE CF=(?)");
 
             stmt.setString(1, holder.getCf());
             stmt.execute();
 
-            System.out.println("!- Eliminato utente: " + holder.getFirstname() + " " + holder.getLastname() + " " + holder.getCf());
             holders.remove(holder);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (con != null)
+                    con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void updatePassword(Holder holder, String newPassword) {
+        try {
+            con = DriverManager.getConnection(url);
+            PreparedStatement stmt = con.prepareStatement("UPDATE Holders SET password=(?) WHERE CF=(?)");
+
+            stmt.setString(1, newPassword);
+            stmt.setString(2, holder.getCf());
+            stmt.execute();
+
+            System.out.println("!# Aggiornata password utente: " + holder.getCf());
+            holder.setPassword(newPassword);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

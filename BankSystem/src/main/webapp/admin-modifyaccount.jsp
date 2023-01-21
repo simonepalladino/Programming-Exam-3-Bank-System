@@ -48,6 +48,9 @@
                             <div class="col-md-8 col-xl-6 text-center mx-auto">
                                 <h2 style="font-weight: bold;color: var(--bs-body-bg);">Account info</h2>
                                 <p class="w-lg-50" style="color: var(--bs-body-bg);">Want to remove this person?<br></p>
+                                <form method="post">
+                                <button class="btn btn-danger" type="submit" style="margin-bottom: 5px;margin-top: -9px;" name="delete" value="account">Delete account</button>
+                                </form>
                             </div>
                         </div>
                         <div class="row mb-5" style="margin-bottom: 0px;padding-bottom: 0px;">
@@ -66,19 +69,19 @@
                                         <div class="row row-cols-2 row-cols-md-4 d-lg-flex">
                                             <div class="col">
                                                 <div class="p-3">
-                                                    <h4 class="display-5 fw-bold text-white mb-0">1</h4>
+                                                    <h4 class="display-5 fw-bold text-white mb-0"><c:out value="${requestScope.withdrawals}"/></h4>
                                                     <p class="mb-0">Total withdrawals</p>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="p-3">
-                                                    <h4 class="display-5 fw-bold text-white mb-0">2</h4>
+                                                    <h4 class="display-5 fw-bold text-white mb-0"><c:out value="${requestScope.deposits}"/></h4>
                                                     <p class="mb-0">Total deposits</p>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="p-3">
-                                                    <h4 class="display-5 fw-bold text-white mb-0" style="padding-left: 0px;padding-right: 0px;margin-left: -10px;margin-right: -10px;">1000.00€</h4>
+                                                    <h4 class="display-5 fw-bold text-white mb-0" style="padding-left: 0px;padding-right: 0px;margin-left: -10px;margin-right: -10px;"><c:out value="${requestScope.balance}"/>€</h4>
                                                     <p class="mb-0">Total Balance</p>
                                                 </div>
                                             </div>
@@ -94,8 +97,8 @@
                             <div class="col-md-8 col-xl-6 text-center mx-auto">
                                 <h2 style="font-weight: bold;color: var(--bs-body-bg);padding-right: 0px;">Manage credit cards</h2>
                                 <p class="w-lg-50" style="color: var(--bs-body-bg);">Too many? Less than expected?<br></p>
-                                <form method="get" action="admin-addcard.jsp">
-                                    <button class="btn btn-light" type="submit" style="padding-left: 66px;padding-right: 66px;">Add new card</button>
+                                <form method="get" action="admin-addcard">
+                                    <button class="btn btn-light" type="submit" style="padding-left: 66px;padding-right: 66px;" name="selectedAccount" value='<c:out value="${param.selectedAccount}"/>'>Add new card</button>
                                 </form>
                             </div>
                         </div>
@@ -103,48 +106,25 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <td>
-                                            <div class="text-center d-flex flex-column flex-wrap justify-content-lg-start align-items-lg-center align-items-xl-center" data-bss-hover-animate="pulse" style="background: linear-gradient(39deg, var(--bs-gray-400), white), var(--bs-table-border-color);border-radius: 12px;width: 258.469px;">
-                                                <div class="bs-icon-lg bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon lg" style="background: linear-gradient(-5deg, var(--bs-gray-dark), var(--bs-gray) 77%), var(--bs-gray);margin-left: 5px;margin-top: 3px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-credit-card" style="font-size: 41px;">
+                                        <c:forEach var="cardList" items="${cardList}">
+                                            <td>
+                                                <div class="text-center d-flex flex-column flex-wrap justify-content-lg-start align-items-lg-center align-items-xl-center" data-bss-hover-animate="pulse" style="background: linear-gradient(39deg, var(--bs-gray-400), white), var(--bs-table-border-color);border-radius: 12px;width: 258.469px;">
+                                                    <div class="bs-icon-lg bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon lg" style="background: linear-gradient(-5deg, var(--bs-gray-dark), var(--bs-gray) 77%), var(--bs-gray);margin-left: 5px;margin-top: 3px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-credit-card" style="font-size: 41px;">
                                                         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"></path>
                                                         <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"></path>
                                                     </svg></div>
-                                                <div class="px-3">
-                                                    <h5 class="text-center" style="margin-top: 6px;">Primary Card</h5>
-                                                    <p class="fs-6">3028XXXXXXXXXXXX</p>
-                                                    <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
-                                                    <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;">1000.00€</p><button class="btn btn-danger" type="button" style="margin-bottom: 5px;margin-top: -9px;">Remove card</button>
+                                                    <div class="px-3">
+                                                        <h5 class="text-center" style="margin-top: 6px;"><c:out value="${cardList.card_name}"/></h5>
+                                                        <p class="fs-6"><c:out value="${cardList.card_number}"/></p>
+                                                        <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
+                                                        <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;"><c:out value="${cardList.balance}"/>€</p>
+                                                        <form method="post">
+                                                        <button class="btn btn-danger" type="submit" name="delete" value='<c:out value="${cardList.card_number}"/>' style="margin-bottom: 5px;margin-top: -9px;">Remove card</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-center d-flex flex-column flex-wrap justify-content-lg-start align-items-lg-center align-items-xl-center" data-bss-hover-animate="pulse" style="background: linear-gradient(39deg, var(--bs-gray-400), white), var(--bs-table-border-color);border-radius: 12px;width: 258.469px;">
-                                                <div class="bs-icon-lg bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon lg" style="background: linear-gradient(-5deg, var(--bs-gray-dark), var(--bs-gray) 77%), var(--bs-gray);margin-left: 5px;margin-top: 3px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-credit-card" style="font-size: 41px;">
-                                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"></path>
-                                                        <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"></path>
-                                                    </svg></div>
-                                                <div class="px-3">
-                                                    <h5 class="text-center" style="margin-top: 6px;">Secondary Card</h5>
-                                                    <p class="fs-6">3028XXXXXXXXXXXX</p>
-                                                    <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
-                                                    <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;">0.00€</p><button class="btn btn-danger" type="button" style="margin-bottom: 5px;margin-top: -9px;">Remove card</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-center d-flex flex-column flex-wrap justify-content-lg-start align-items-lg-center align-items-xl-center" data-bss-hover-animate="pulse" style="background: linear-gradient(39deg, var(--bs-gray-400), white), var(--bs-table-border-color);border-radius: 12px;width: 258.469px;">
-                                                <div class="bs-icon-lg bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon lg" style="background: linear-gradient(-5deg, var(--bs-gray-dark), var(--bs-gray) 77%), var(--bs-gray);margin-left: 5px;margin-top: 3px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-credit-card" style="font-size: 41px;">
-                                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"></path>
-                                                        <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"></path>
-                                                    </svg></div>
-                                                <div class="px-3">
-                                                    <h5 class="text-center" style="margin-top: 6px;">Third Card</h5>
-                                                    <p class="fs-6">3028XXXXXXXXXXXX</p>
-                                                    <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
-                                                    <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;">0.00€</p><button class="btn btn-danger" type="button" style="margin-bottom: 5px;margin-top: -9px;">Remove card</button>
-                                                </div>
-                                            </div>
-                                        </td>
+                                            </td>
+                                        </c:forEach>
                                     </tr>
                                 </tbody>
                             </table>

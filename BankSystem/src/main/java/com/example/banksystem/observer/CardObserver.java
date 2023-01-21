@@ -10,8 +10,8 @@ import java.util.List;
 
 public class CardObserver {
     private static final CardObserver instance = new CardObserver();
-    private static List<Holder> observers = new ArrayList<>();
-    private static CardOperation cardOperation = null;
+    private List<Holder> observers = new ArrayList<>();
+    private CardOperation cardOperation = null;
 
     //Singleton, previene l'istanziazione da parte di altre classi
     private CardObserver() {}
@@ -21,10 +21,10 @@ public class CardObserver {
     }
 
     public void setCardOperation(CardOperation cardOperation) {
-        if (CardObserver.cardOperation != null)
+        if (this.cardOperation != null)
             observers.clear();
 
-        CardObserver.cardOperation = cardOperation;
+        this.cardOperation = cardOperation;
     }
 
     public void addObserver(Holder holder) {
@@ -50,6 +50,16 @@ public class CardObserver {
 
     public void delete(Card card) {
         cardOperation.delete(card);
+        notifyObservers(card.getCF_FK());
+    }
+
+    public void deposit(Card card, double money) {
+        cardOperation.deposit(card, money);
+        notifyObservers(card.getCF_FK());
+    }
+
+    public void withdraw(Card card, double money) {
+        cardOperation.withdraw(card, money);
         notifyObservers(card.getCF_FK());
     }
 

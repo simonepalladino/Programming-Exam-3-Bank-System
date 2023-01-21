@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 public class CardOperation implements Operation<Card> {
     private final String url = "jdbc:sqlite:banksystem.sqlite";
@@ -140,7 +141,10 @@ public class CardOperation implements Operation<Card> {
     @Override
     public void delete(Card c) {
         try {
-            con = DriverManager.getConnection(url);
+            Properties properties = new Properties();
+            properties.setProperty("foreign_keys", "true");
+
+            con = DriverManager.getConnection(url, properties);
             PreparedStatement stmt = con.prepareStatement("DELETE FROM Cards WHERE card_number=(?)");
 
             stmt.setString(1, c.getCard_number());
@@ -162,12 +166,12 @@ public class CardOperation implements Operation<Card> {
 
     public void deposit(Card c, double money) {
         c.deposit(money);
-        updateBalance(c, c.getBalance() + money);
+        updateBalance(c, c.getBalance());
     }
 
     public void withdraw(Card c, double money) {
         c.withDraw(money);
-        updateBalance(c, c.getBalance() - money);
+        updateBalance(c, c.getBalance());
     }
 
     public void updateBalance(Card c, double newBalance) {
