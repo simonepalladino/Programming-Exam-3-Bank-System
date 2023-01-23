@@ -2,6 +2,10 @@ package com.example.banksystem.model;
 
 import java.time.LocalDate;
 
+
+/* Un miscuglio tra informazioni riguardo la carta e il movimento:
+    utile per scopi informativi
+ */
 public class MovementInfo {
     private String mov_date_string;
     private LocalDate mov_date;

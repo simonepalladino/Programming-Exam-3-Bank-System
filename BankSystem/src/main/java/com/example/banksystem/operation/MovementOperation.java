@@ -131,7 +131,7 @@ public class MovementOperation implements Operation<Movement> {
             System.out.println("@+ Movimento aggiunto: " +  m.getId_mov() + " " + m.getCard_number_FK() + " " + m.getProduct_id() + " " + m.getMov_date() + " " + m.getPrice());
             movements.add(m);
 
-            //Codice per aggiungere l'operazione alla carta
+            //Modifica il saldo della carta associata
             if (m.getPrice() >= 0)
                 CardObserver.getInstance().deposit(Actions.getInstance().cardOperation.get(m.getCard_number_FK()), m.getPrice());
             else

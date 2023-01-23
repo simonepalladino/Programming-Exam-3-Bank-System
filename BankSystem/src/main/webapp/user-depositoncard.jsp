@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="assets/css/Pricing-Free-Paid-badges.css">
 </head>
 
+<c:url value="user-depositoncard.jsp" var="displayURL">
+    <c:param name="error"   value="${param.error}" />
+</c:url>
+
 <body style="background: linear-gradient(0deg, var(--bs-blue), white 23%);">
     <nav class="navbar navbar-light navbar-expand-md py-3">
         <div class="container"><a class="navbar-brand d-flex align-items-center"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bank">
@@ -51,9 +55,18 @@
                                 <div class="text-center mb-3" style="margin-top: -27px;"><sub>How much do you want to deposit?</sub></div><strong class="d-lg-flex justify-content-lg-center align-items-lg-center" style="padding-bottom: 0px;margin-bottom: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-credit-card text-center" style="font-size: 27px;">
                                         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"></path>
                                         <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"></path>
-                                    </svg>&nbsp; 3000XXXXXXXXXXX</strong><input class="form-control" type="text" name="email" placeholder="0.00€" style="margin-bottom: 15px;text-align: center;margin-left: 0px;margin-right: 0px;" inputmode="numeric">
+                                    </svg>&nbsp; <c:out value="${requestScope.card}"/></strong>
+                                <input class="form-control" type="text" name="money" placeholder="0.00€" style="margin-bottom: 15px;text-align: center;margin-left: 0px;margin-right: 0px;" inputmode="numeric">
+                                <c:choose>
+                                    <c:when test="${param.error == 'input'}">
+                                        <small class="text-danger">Insert a valid input!</small>
+                                    </c:when>
+                                </c:choose>
                                 <div class="text-center">
-                                    <div class="btn-group" role="group"><button class="btn btn-primary" type="button" style="background: var(--bs-red);border-color: var(--bs-red);padding-left: 50px;padding-right: 50px;">Cancel</button><button class="btn btn-primary" type="button" style="padding-left: 50px;padding-right: 50px;">Confirm</button></div>
+                                    <div class="btn-group" role="group">
+                                        <!-- <button class="btn btn-primary" type="submit" style="background: var(--bs-red);border-color: var(--bs-red);padding-left: 50px;padding-right: 50px;" name="money" value="cancel">Cancel</button> -->
+                                        <button class="btn btn-primary" type="submit" style="padding-left: 50px;padding-right: 50px;">Confirm</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

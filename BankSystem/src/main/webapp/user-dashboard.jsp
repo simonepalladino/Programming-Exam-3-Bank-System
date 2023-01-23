@@ -22,7 +22,7 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <form method="get" action="dashboard">
-                            <input type="submit" value="Home" style="background:none; border-width:0px;" class="nav-link active" name="logintype" value="user"/></form></li>
+                            <input type="submit" value="Home" style="background:none; border-width:0px;" class="nav-link active" name="logintype"/></form></li>
                     <li class="nav-item">
                         <form method="get" action="user-deposit">
                             <input type="submit" value="Deposit" style="background:none; border-width:0px;" class="nav-link"/></form></li>

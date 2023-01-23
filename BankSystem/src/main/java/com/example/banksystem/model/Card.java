@@ -10,7 +10,7 @@ public class Card implements Observer {
     private String CF_FK;
     private int CVV;
     private String Card_type;
-    LocalDate expiration_date;
+    private LocalDate expiration_date;
     private String card_name;
     private double balance;
     private MovementOperation movements;

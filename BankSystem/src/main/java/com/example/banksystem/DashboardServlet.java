@@ -16,7 +16,6 @@ import java.util.List;
 @WebServlet(name = "dashboard", value = "/dashboard")
 public class DashboardServlet extends HttpServlet {
     String logintype;
-    String usertext;
     Holder selectedHolder;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -43,7 +42,7 @@ public class DashboardServlet extends HttpServlet {
             request.setAttribute("balance", totalBalance);
 
             //Imposta la lista di transazioni recenti dell'utente (massimo tre)
-            Iterator<Movement> recentMovIterator = Factory.getMovementUserIterator(selectedHolder.getCf());
+            Iterator<Movement> recentMovIterator = Factory.getMovementUserIterator(selectedHolder.getCf(), true);
             List<MovementInfo> recentMovements = new ArrayList<>();
 
             int i = 1;

@@ -107,6 +107,13 @@ public class ProductOperation {
             stmt.setString(5, "withdraw");
             stmt.addBatch();
 
+            stmt.setString(1, "Refund");
+            stmt.setString(2, "refund");
+            stmt.setInt(3, 0);
+            stmt.setString(4, "Refund made on latest operation");
+            stmt.setString(5, "deposit");
+            stmt.addBatch();
+
             // Execute the batch
             stmt.executeBatch();
 

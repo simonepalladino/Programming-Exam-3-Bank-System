@@ -89,7 +89,7 @@ public class Factory {
         return new MovementOperation(toFind, false);
     }
 
-    public static Iterator getMovementUserIterator(String toFind) {
-        return new MovementIterator(new MovementOperation(toFind, false).getAll());
+    public static Iterator getMovementUserIterator(String toFind, boolean reverse) {
+        return new MovementIterator(new MovementOperation(toFind, false).getAll(), reverse);
     }
 }
