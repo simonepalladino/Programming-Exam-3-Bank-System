@@ -61,7 +61,9 @@ public class UserBuyServlet extends HttpServlet {
         response.setContentType("text/html");
         String action = request.getParameter("buy");
         String selectedcard = request.getParameter("selectedcard");
+
         Card selectedCard = selectedHolder.getCardOperation().get(selectedcard);
+        Movement movement = null;
 
         if (action.equals("withdraw") || action == null) {
             double money = 0;
@@ -69,12 +71,12 @@ public class UserBuyServlet extends HttpServlet {
             try {
                 money = Double.parseDouble(request.getParameter("withdraw"));
 
-                MovementObserver.getInstance().add(new Movement("withdraw", LocalDate.now(), selectedcard, -money));
+                movement = new Movement("withdraw", LocalDate.now(), selectedcard, -money);
             } //catch di un'altra espressione (riguardo i fondi non disponibili)
             catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Si è verificato un errore durante la lettura del prelievo!");
-                //**
+
                 response.sendRedirect("user-errorpage.jsp?error=withdrawmoney&backurl=user-buy");
                 return;
             }
@@ -83,13 +85,26 @@ public class UserBuyServlet extends HttpServlet {
             Product selectedProduct = Actions.getInstance().productOperation.get(action);
             double price = getDiscountPrice(selectedProduct.getPrice(), selectedHolder.getContract_type(), selectedProduct.getType());
 
-            //Se la carta è un bancomat, allora non può andare sotto zero!
-            if (selectedCard.getCard_type().equals("Bancomat") && selectedCard.getBalance() - price < 0) {
-                response.sendRedirect("user-errorpage.jsp?error=nofund&backurl=user-buy");
-                return;
-            }
+            movement = new Movement(action, LocalDate.now(), selectedcard, -price);
+        }
 
-            MovementObserver.getInstance().add(new Movement(action, LocalDate.now(), selectedcard, -price));
+        try {
+            //Controlla se l'utente può permettersi di effettuare il deposito
+            NoFundsException.checkWithdrawLimit(selectedHolder, selectedCard, movement);
+            WithdrawExceedException.checkWithdrawLimit(selectedHolder, selectedCard, movement);
+
+            MovementObserver.getInstance().add(movement);
+        } catch (NoFundsException noFundsException) {
+            System.out.println(noFundsException.toString());
+            response.sendRedirect("user-errorpage.jsp?error=nofund&backurl=user-deposit");
+            return;
+        } catch (WithdrawExceedException withdrawExceedException) {
+            System.out.println(withdrawExceedException.toString());
+            response.sendRedirect("user-errorpage.jsp?error=nowithdraw&backurl=user-deposit");
+            return;
+        } catch (Exception e) {
+            response.sendRedirect("user-errorpage.jsp?backurl=user-deposit");
+            return;
         }
 
         response.sendRedirect("dashboard?logintype=user");

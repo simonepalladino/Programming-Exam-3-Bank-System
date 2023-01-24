@@ -70,6 +70,12 @@
                                         <c:when test="${param.error == 'nofund'}">
                                             <sub>The user hasn't enough fund available on selected card</sub>
                                         </c:when>
+                                        <c:when test="${param.error == 'nodeposit'}">
+                                            <sub>The user has exceeded the deposit limit for his account type</sub>
+                                        </c:when>
+                                        <c:when test="${param.error == 'nowithdraw'}">
+                                            <sub>The user has exceeded the withdrawal limit for his account type</sub>
+                                        </c:when>
                                         <c:otherwise>
                                             <sub>There was an error while doing latest operation</sub>
                                         </c:otherwise>

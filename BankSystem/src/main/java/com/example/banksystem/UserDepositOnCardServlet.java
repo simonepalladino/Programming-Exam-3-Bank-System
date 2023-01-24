@@ -1,5 +1,6 @@
 package com.example.banksystem;
 
+import com.example.banksystem.model.Holder;
 import com.example.banksystem.model.Movement;
 import com.example.banksystem.observer.CardObserver;
 import com.example.banksystem.observer.MovementObserver;
@@ -16,10 +17,14 @@ import java.time.LocalDate;
 
 @WebServlet(name = "userDepositOnCard", value = "/user-depositoncard")
 public class UserDepositOnCardServlet extends HttpServlet {
+    Holder selectedHolder;
     String selectedCard;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
+        HttpSession session = request.getSession();
+
+        selectedHolder = (Holder) session.getAttribute("selectedHolder");
         selectedCard = request.getParameter("card");
 
         request.setAttribute("card", selectedCard);
@@ -42,7 +47,21 @@ public class UserDepositOnCardServlet extends HttpServlet {
 
         if (!cancel) {
             if (moneyDouble > 0) {
-                MovementObserver.getInstance().add(new Movement("deposit", LocalDate.now(), selectedCard, moneyDouble));
+                Movement deposit = new Movement("deposit", LocalDate.now(), selectedCard, moneyDouble);
+
+                try {
+                    //Controlla se l'utente può permettersi di effettuare il deposito
+                    DepositExceedException.checkDepositLimit(selectedHolder, deposit);
+
+                    MovementObserver.getInstance().add(deposit);
+                } catch (DepositExceedException depositExceedException) {
+                    System.out.println(depositExceedException.toString());
+                    response.sendRedirect("user-errorpage.jsp?error=nodeposit&backurl=user-deposit");
+                    return;
+                } catch (Exception e) {
+                    response.sendRedirect("user-errorpage.jsp?backurl=user-deposit");
+                    return;
+                }
             } else {
                 response.sendRedirect("user-depositoncard?error=input&card=" + selectedCard);
                 return;
