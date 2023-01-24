@@ -97,9 +97,41 @@ public class UserBuyServlet extends HttpServlet {
     public static double getDiscountPrice(double price, String contract_type, String product_type) {
         switch (contract_type) {
             case "Premium":
+                if (product_type.equals("phone")){
+                    return price / 100 * 90;
+                }
+                else if (product_type.equals("tv")){
+                    return price / 100 * 70;
+                }
+                else if (product_type.equals("coffee")) {
+                    return price / 100 * 95;
+                }
+                else if (product_type.equals("headphones")) {
+                    return price / 100 * 70;
+                }
+                else if (product_type.equals("food")) {
+                    return price / 100 * 60;
+                }
+                else
                 return price / 100 * 90;
             case "Enterprise":
-                return price / 100 * 80;
+                if (product_type.equals("phone")){
+                    return price / 100 * 70;
+                }
+                else if (product_type.equals("tv")){
+                    return price / 100 * 60;
+                }
+                else if (product_type.equals("coffee")) {
+                    return price / 100 * 85;
+                }
+                else if (product_type.equals("headphones")) {
+                    return price / 100 * 60;
+                }
+                else if (product_type.equals("food")) {
+                    return price / 100 * 50;
+                }
+                else
+                    return price / 100 * 80;
         }
 
         return price;
