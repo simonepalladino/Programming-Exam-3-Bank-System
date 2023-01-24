@@ -50,7 +50,7 @@
                 <div class="col">
                     <div class="card mb-4">
                         <div class="card-body text-center p-4">
-                            <h4 class="fw-bold card-subtitle">Free</h4>
+                            <h4 class="fw-bold card-subtitle">Basic</h4>
                             <h4 class="display-5 fw-bold card-title">0€</h4>
                             <p>It&#39;s free, forever and ever</p>
                             <button class="btn btn-light d-block w-100" type="submit" name="selected" value="Basic" <c:if test="${sessionScope.selectedHolder.contract_type == 'Basic'}">disabled</c:if>>
@@ -124,7 +124,16 @@
                     <div class="card mb-4">
                         <div class="card-body text-center p-4">
                             <h4 class="fw-bold card-subtitle">Enterprise</h4>
-                            <h4 class="display-5 fw-bold card-title">€1000<span class="fs-4 fw-normal text-muted"></span></h4>
+                            <h4 class="display-5 fw-bold card-title">
+                                <c:choose>
+                                    <c:when test="${sessionScope.selectedHolder.contract_type == 'Premium'}">
+                                        900€
+                                    </c:when>
+                                    <c:otherwise>
+                                        1000€
+                                    </c:otherwise>
+                                </c:choose>
+                                <span class="fs-4 fw-normal text-muted"></span></h4>
                             <p>It&#39;s a must if you need all of this</p>
                             <button class="btn btn-dark d-block w-100" type="submit" name="selected" value="Enterprise" <c:if test="${sessionScope.selectedHolder.contract_type == 'Enterprise'}">disabled</c:if>>
                                 <c:choose>

@@ -39,16 +39,16 @@ public class UserPlanServlet extends HttpServlet {
             case "Premium":
                 if (selectedHolder.getContract_type().equals("Basic")) {
                     prodID = "basic-to-premium";
-                    price = 50;
+                    price = 100;
                 }
                 break;
             case "Enterprise":
                 if (selectedHolder.getContract_type().equals("Basic")) {
                     prodID = "basic-to-enterprise";
-                    price = 100;
+                    price = 1000;
                 } else if (selectedHolder.getContract_type().equals("Premium")) {
                     prodID = "premium-to-enterprise";
-                    price = 50;
+                    price = 900;
                 }
                 break;
         }
