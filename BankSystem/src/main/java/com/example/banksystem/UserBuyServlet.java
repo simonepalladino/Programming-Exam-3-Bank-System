@@ -41,9 +41,10 @@ public class UserBuyServlet extends HttpServlet {
             //Aggiunge solo i "prodotti" che non sono corrispondenti alla descrizione del deposito e del ritiro
             if (!prod.getType().equals("deposit") && !prod.getType().equals("withdraw") && !prod.getType().equals("upgrade")) {
                 //imposta il prezzo di sconto
+                prod.setDiscountPrice(0);
                 double discountPrice = getDiscountPrice(prod.getPrice(), selectedHolder.getContract_type(), prod.getType());
 
-                if (discountPrice != prod.getPrice())
+                if (discountPrice < prod.getPrice())
                     prod.setDiscountPrice(getDiscountPrice(prod.getPrice(), selectedHolder.getContract_type(), prod.getType()));
                 productList.add(prod);
             }
