@@ -7,6 +7,10 @@ import com.example.banksystem.model.Holder;
 import com.example.banksystem.model.Movement;
 import com.example.banksystem.model.Product;
 
+/**
+ * @exception DepositExceedException Questa eccezione consente di impostare delle limitazioni ai depositi
+ */
+
 public class DepositExceedException extends Exception {
     public DepositExceedException() {
         super("An error occurred");

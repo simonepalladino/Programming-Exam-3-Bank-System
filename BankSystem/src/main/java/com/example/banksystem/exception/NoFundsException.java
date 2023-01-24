@@ -8,6 +8,10 @@ import com.example.banksystem.model.Holder;
 import com.example.banksystem.model.Movement;
 import com.example.banksystem.model.Product;
 
+/**
+ * @exception NoFundsException Questa eccezione consente di impostare delle limitazioni in base ai tipi di contratti
+ */
+
 public class NoFundsException extends Exception {
     public NoFundsException() {
         super("An error occurred");
@@ -20,8 +24,8 @@ public class NoFundsException extends Exception {
     /*
         Una carta Bancomat non può andare sotto lo zero
         Una persona con contratto Basic e carta di credito non può scendere sotto i -10€
-        Una persona con contratto Basic e carta di credito non può scendere sotto i -100€
-        Una persona con contratto Basic e carta di credito non può scendere sotto i -1000€
+        Una persona con contratto Premium e carta di credito non può scendere sotto i -100€
+        Una persona con contratto Enterprise e carta di credito non può scendere sotto i -1000€
      */
     public static void checkWithdrawLimit(Holder holder, Card card, Movement movement) throws NoFundsException {
         if (card.getBalance() + movement.getPrice() < 0) {

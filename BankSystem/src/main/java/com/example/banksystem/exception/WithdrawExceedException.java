@@ -8,6 +8,10 @@ import com.example.banksystem.model.Holder;
 import com.example.banksystem.model.Movement;
 import com.example.banksystem.model.Product;
 
+/**
+ * @exception WithdrawExceedException Questa eccezione consente di impostare delle limitazioni sui prelievi
+ */
+
 public class WithdrawExceedException extends Exception {
     public WithdrawExceedException() {
         super("An error occurred");

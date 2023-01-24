@@ -8,6 +8,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
+/**
+ *
+ * @author simone palladino
+ * @author luca tartaglia
+ * @author mattia di palma
+ *
+ */
 @WebServlet(name = "login", value = "/login")
 public class LoginServlet extends HttpServlet {
     Connection con;
