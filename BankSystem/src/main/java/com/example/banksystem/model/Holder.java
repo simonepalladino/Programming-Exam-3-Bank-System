@@ -120,6 +120,7 @@ public class Holder implements Observer {
         this.password = password;
     }
 
+    @Override
     public void update() {
         System.out.println("?! Aggiorno la lista delle carte di " + cf);
         cards = new CardOperation(cf);

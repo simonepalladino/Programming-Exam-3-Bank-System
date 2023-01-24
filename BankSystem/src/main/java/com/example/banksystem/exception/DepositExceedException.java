@@ -7,10 +7,6 @@ import com.example.banksystem.model.Holder;
 import com.example.banksystem.model.Movement;
 import com.example.banksystem.model.Product;
 
-/**
- * @exception DepositExceedException Questa eccezione consente di impostare delle limitazioni ai depositi
- */
-
 public class DepositExceedException extends Exception {
     public DepositExceedException() {
         super("An error occurred");
@@ -20,10 +16,15 @@ public class DepositExceedException extends Exception {
         return getMessage() + ": no sufficient funds!";
     }
 
-    /*
-        Una persona con contratto Basic può depositare massimo 5000€ al giorno
-        Una persona con contratto Premium può depositarne massimo 50.000€ al giorno
-        Una persona con contratto Enterprise può depositare 1.000.000€ al giorno
+    /**
+     *
+     * @param holder passiamo il proprietario della carta e colui che effettua il movimento
+     * @param movement passiamo come parametro il movimento
+     * @throws DepositExceedException
+     *
+     * Una persona con contratto Basic può depositare massimo 5000€ al giorno
+     * Una persona con contratto Premium può depositarne massimo 50.000€ al giorno
+     * Una persona con contratto Enterprise può depositare 1.000.000€ al giorno
     */
     public static void checkDepositLimit(Holder holder, Movement movement) throws DepositExceedException {
         //Capire quanti acquisti ha fatto la carta nella giornata
@@ -54,4 +55,6 @@ public class DepositExceedException extends Exception {
         if (limitDeposit > 0 && operationCount > limitDeposit)
             throw new DepositExceedException();
     }
+
+
 }

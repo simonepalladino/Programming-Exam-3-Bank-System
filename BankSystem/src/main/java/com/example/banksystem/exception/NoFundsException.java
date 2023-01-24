@@ -1,12 +1,8 @@
 package com.example.banksystem.exception;
 
-import com.example.banksystem.Actions;
-import com.example.banksystem.Factory;
-import com.example.banksystem.iterator.Iterator;
 import com.example.banksystem.model.Card;
 import com.example.banksystem.model.Holder;
 import com.example.banksystem.model.Movement;
-import com.example.banksystem.model.Product;
 
 /**
  * @exception NoFundsException Questa eccezione consente di impostare delle limitazioni in base ai tipi di contratti
