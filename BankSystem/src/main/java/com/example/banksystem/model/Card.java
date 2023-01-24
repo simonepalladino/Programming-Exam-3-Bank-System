@@ -96,6 +96,7 @@ public class Card implements Observer {
         this.balance = this.balance + balance;
     }
 
+    @Override
     public void update() {
         System.out.println("?! Aggiorno la lista dei movimenti della carta " + card_number);
         movements = new MovementOperation(card_number, true);

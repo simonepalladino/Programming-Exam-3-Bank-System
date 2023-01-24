@@ -23,10 +23,15 @@ public class WithdrawExceedException extends Exception {
         return getMessage() + ": withdraw exceeded!!";
     }
 
-    /*
-        Una persona con contratto Basic può spendere massimo 2000€ per carta al giorno ed effettuare massimo tre operazioni
-        Una persona con contratto Premium può spenderne massimo 10.000€ per carta al giorno ed effettuare massimo dieci operazioni
-        Una persona con contratto Enterprise può spendere 100.000€ per carta al giorno con un numero indefinito di operazioni
+    /**
+     * @param holder passiamo il proprietario della carta e colui che effettua il movimento
+     * @param card passiamo come parametro la carta
+     * @param movement passiamo come parametro il movimento
+     * @throws WithdrawExceedException
+     *
+     *  Una persona con contratto Basic può spendere massimo 2000€ per carta al giorno ed effettuare massimo tre operazioni
+     *         Una persona con contratto Premium può spenderne massimo 10.000€ per carta al giorno ed effettuare massimo dieci operazioni
+     *         Una persona con contratto Enterprise può spendere 100.000€ per carta al giorno con un numero indefinito di operazioni
      */
     public static void checkWithdrawLimit(Holder holder, Card card, Movement movement) throws WithdrawExceedException {
         //Capire quanti acquisti ha fatto la carta nella giornata
