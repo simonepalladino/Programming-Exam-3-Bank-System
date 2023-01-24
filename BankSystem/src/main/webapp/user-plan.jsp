@@ -22,7 +22,7 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <form method="get" action="dashboard">
-                            <input type="submit" value="Home" style="background:none; border-width:0px;" class="nav-link" name="logintype" value="user"/></form></li>
+                            <input type="submit" value="Home" style="background:none; border-width:0px;" class="nav-link" name="logintype"/></form></li>
                     <li class="nav-item">
                         <form method="get" action="user-deposit">
                             <input type="submit" value="Deposit" style="background:none; border-width:0px;" class="nav-link"/></form></li>
@@ -38,88 +38,123 @@
             </div>
         </div>
     </nav>
-    <div class="container py-4 py-xl-5">
-        <div class="row flash animated mb-5">
-            <div class="col-md-8 col-xl-6 text-center mx-auto">
-                <h2>Change your plan</h2>
-                <p class="w-lg-50">Explore endless possibilities with your cash by making a one-time purchase</p>
+    <form method="post">
+        <div class="container py-4 py-xl-5">
+            <div class="row flash animated mb-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2>Change your plan</h2>
+                    <p class="w-lg-50">Explore endless possibilities with your cash by making a one-time purchase</p>
+                </div>
+            </div>
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3 d-xl-flex">
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-body text-center p-4">
+                            <h4 class="fw-bold card-subtitle">Free</h4>
+                            <h4 class="display-5 fw-bold card-title">0€</h4>
+                            <p>It&#39;s free, forever and ever</p>
+                            <button class="btn btn-light d-block w-100" type="submit" name="selected" value="Basic" <c:if test="${sessionScope.selectedHolder.contract_type == 'Basic'}">disabled</c:if>>
+                                <c:choose>
+                                    <c:when test="${sessionScope.selectedHolder.contract_type == 'Basic'}">
+                                        You're already a Basic user!
+                                    </c:when>
+                                    <c:otherwise>
+                                        Downgrade to Basic
+                                    </c:otherwise>
+                                </c:choose>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-light border rounded border-light p-4">
+                        <ul class="list-unstyled">
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>Your money in a Bank, for free.</span></li>
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>A withdraw costs 1€, sorry.</span></li>
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>You have no discounts from us.</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-primary border-2 mb-4">
+                        <div class="card-body text-center p-4"><span class="badge rounded-pill bg-primary position-absolute top-0 start-50 translate-middle text-uppercase">Most Popular</span>
+                            <h4 class="fw-bold card-subtitle">Premium</h4>
+                            <h4 class="display-5 fw-bold card-title">100€<span class="fs-4 fw-normal text-muted"></span></h4>
+                            <p>Then you will be amazed, until you die (or change your Bank)</p>
+                            <button class="btn btn-primary d-block w-100" type="submit" name="selected" value="Premium" <c:if test="${sessionScope.selectedHolder.contract_type == 'Premium'}">disabled</c:if>>
+                                <c:choose>
+                                    <c:when test="${sessionScope.selectedHolder.contract_type == 'Enterprise'}">
+                                        Downgrade to Premium
+                                    </c:when>
+                                    <c:when test="${sessionScope.selectedHolder.contract_type == 'Basic'}">
+                                        Upgrade to Premium
+                                    </c:when>
+                                    <c:otherwise>
+                                        You're already a Premium user!
+                                    </c:otherwise>
+                                </c:choose>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-light border rounded border-light p-4">
+                        <ul class="list-unstyled">
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>Still your money here, still for free.</span></li>
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>Free withdraws!</span></li>
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>Our discounts from wonderful partners.</span></li>
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>A better status symbol (jocking).</span></li>
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>You can deposit up to 99999.99€!</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-body text-center p-4">
+                            <h4 class="fw-bold card-subtitle">Enterprise</h4>
+                            <h4 class="display-5 fw-bold card-title">€1000<span class="fs-4 fw-normal text-muted"></span></h4>
+                            <p>It&#39;s a must if you need all of this</p>
+                            <button class="btn btn-dark d-block w-100" type="submit" name="selected" value="Enterprise" <c:if test="${sessionScope.selectedHolder.contract_type == 'Enterprise'}">disabled</c:if>>
+                                <c:choose>
+                                    <c:when test="${sessionScope.selectedHolder.contract_type != 'Enterprise'}">
+                                        Upgrade to Enterprise
+                                    </c:when>
+                                    <c:otherwise>
+                                        You're already an Enterprise user!
+                                    </c:otherwise>
+                                </c:choose>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-light border rounded border-light p-4">
+                        <ul class="list-unstyled">
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>Unlimited money in your account.</span></li>
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>Even more discounts (up to 20%).</span></li>
+                            <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg class="bi bi-check-lg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+                        </svg></span><span>Maybe other.</span></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3 d-xl-flex">
-            <div class="col" data-bss-hover-animate="pulse">
-                <div class="card mb-4">
-                    <div class="card-body text-center p-4">
-                        <h4 class="fw-bold card-subtitle">Free</h4>
-                        <h4 class="display-5 fw-bold card-title">0€</h4>
-                        <p>It's free, forever and ever</p><a class="btn btn-light d-block w-100" role="button" href="#">Downgrade to Free</a>
-                    </div>
-                </div>
-                <div class="bg-light border rounded border-light p-4">
-                    <ul class="list-unstyled">
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>Your money in a Bank, for free.</span></li>
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>A withdraw costs 1€, sorry.</span></li>
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>You have no discounts from us.</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col" data-bss-hover-animate="pulse">
-                <div class="card border-primary border-2 mb-4">
-                    <div class="card-body text-center p-4"><span class="badge rounded-pill bg-primary position-absolute top-0 start-50 translate-middle text-uppercase">Most Popular</span>
-                        <h4 class="fw-bold card-subtitle">Premium</h4>
-                        <h4 class="display-5 fw-bold card-title">100€<span class="fs-4 fw-normal text-muted"></span></h4>
-                        <p>Then you will be amazed, until you die (or change your Bank)</p><a class="btn btn-primary disabled d-block w-100" role="button" href="#">You're already a Premium user!</a>
-                    </div>
-                </div>
-                <div class="bg-light border rounded border-light p-4">
-                    <ul class="list-unstyled">
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>Still your money here, still for free.</span></li>
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>Free withdraws!</span></li>
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>Our discounts from wonderful partners.</span></li>
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>A better status symbol (jocking).</span></li>
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>You can deposit up to 99999.99€!</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col" data-bss-hover-animate="pulse">
-                <div class="card mb-4">
-                    <div class="card-body text-center p-4">
-                        <h4 class="fw-bold card-subtitle">Enterprise</h4>
-                        <h4 class="display-5 fw-bold card-title">€1000<span class="fs-4 fw-normal text-muted"></span></h4>
-                        <p>It's a must if you need all of this</p><a class="btn btn-dark d-block w-100" role="button" href="#">Upgrade to Enterprise</a>
-                    </div>
-                </div>
-                <div class="bg-light border rounded border-light p-4">
-                    <ul class="list-unstyled">
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>Unlimited money in your account.</span></li>
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>Even more discounts (up to 20%).</span></li>
-                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
-                                </svg></span><span>Maybe other.</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    </form>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
 </body>

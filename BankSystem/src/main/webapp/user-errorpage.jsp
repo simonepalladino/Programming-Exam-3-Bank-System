@@ -14,6 +14,7 @@
 
 <c:url value="user-errorpage.jsp" var="displayURL">
     <c:param name="error"   value="${param.error}" />
+    <c:param name="backurl"   value="${param.backurl}" />
 </c:url>
 
 <body style="background: linear-gradient(0deg, var(--bs-blue), white 23%);">
@@ -54,11 +55,20 @@
                             <form method="post">
                                 <div class="text-center mb-3" style="margin-top: -27px;">
                                     <c:choose>
-                                        <c:when test="${param.error.equals('canceloperation')}">
+                                        <c:when test="${param.error == 'canceloperation'}">
                                             <sub>The system couldn&#39;t cancel the following operation</sub>
                                         </c:when>
-                                        <c:when test="${param.error.equals('nooperation')}">
-                                            <sub>The system couldn&#39;t find the operation</sub>
+                                        <c:when test="${param.error == 'nooperation'}">
+                                            <sub>The system couldn&#39;t find a valid operation</sub>
+                                        </c:when>
+                                        <c:when test="${param.error == 'withdraw'}">
+                                            <sub>There was an error while reading money quantity</sub>
+                                        </c:when>
+                                        <c:when test="${param.error == 'nocards'}">
+                                            <sub>The user couldn't do any transaction: no debit/credit cards found</sub>
+                                        </c:when>
+                                        <c:when test="${param.error == 'nofund'}">
+                                            <sub>The user hasn't enough fund available on selected card</sub>
                                         </c:when>
                                         <c:otherwise>
                                             <sub>There was an error while doing latest operation</sub>
@@ -67,7 +77,14 @@
                                     </div>
                                 <div class="text-center">
                                     <div class="btn-group" role="group">
-                                        <a class="btn btn-primary" role="button" style="padding-left: 41px;padding-right: 41px;" href="dashboard?logintype=user">Ok</a></div>
+                                        <c:choose>
+                                            <c:when test="${param.backurl != null}">
+                                                <a class="btn btn-primary" role="button" style="padding-left: 41px;padding-right: 41px;" href='<c:out value="${param.backurl}"/>'>Ok</a></div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a class="btn btn-primary" role="button" style="padding-left: 41px;padding-right: 41px;" href="dashboard?logintype=user">Ok</a></div>
+                                            </c:otherwise>
+                                        </c:choose>
                                 </div>
                             </form>
                         </div>

@@ -61,9 +61,4 @@ public class DashboardServlet extends HttpServlet {
             request.getRequestDispatcher("user-dashboard.jsp").forward(request, response);
         }
     }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-
-    }
 }

@@ -85,6 +85,10 @@ public class Factory {
         return null;
     }
 
+    public static Iterator getMovementCardIterator(String toFind, boolean reverse) {
+        return new MovementIterator(new MovementOperation(toFind, true).getAll(), reverse);
+    }
+
     public static Operation getMovementUserOperation(String toFind) {
         return new MovementOperation(toFind, false);
     }

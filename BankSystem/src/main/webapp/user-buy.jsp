@@ -37,12 +37,35 @@
             </div>
         </div>
     </nav>
-    <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 5px;margin-left: 20px;margin-right: 20px;"><img width="100" height="80" src="assets/img/clipboard-image.png">
+<form method="post">
+    <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 20px;margin-right: 20px;margin-bottom: -11px;margin-top: -4px;">
+        <div style="margin-left: 5px;">
+            <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;">Choose your card</p>
+        </div>
+        <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">
+
+        <select class="form-select-sm" name="selectedcard" style="border-style: solid;border-color: var(--bs-blue);border-radius: 6px;width: 80vh;">
+            <c:forEach var="cards" items="${cards}" varStatus="status">
+                <c:choose>
+                    <c:when test="${cards.card_type == 'Bancomat'}">
+                        <option value='<c:out value="${cards.card_number}"/>' <c:if test="${status.first}">selected</c:if>>💳 <c:out value="${cards.card_name}"/> - <c:out value="${cards.card_number}"/></option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value='<c:out value="${cards.card_number}"/>' <c:if test="${status.first}">selected</c:if>>🏦 <c:out value="${cards.card_name}"/> - <c:out value="${cards.card_number}"/></option>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </select></small>
+    </div>
+    <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 5px;margin-left: 20px;margin-right: 20px;"><img width="100" height="80" src="assets/img/withdraw.png">
         <div style="margin-left: 5px;">
             <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;">Withdraw money</p>
             <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;margin-top: -5px;"><small class="fw-normal">from bank</small></p>
         </div>
-        <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center"><input class="form-control-sm" type="text" style="margin-right: 5px;border-style: outset;border-color: var(--bs-blue);border-radius: 5px;" placeholder="Insert amount" name="withdraw">€&nbsp; &nbsp;&nbsp;<button class="btn btn-primary" type="button" style="margin-right: 12px;">Withdraw now</button></small>
+        <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">
+            <input class="form-control-sm" type="text" style="margin-right: 5px;border-style: outset;border-color: var(--bs-blue);border-radius: 5px;" placeholder="Insert amount" name="withdraw">€&nbsp; &nbsp;&nbsp;
+            <button class="btn btn-primary" type="submit" style="margin-right: 12px;" name="buy" value="withdraw">Withdraw now</button>
+        </small>
     </div>
     <div class="table-responsive d-flex" style="max-height: 70vh;border-style: none;">
         <table class="table">
@@ -50,67 +73,35 @@
                 <tr></tr>
                 <tr>
                     <td style="border-style: none;">
-                        <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 10px;margin-left: 35px;margin-right: 35px;"><img width="100" height="80" src="assets/img/clipboard-image-1.png">
-                            <div class="text-center" style="margin-left: 5px;">
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;">Nice coffee</p>
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;margin-top: -5px;"><small class="fw-normal text-center">from bar</small></p>
-                            </div>
-                            <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">4.90€&nbsp;&nbsp;<button class="btn btn-primary" type="button" style="margin-right: 12px;">Buy now</button></small>
-                        </div>
-                        <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 10px;margin-left: 35px;margin-right: 35px;"><img width="100" height="80" src="assets/img/clipboard-image-2.png">
-                            <div style="margin-left: 5px;">
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;">iPhone 14 Pro</p>
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;margin-top: -5px;"><small class="fw-normal">from shop</small></p>
-                            </div>
-                            <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">1299.90€&nbsp;&nbsp;<button class="btn btn-primary" type="button" style="margin-right: 12px;">Buy now</button></small>
-                        </div>
-                        <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 10px;margin-left: 35px;margin-right: 35px;"><img width="100" height="80" src="assets/img/clipboard-image-3.png">
-                            <div style="margin-left: 5px;">
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;">Galaxy S23 Ultra</p>
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;margin-top: -5px;"><small class="fw-normal">preorder now</small></p>
-                            </div>
-                            <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">1349.90€&nbsp;&nbsp;<button class="btn btn-primary" type="button" style="margin-right: 12px;">Buy now</button></small>
-                        </div>
-                        <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 10px;margin-left: 35px;margin-right: 35px;"><img width="100" height="80" src="assets/img/clipboard-image-3.png">
-                            <div style="margin-left: 5px;">
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;">Galaxy S23 Ultra</p>
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;margin-top: -5px;"><small class="fw-normal">preorder now</small></p>
-                            </div>
-                            <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">1349.90€&nbsp;&nbsp;<button class="btn btn-primary" type="button" style="margin-right: 12px;">Buy now</button></small>
-                        </div>
-                        <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 10px;margin-left: 35px;margin-right: 35px;"><img width="100" height="80" src="assets/img/clipboard-image-3.png">
-                            <div style="margin-left: 5px;">
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;">Galaxy S23 Ultra</p>
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;margin-top: -5px;"><small class="fw-normal">preorder now</small></p>
-                            </div>
-                            <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">1349.90€&nbsp;&nbsp;<button class="btn btn-primary" type="button" style="margin-right: 12px;">Buy now</button></small>
-                        </div>
-                        <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 10px;margin-left: 35px;margin-right: 35px;"><img width="100" height="80" src="assets/img/clipboard-image-3.png">
-                            <div style="margin-left: 5px;">
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;">Galaxy S23 Ultra</p>
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;margin-top: -5px;"><small class="fw-normal">preorder now</small></p>
-                            </div>
-                            <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">1349.90€&nbsp;&nbsp;<button class="btn btn-primary" type="button" style="margin-right: 12px;">Buy now</button></small>
-                        </div>
-                        <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 10px;margin-left: 35px;margin-right: 35px;"><img width="100" height="80" src="assets/img/clipboard-image-3.png">
-                            <div style="margin-left: 5px;">
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;">Galaxy S23 Ultra</p>
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;margin-top: -5px;"><small class="fw-normal">preorder now</small></p>
-                            </div>
-                            <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">1349.90€&nbsp;&nbsp;<button class="btn btn-primary" type="button" style="margin-right: 12px;">Buy now</button></small>
-                        </div>
-                        <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 10px;margin-left: 35px;margin-right: 35px;"><img width="100" height="80" src="assets/img/clipboard-image-3.png">
-                            <div style="margin-left: 5px;">
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;">Galaxy S23 Ultra</p>
-                                <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;margin-top: -5px;"><small class="fw-normal">preorder now</small></p>
-                            </div>
-                            <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">1349.90€&nbsp;&nbsp;<button class="btn btn-primary" type="button" style="margin-right: 12px;">Buy now</button></small>
-                        </div>
+
+                        <c:forEach var="products" items="${products}">
+                                <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-top: 10px;margin-bottom: 10px;margin-left: 35px;margin-right: 35px;">
+                                    <img width="100" height="80" src='<c:out value="${products.image}"/>'>
+                                    <div class="text-center" style="margin-left: 5px;">
+                                        <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;"><c:out value="${products.product_name}"/></p>
+                                        <p class="fw-bold text-center text-primary mb-0" style="margin-left: 10px;margin-top: -5px;"><small class="fw-normal text-center"><c:out value="${products.quote}"/></small></p>
+                                    </div>
+                                    <div></div>
+                                    <small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">
+                                        <c:choose>
+                                            <c:when test="${products.discountPrice != 0}">
+                                                <span style="text-decoration: line-through;"><c:out value="${products.price}"/>€</span>&nbsp;<c:out value="${products.discountPrice}"/>€&nbsp;&nbsp;
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:out value="${products.price}"/>€&nbsp;&nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <button class="btn btn-primary" type="submit" style="margin-right: 12px;" name="buy" value='<c:out value="${products.product_id}"/>'>Buy now</button>
+                                    </small>
+                                </div>
+                        </c:forEach>
+
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+</form>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
 </body>

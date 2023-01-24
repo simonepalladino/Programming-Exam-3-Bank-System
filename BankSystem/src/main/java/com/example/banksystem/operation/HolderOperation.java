@@ -58,8 +58,9 @@ public class HolderOperation implements Operation<Holder>{
                 contract_cost = rs.getInt("contract_cost");
                 password = rs.getString("password");
 
-                if (query.contains("WHERE"))
+                if (query.contains("WHERE")) {
                     System.out.println(" ! Trovato utente: " + firstname + " " + lastname + " " + cf);
+                }
                 else
                     System.out.println("! Aggiunto utente: " + firstname + " " + lastname + " " + cf);
                 holders.add(new Holder(username, firstname, lastname, cf, date_of_birth, contract_type, residence, contract_cost, password));
@@ -173,6 +174,29 @@ public class HolderOperation implements Operation<Holder>{
 
             System.out.println("!# Aggiornata password utente: " + holder.getCf());
             holder.setPassword(newPassword);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (con != null)
+                    con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void updatePlan(Holder holder, String newPlan) {
+        try {
+            con = DriverManager.getConnection(url);
+            PreparedStatement stmt = con.prepareStatement("UPDATE Holders SET contract_type=(?) WHERE CF=(?)");
+
+            stmt.setString(1, newPlan);
+            stmt.setString(2, holder.getCf());
+            stmt.execute();
+
+            System.out.println("!% Aggiornato contratto utente: " + holder.getCf());
+            holder.setContract_type(newPlan);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

@@ -130,7 +130,7 @@
                     </td>
                     <td></td>
                     <c:choose>
-                        <c:when test="${requestScope.view.equals('all')}">
+                        <c:when test="${requestScope.view == 'all'}">
                             <td style="background: linear-gradient(180deg, rgba(25,110,247,0.61), white 79%);border-radius: 20px;">
                                 <div class="row mb-5" style="margin-bottom: 38px;margin-top: 0px;">
                                     <div class="col-md-8 col-xl-8 text-center mx-auto" style="margin-bottom: -48px;">
@@ -146,7 +146,7 @@
                                                             <form method="get" action="user-deposit"><button class="btn btn-light" type="submit" name="view" value="all">View all</button></form></div>
                                                     </td>
                                                     <td style="border-style: none;"><form method="get" action="user-canceloperation">
-                                                        <button class="btn btn-primary text-center" type="submit" style="background: var(--bs-danger);border-color: var(--bs-danger);margin-bottom: 0px;margin-top: -8px;">Cancel latest operation</button></form></td>
+                                                        <button class="btn btn-primary text-center" type="submit" style="background: var(--bs-danger);border-color: var(--bs-danger);margin-bottom: 0px;margin-top: -8px;" name="backurl" value="user-deposit?view=all">Cancel latest operation</button></form></td>
                                                 </tr>
                                                 <tr></tr>
                                                 </tbody>
@@ -163,16 +163,21 @@
                                                 <c:forEach var="recentMovements" items="${recentMovements}">
                                                     <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;">
                                                         <c:choose>
-                                                            <c:when test="${recentMovements.type.equals('deposit')}">
+                                                            <c:when test="${recentMovements.type == 'deposit'}">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
                                                                     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                                                     <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
                                                                 </svg>
                                                             </c:when>
-                                                            <c:when test="${recentMovements.type.equals('withdraw')}">
+                                                            <c:when test="${recentMovements.type == 'withdraw'}">
                                                                 <svg class="bi bi-cash-stack text-primary" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
                                                                     <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                                                     <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"></path>
+                                                                </svg>
+                                                            </c:when>
+                                                            <c:when test="${recentMovements.type == 'upgrade'}">
+                                                                <svg class="bi bi-arrow-up-right-circle-fill text-primary" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8zm5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707l-4.096 4.096z"></path>
                                                                 </svg>
                                                             </c:when>
                                                             <c:otherwise>
@@ -219,7 +224,7 @@
                                                             <form method="get" action="user-deposit"><button class="btn btn-primary" type="submit" name="view" value="all">View all</button></form></div>
                                                     </td>
                                                     <td style="border-style: none;"><form method="get" action="user-canceloperation">
-                                                        <button class="btn btn-primary text-center" type="submit" style="background: var(--bs-danger);border-color: var(--bs-danger);margin-bottom: 0px;margin-top: -8px;">Cancel latest operation</button></form></td>
+                                                        <button class="btn btn-primary text-center" type="submit" style="background: var(--bs-danger);border-color: var(--bs-danger);margin-bottom: 0px;margin-top: -8px;" name="backurl" value="user-deposit">Cancel latest operation</button></form></td>
                                                 </tr>
                                                 <tr></tr>
                                                 </tbody>
@@ -242,16 +247,21 @@
                                                         <c:forEach var="recentMovements" items="${cardRecentMovements.getMovementsInfo()}">
                                                             <div class="bg-light border rounded border-3 shadow d-flex align-items-lg-center" style="margin-left: 0px;margin-right: 0px;margin-top: 10px;margin-bottom: 10px;">
                                                                 <c:choose>
-                                                                    <c:when test="${recentMovements.type.equals('deposit')}">
+                                                                    <c:when test="${recentMovements.type == 'deposit'}">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash text-primary" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
                                                                             <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                                                             <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"></path>
                                                                         </svg>
                                                                     </c:when>
-                                                                    <c:when test="${recentMovements.type.equals('withdraw')}">
+                                                                    <c:when test="${recentMovements.type == 'withdraw'}">
                                                                         <svg class="bi bi-cash-stack text-primary" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
                                                                             <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                                                             <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"></path>
+                                                                        </svg>
+                                                                    </c:when>
+                                                                    <c:when test="${recentMovements.type == 'upgrade'}">
+                                                                        <svg class="bi bi-arrow-up-right-circle-fill text-primary" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="font-size: 46px;margin-left: 8px;margin-right: 8px;">
+                                                                            <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8zm5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707l-4.096 4.096z"></path>
                                                                         </svg>
                                                                     </c:when>
                                                                     <c:otherwise>

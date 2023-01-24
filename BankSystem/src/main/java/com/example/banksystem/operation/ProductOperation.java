@@ -18,6 +18,8 @@ public class ProductOperation {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        //Inizializza i valori predefiniti
         initializeDefaults();
 
         try {
@@ -29,6 +31,7 @@ public class ProductOperation {
             double price;
             String quote;
             String type;
+            String image;
 
             rs = stmt.executeQuery("SELECT * FROM Products");
 
@@ -38,10 +41,14 @@ public class ProductOperation {
                 price = rs.getDouble("price");
                 quote = rs.getString("quote");
                 type = rs.getString("type");
+                image = rs.getString("image");
 
                 System.out.println(" $ E' stato inizializzato il prodotto: " + product_id + " " + product_name);
 
-                products.add(new Product(product_name, product_id, price, quote, type));
+                if (image != null)
+                    products.add(new Product(product_name, product_id, price, quote, type, image));
+                else
+                    products.add(new Product(product_name, product_id, price, quote, type));
             }
         }catch (SQLException e) {
             e.printStackTrace();
@@ -112,6 +119,27 @@ public class ProductOperation {
             stmt.setInt(3, 0);
             stmt.setString(4, "Refund made on latest operation");
             stmt.setString(5, "deposit");
+            stmt.addBatch();
+
+            stmt.setString(1, "Upgrade to Premium");
+            stmt.setString(2, "basic-to-premium");
+            stmt.setInt(3, 0);
+            stmt.setString(4, "From a basic person to a premium person");
+            stmt.setString(5, "upgrade");
+            stmt.addBatch();
+
+            stmt.setString(1, "Upgrade to Enterprise");
+            stmt.setString(2, "basic-to-enterprise");
+            stmt.setInt(3, 0);
+            stmt.setString(4, "From a basic person to an enterprise person");
+            stmt.setString(5, "upgrade");
+            stmt.addBatch();
+
+            stmt.setString(1, "Upgrade to Enterprise");
+            stmt.setString(2, "premium-to-enterprise");
+            stmt.setInt(3, 0);
+            stmt.setString(4, "From a premium person to an enterprise person");
+            stmt.setString(5, "upgrade");
             stmt.addBatch();
 
             // Execute the batch

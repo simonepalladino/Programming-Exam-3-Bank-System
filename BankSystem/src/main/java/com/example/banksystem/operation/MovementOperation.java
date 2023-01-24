@@ -21,7 +21,7 @@ public class MovementOperation implements Operation<Movement> {
     private int lastMovementID = 0;
 
     public MovementOperation() {
-        initialization("SELECT * FROM movements");
+        initialization("SELECT * FROM movements ORDER BY Id_mov");
     }
 
     public MovementOperation(String toFind, boolean ifCard) {
@@ -32,9 +32,9 @@ public class MovementOperation implements Operation<Movement> {
         //ifCard indica se si sta cercando i movimenti relativi a una carta specifica
         // oppure tutti i movimenti di un utente
         if (ifCard)
-            initialization("SELECT * FROM movements WHERE card_number_FK = '" + toFind + "'");
+            initialization("SELECT * FROM movements WHERE card_number_FK = '" + toFind + "' ORDER BY Id_mov");
         else
-            initialization("SELECT * FROM movements JOIN Cards ON movements.card_number_FK = Cards.card_number WHERE Cards.CF_FK = '" + toFind + "'");
+            initialization("SELECT * FROM movements JOIN Cards ON movements.card_number_FK = Cards.card_number WHERE Cards.CF_FK = '" + toFind + "' ORDER BY Id_mov");
     }
 
     private void initialization(String query) {
@@ -48,7 +48,7 @@ public class MovementOperation implements Operation<Movement> {
             con = DriverManager.getConnection(url);
             Statement stmt = con.createStatement();
             ResultSet rs;
-            int id_mov;
+            int id_mov = 0;
             String product_id;
             LocalDate mov_date;
             String card_number;
@@ -65,14 +65,16 @@ public class MovementOperation implements Operation<Movement> {
                 price = rs.getDouble("price");
 
                 if (query.contains("WHERE")) {
-                    System.out.println(" @+ Movimento assegnato alla carta: " + card_number);
+                    //System.out.println(" @+ Movimento assegnato alla carta: " + card_number);
                 } else {
                     System.out.println("@ Movimento caricato: " +  id_mov + " " + card_number + " " + product_id + " " + mov_date + " " + price);
-                    lastMovementID++;
                 }
 
                 movements.add(new Movement(id_mov, product_id, mov_date, card_number, price));
             }
+
+            if (!query.contains("WHERE"))
+                lastMovementID = id_mov;
         }catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -90,6 +92,15 @@ public class MovementOperation implements Operation<Movement> {
     public Movement get(String toFind) {
         for (Movement move : movements) {
             if (String.valueOf(move.getId_mov()).equals(toFind))
+                return move;
+        }
+
+        return null;
+    }
+
+    public Movement get(int toFind) {
+        for (Movement move : movements) {
+            if (move.getId_mov() == toFind)
                 return move;
         }
 
@@ -126,7 +137,7 @@ public class MovementOperation implements Operation<Movement> {
             pstmt.executeUpdate();
 
             if (m.getId_mov() == -1 && lastMovementID > -1)
-                m.setId_mov(lastMovementID);
+                m.setId_mov(++lastMovementID);
 
             System.out.println("@+ Movimento aggiunto: " +  m.getId_mov() + " " + m.getCard_number_FK() + " " + m.getProduct_id() + " " + m.getMov_date() + " " + m.getPrice());
             movements.add(m);
@@ -162,6 +173,9 @@ public class MovementOperation implements Operation<Movement> {
             stmt.execute();
 
             System.out.println("@- Movimento eliminato: " +  m.getId_mov() + " " + m.getCard_number_FK() + " " + m.getProduct_id() + " " + m.getMov_date());
+
+            if (lastMovementID == m.getId_mov())
+                lastMovementID--;
             movements.remove(m);
         } catch (SQLException e) {
             e.printStackTrace();

@@ -53,8 +53,9 @@ public class CardOperation implements Operation<Card> {
                 expiration_date = rs.getDate("expiration_date").toLocalDate();
                 balance = rs.getDouble("balance");
 
-                if (query.contains("WHERE"))
-                    System.out.println(" = Carta " + card_number + " assegnata all'utente " + CF_FK);
+                if (query.contains("WHERE")) {
+                    //System.out.println(" = Carta " + card_number + " assegnata all'utente " + CF_FK);
+                }
                 else
                     System.out.println("* Carta caricata: " +  card_name + " " + card_number + " " + expiration_date + " balance:" + balance);
 

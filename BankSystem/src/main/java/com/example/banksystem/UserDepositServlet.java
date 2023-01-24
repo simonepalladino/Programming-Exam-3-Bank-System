@@ -81,7 +81,7 @@ public class UserDepositServlet extends HttpServlet {
             //Itera per ciascuna carta
             while (iterator.hasNext()) {
                 Card card = iterator.next();
-                Iterator<Movement> iterator2 = Factory.getIterator(Factory.OperationType.MOVEMENT, card.getCard_number());
+                Iterator<Movement> iterator2 = Factory.getMovementCardIterator(card.getCard_number(), true);
                 List<MovementInfo> recentMovements = new ArrayList<>();
 
                 //Itera per ciascun movimento relativo alla carta

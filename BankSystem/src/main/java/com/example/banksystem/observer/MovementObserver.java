@@ -54,7 +54,7 @@ public class MovementObserver {
     }
 
     //Per fare le cose senza notificare l'Observer
-    public MovementOperation getCardOperation() {
+    public MovementOperation getMovementOperation() {
         return movementOperation;
     }
 }
