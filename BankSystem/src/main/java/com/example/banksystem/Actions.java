@@ -1,6 +1,5 @@
 package com.example.banksystem;
 
-import com.example.banksystem.model.Product;
 import com.example.banksystem.operation.CardOperation;
 import com.example.banksystem.operation.HolderOperation;
 import com.example.banksystem.operation.MovementOperation;

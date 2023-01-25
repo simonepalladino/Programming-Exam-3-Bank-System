@@ -110,6 +110,13 @@ public class UserBuyServlet extends HttpServlet {
         response.sendRedirect("dashboard?logintype=user");
     }
 
+    /**
+     * Questo metodo è utile per il calcolo del prezzo scontato con un semplice switch
+     * @param price passo come parametro il prezzo del prodotto
+     * @param contract_type passo come parametro il tipo di contratto
+     * @param product_type passo come parametro il tipo di prodotto
+     * @return restituisce il prezzo del prodotto scontato
+     */
     public static double getDiscountPrice(double price, String contract_type, String product_type) {
         switch (contract_type) {
             case "Premium":
