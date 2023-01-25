@@ -61,24 +61,8 @@ public class Product {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public double getDiscountPrice() {
         return discountPrice;
-    }
-
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
-    }
-
-    public void setProduct_id(String product_id) {
-        this.product_id = product_id;
-    }
-
-    public void setQuote(String quote) {
-        this.quote = quote;
     }
 
     public void setDiscountPrice(double discountPrice) {

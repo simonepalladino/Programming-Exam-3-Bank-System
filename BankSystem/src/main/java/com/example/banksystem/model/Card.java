@@ -87,48 +87,16 @@ public class Card implements Observer {
         this.balance = this.balance + balance;
     }
 
-    public void setCF_FK(String CF_FK) {
-        this.CF_FK = CF_FK;
-    }
-
-    public void setCVV(int CVV) {
-        this.CVV = CVV;
-    }
-
-    public void setCard_type(String card_type) {
-        Card_type = card_type;
-    }
-
     public LocalDate getExpiration_date() {
         return expiration_date;
-    }
-
-    public void setExpiration_date(LocalDate expiration_date) {
-        this.expiration_date = expiration_date;
-    }
-
-    public void setCard_name(String card_name) {
-        this.card_name = card_name;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 
     public MovementOperation getMovements() {
         return movements;
     }
 
-    public void setMovements(MovementOperation movements) {
-        this.movements = movements;
-    }
-
     public int getLastMovementID() {
         return lastMovementID;
-    }
-
-    public void setLastMovementID(int lastMovementID) {
-        this.lastMovementID = lastMovementID;
     }
 
     /**

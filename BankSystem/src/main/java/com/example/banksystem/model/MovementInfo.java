@@ -29,16 +29,8 @@ public class MovementInfo {
         return mov_date_string;
     }
 
-    public void setMov_date_string(String mov_date_string) {
-        this.mov_date_string = mov_date_string;
-    }
-
     public LocalDate getMov_date() {
         return mov_date;
-    }
-
-    public void setMov_date(LocalDate mov_date) {
-        this.mov_date = mov_date;
     }
 
     public String getCard_number() {
@@ -61,16 +53,8 @@ public class MovementInfo {
         return product_name;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
-    }
-
     public String getQuote() {
         return quote;
-    }
-
-    public void setQuote(String quote) {
-        this.quote = quote;
     }
 
     public String getType() {

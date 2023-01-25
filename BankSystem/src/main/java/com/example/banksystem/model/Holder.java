@@ -100,26 +100,6 @@ public class Holder implements Observer {
         this.password = password;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public void setDate_of_birth(Date date_of_birth) {
-        this.date_of_birth = date_of_birth;
-    }
-
-    public void setResidence(String residence) {
-        this.residence = residence;
-    }
-
     public void setCards(CardOperation cards) {
         this.cards = cards;
     }
