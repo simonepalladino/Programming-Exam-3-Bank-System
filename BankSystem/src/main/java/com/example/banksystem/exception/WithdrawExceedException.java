@@ -24,14 +24,14 @@ public class WithdrawExceedException extends Exception {
     }
 
     /**
-     * @param holder passiamo il proprietario della carta e colui che effettua il movimento
-     * @param card passiamo come parametro la carta
-     * @param movement passiamo come parametro il movimento
-     * @throws WithdrawExceedException
-     *
-     *  Una persona con contratto Basic può spendere massimo 2000€ per carta al giorno ed effettuare massimo tre operazioni
-     *         Una persona con contratto Premium può spenderne massimo 10.000€ per carta al giorno ed effettuare massimo dieci operazioni
-     *         Una persona con contratto Enterprise può spendere 100.000€ per carta al giorno con un numero indefinito di operazioni
+     * Controlla se il correntista può effettuare il prelievo o l'acquisto secondo alcune regole specifiche del sistema.
+     * Una persona con contratto Basic può spendere massimo 2000€ per carta al giorno ed effettuare massimo tre operazioni
+     * Una persona con contratto Premium può spenderne massimo 10.000€ per carta al giorno ed effettuare massimo dieci operazioni
+     * Una persona con contratto Enterprise può spendere 100.000€ per carta al giorno con un numero indefinito di operazioni
+     * @param holder correntista dal quale si vuole leggere la tipologia di contratto
+     * @param card carta sul quale si vogliono effettuare controlli
+     * @param movement movimento che si sta per aggiungere
+     * @throws NoFundsException
      */
     public static void checkWithdrawLimit(Holder holder, Card card, Movement movement) throws WithdrawExceedException {
         //Capire quanti acquisti ha fatto la carta nella giornata

@@ -21,10 +21,19 @@ public class MovementOperation implements Operation<Movement> {
     private List<Movement> movements = new ArrayList<>();
     private int lastMovementID = 0;
 
+    /**
+     * Inizializza la lista di tutti i movimenti
+     */
     public MovementOperation() {
         initialization("SELECT * FROM movements ORDER BY Id_mov");
     }
 
+    /**
+     * Inizializza la lista di movimenti con opzioni
+     * @param toFind stringa che indica il parametro da voler cercare
+     * @param ifCard se impostato a vero inizializza la ricerca mostrando tutti i movimenti relativi al parametro "card_number_FK";
+     *               se impostato a falso inizializza la ricerca mostrando tutti i movimenti relativi al CF dell'utente immesso
+     */
     public MovementOperation(String toFind, boolean ifCard) {
         //Se inizializzato con parametro di ricerca, allora non è possibile conoscere l'ID auto increment
         //siccome la relazione della tabella nel db è 1:N, non M:N
@@ -94,6 +103,11 @@ public class MovementOperation implements Operation<Movement> {
     }
 
 
+    /**
+     * Ricerca all'interno della lista di movimenti "movements" se è presente il movimento che si sta cercando
+     * @param toFind id del movimento che si vuole cercare
+     * @return il movimento trovato, altrimenti null
+     */
     @Override
     public Movement get(String toFind) {
         for (Movement move : movements) {
@@ -119,6 +133,9 @@ public class MovementOperation implements Operation<Movement> {
     }
 
 
+    /**
+     * @return la lista dei movimenti
+     */
     @Override
     public List getAll() {
         return movements;

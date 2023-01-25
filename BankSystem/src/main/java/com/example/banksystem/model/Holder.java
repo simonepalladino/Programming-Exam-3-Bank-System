@@ -20,6 +20,10 @@ public class Holder implements Observer {
     private CardOperation cards;
 
 
+    /**
+     * Inizializza un correntista con gli stessi valori delle colonne della tabella "HOLDERS" presente nel database.
+     * @see com.example.banksystem.operation.HolderOperation
+     */
     public Holder(String username, String firstname, String lastname, String cf, Date date_of_birth, String contract_type, String residence, int contract_cost, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -42,24 +46,12 @@ public class Holder implements Observer {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getFirstname() {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
     public String getLastname() {
         return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
     }
 
     public String getCf() {
@@ -72,10 +64,6 @@ public class Holder implements Observer {
 
     public Date getDate_of_birth() {
         return date_of_birth;
-    }
-
-    public void setDate_of_birth(Date date_of_birth) {
-        this.date_of_birth = date_of_birth;
     }
 
     public String getContract_type() {
@@ -104,10 +92,6 @@ public class Holder implements Observer {
 
     public CardOperation getCardOperation() {return cards;}
 
-    public void addCard(Card c){
-        this.cards.add(c);
-    }
-
     public String getPassword() {
         return password;
     }
@@ -116,6 +100,34 @@ public class Holder implements Observer {
         this.password = password;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setDate_of_birth(Date date_of_birth) {
+        this.date_of_birth = date_of_birth;
+    }
+
+    public void setResidence(String residence) {
+        this.residence = residence;
+    }
+
+    public void setCards(CardOperation cards) {
+        this.cards = cards;
+    }
+
+    /**
+     * Aggiorna la lista dei movimenti del correntista quando richiesto dall'Observer
+     @see com.example.banksystem.observer.CardObserver
+     */
     @Override
     public void update() {
         System.out.println("?! Aggiorno la lista delle carte di " + cf);

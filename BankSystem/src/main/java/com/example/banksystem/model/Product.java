@@ -33,16 +33,8 @@ public class Product {
         return product_name;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
-    }
-
     public String getProduct_id() {
         return product_id;
-    }
-
-    public void setProduct_id(String product_id) {
-        this.product_id = product_id;
     }
 
     public double getPrice() {
@@ -55,10 +47,6 @@ public class Product {
 
     public String getQuote() {
         return quote;
-    }
-
-    public void setQuote(String quote) {
-        this.quote = quote;
     }
 
     public String getType() {
@@ -79,6 +67,18 @@ public class Product {
 
     public double getDiscountPrice() {
         return discountPrice;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
+    }
+
+    public void setQuote(String quote) {
+        this.quote = quote;
     }
 
     public void setDiscountPrice(double discountPrice) {

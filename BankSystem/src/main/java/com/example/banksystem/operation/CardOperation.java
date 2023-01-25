@@ -14,6 +14,9 @@ public class CardOperation implements Operation<Card> {
     private Connection con;
     private List<Card> cards = new ArrayList<>();
 
+    /**
+     * Inizializza la lista di tutte le carte
+     */
     public CardOperation() {
         initialization("SELECT * FROM Cards");
     }
@@ -26,6 +29,10 @@ public class CardOperation implements Operation<Card> {
         initialization("SELECT * FROM Cards WHERE CF_FK = '" + cf + "'");
     }
 
+    /**
+     * Aggiunge alla lista di carte "cards" le carte trovate
+     * @param query query che sarà effettuata
+     */
     private void initialization(String query) {
         try {
             try {

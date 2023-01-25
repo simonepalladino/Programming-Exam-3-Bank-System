@@ -46,12 +46,9 @@ public class Card implements Observer {
         movements = new MovementOperation(card_number, true);
     }
 
+
     public String getCard_name() {
         return card_name;
-    }
-
-    public void setCard_name(String card_name) {
-        this.card_name = card_name;
     }
 
     public String getCard_number() {
@@ -66,32 +63,16 @@ public class Card implements Observer {
         return CF_FK;
     }
 
-    public void setCF_FK(String CF_FK) {
-        this.CF_FK = CF_FK;
-    }
-
     public int getCVV() {
         return CVV;
-    }
-
-    public void setCVV(int CVV) {
-        this.CVV = CVV;
     }
 
     public String getCard_type() {
         return Card_type;
     }
 
-    public void setCard_type(String card_type) {
-        Card_type = card_type;
-    }
-
     public LocalDate getDate() {
         return expiration_date;
-    }
-
-    public void setDate(LocalDate date) {
-        expiration_date = date;
     }
 
     public double getBalance() {
@@ -106,6 +87,54 @@ public class Card implements Observer {
         this.balance = this.balance + balance;
     }
 
+    public void setCF_FK(String CF_FK) {
+        this.CF_FK = CF_FK;
+    }
+
+    public void setCVV(int CVV) {
+        this.CVV = CVV;
+    }
+
+    public void setCard_type(String card_type) {
+        Card_type = card_type;
+    }
+
+    public LocalDate getExpiration_date() {
+        return expiration_date;
+    }
+
+    public void setExpiration_date(LocalDate expiration_date) {
+        this.expiration_date = expiration_date;
+    }
+
+    public void setCard_name(String card_name) {
+        this.card_name = card_name;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public MovementOperation getMovements() {
+        return movements;
+    }
+
+    public void setMovements(MovementOperation movements) {
+        this.movements = movements;
+    }
+
+    public int getLastMovementID() {
+        return lastMovementID;
+    }
+
+    public void setLastMovementID(int lastMovementID) {
+        this.lastMovementID = lastMovementID;
+    }
+
+    /**
+     * Aggiorna la lista dei movimenti della carta quando richiesto dall'Observer
+      @see com.example.banksystem.observer.MovementObserver
+     */
     @Override
     public void update() {
         System.out.println("?! Aggiorno la lista dei movimenti della carta " + card_number);

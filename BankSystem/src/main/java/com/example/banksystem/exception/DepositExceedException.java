@@ -17,14 +17,13 @@ public class DepositExceedException extends Exception {
     }
 
     /**
-     *
-     * @param holder passiamo il proprietario della carta e colui che effettua il movimento
-     * @param movement passiamo come parametro il movimento
+     * Controlla se il correntista può effettuare il deposito secondo alcune regole specifiche del sistema.
+     * Una persona con contratto Basic può depositare massimo 5000€ al giorno.
+     * Una persona con contratto Premium può depositarne massimo 50.000€ al giorno.
+     * Una persona con contratto Enterprise può depositare 1.000.000€ al giorno.
+     * @param holder correntista sul quale si vogliono effettuare controlli
+     * @param movement movimento che si sta per aggiungere
      * @throws DepositExceedException
-     *
-     * Una persona con contratto Basic può depositare massimo 5000€ al giorno
-     * Una persona con contratto Premium può depositarne massimo 50.000€ al giorno
-     * Una persona con contratto Enterprise può depositare 1.000.000€ al giorno
     */
     public static void checkDepositLimit(Holder holder, Movement movement) throws DepositExceedException {
         //Capire quanti acquisti ha fatto la carta nella giornata

@@ -4,7 +4,6 @@ import com.example.banksystem.iterator.CardIterator;
 import com.example.banksystem.iterator.HolderIterator;
 import com.example.banksystem.iterator.Iterator;
 import com.example.banksystem.iterator.MovementIterator;
-import com.example.banksystem.model.Product;
 import com.example.banksystem.observer.CardObserver;
 import com.example.banksystem.observer.MovementObserver;
 import com.example.banksystem.operation.*;
@@ -35,38 +34,22 @@ public class Factory {
         return null;
     }
 
-    public static Operation getOperation(OperationType type) {
-        switch (type) {
-            case HOLDER:
-                return new HolderOperation();
-            case CARD:
-                return new CardOperation();
-            case MOVEMENT:
-                return new MovementOperation();
-        }
-
-        return null;
-    }
-
-    public static Operation getOperation(OperationType type, String toFind) {
-        switch (type) {
-            case HOLDER:
-                return new HolderOperation(toFind);
-            case CARD:
-                return new CardOperation(toFind);
-            case MOVEMENT:
-                return new MovementOperation(toFind, true);
-        }
-
-        return null;
-    }
-
     public static Iterator getIterator(OperationType type) {
         switch (type) {
             case HOLDER:
-                return new HolderIterator(new HolderOperation().getAll());
+                HolderOperation tempHolder = new HolderOperation();
+
+                //Rimuove dalla lista di Observers per evitare inutili aggiornamenti
+                CardObserver.getInstance().removeObserver(tempHolder.getAll());
+
+                return new HolderIterator(tempHolder.getAll());
             case CARD:
-                return new CardIterator(new CardOperation().getAll());
+                CardOperation tempCard = new CardOperation();
+
+                //Rimuove dalla lista di Observers per evitare inutili aggiornamenti
+                MovementObserver.getInstance().removeObserver(tempCard.getAll());
+
+                return new CardIterator(tempCard.getAll());
             case MOVEMENT:
                 return new MovementIterator(new MovementOperation().getAll());
         }
@@ -76,9 +59,19 @@ public class Factory {
     public static Iterator getIterator(OperationType type, String toFind) {
         switch (type) {
             case HOLDER:
-                return new HolderIterator(new HolderOperation(toFind).getAll());
+                HolderOperation tempHolder = new HolderOperation(toFind);
+
+                //Rimuove dalla lista di Observers per evitare inutili aggiornamenti
+                CardObserver.getInstance().removeObserver(tempHolder.getAll());
+
+                return new HolderIterator(tempHolder.getAll());
             case CARD:
-                return new CardIterator(new CardOperation(toFind).getAll());
+                CardOperation tempCard = new CardOperation(toFind);
+
+                //Rimuove dalla lista di Observers per evitare inutili aggiornamenti
+                MovementObserver.getInstance().removeObserver(tempCard.getAll());
+
+                return new CardIterator(tempCard.getAll());
             case MOVEMENT:
                 return new MovementIterator(new MovementOperation(toFind, true).getAll());
         }
@@ -87,10 +80,6 @@ public class Factory {
 
     public static Iterator getMovementCardIterator(String toFind, boolean reverse) {
         return new MovementIterator(new MovementOperation(toFind, true).getAll(), reverse);
-    }
-
-    public static Operation getMovementUserOperation(String toFind) {
-        return new MovementOperation(toFind, false);
     }
 
     public static Iterator getMovementUserIterator(String toFind, boolean reverse) {

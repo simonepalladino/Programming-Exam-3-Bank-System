@@ -11,7 +11,9 @@ public class Movement {
     private String card_number_FK;
     private double price;
 
-    //Inizializzazione di tutti i parametri
+    /**
+     * Inizializzazione di tutti i parametri
+     */
     public Movement(int Id_mov, String product_id, LocalDate Mov_date, String card_number_FK, double price) {
         this.id_mov = Id_mov;
         this.product_id = product_id;
@@ -20,7 +22,9 @@ public class Movement {
         this.price = price;
     }
 
-    //Inizializzazione di tutti i parametri senza alcun prezzo specificato
+    /**
+     * Inizializzazione dei parametri senza alcun prezzo specificato
+     */
     public Movement(int Id_mov, String product_id, LocalDate Mov_date, String card_number_FK) {
         this.id_mov = Id_mov;
         this.product_id = product_id;
@@ -30,7 +34,13 @@ public class Movement {
         this.price = Actions.getInstance().productOperation.get(product_id).getPrice();
     }
 
-    //Inizializzazione del movimento senza specificarne l'ID (per iterare i movimenti di una singola carta)
+    /**
+     * Inizializzazione del movimento senza specificarne l'ID (per iterare i movimenti di una singola carta)
+     * @param product_id
+     * @param Mov_date
+     * @param card_number_FK
+     * @param price
+     */
     public Movement(String product_id, LocalDate Mov_date, String card_number_FK, double price) {
         this.id_mov = -1;
         this.product_id = product_id;
@@ -39,7 +49,12 @@ public class Movement {
         this.price = price;
     }
 
-    //Inizializzazione del movimento senza specifica dell'ID e con reperimento automatico del prezzo
+    /**
+     * Inizializzazione del movimento senza specifica dell'ID e con reperimento automatico del prezzo
+     * @param product_id
+     * @param Mov_date
+     * @param card_number_FK
+     */
     public Movement(String product_id, LocalDate Mov_date, String card_number_FK) {
         this.id_mov = -1;
         this.product_id = product_id;

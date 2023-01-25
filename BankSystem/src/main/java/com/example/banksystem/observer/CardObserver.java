@@ -13,9 +13,15 @@ public class CardObserver {
     private List<Holder> observers = new ArrayList<>();
     private CardOperation cardOperation = null;
 
-    //Singleton, previene l'istanziazione da parte di altre classi
+    /**
+     * Inizializza la classe una sola volta secondo la dichiarazione iniziale,
+     * prevenendo l'istanziazione da parte di altre classi (Singleton)
+     */
     private CardObserver() {}
 
+    /**
+     * @return ritorna l'istanza CardObserver sul quale si vogliono effettuare le operazioni
+     */
     public static CardObserver getInstance() {
         return instance;
     }
@@ -45,6 +51,16 @@ public class CardObserver {
      */
     public void removeObserver(Holder holder) {
         observers.remove(holder);
+    }
+
+    /**
+     * Rimuove più observer dalla lista di observers
+     * @param holders correntisti che non si vogliono più osservare
+     */
+    public void removeObserver(List<Holder> holders) {
+        for (Holder holder : holders) {
+            if (holders.indexOf(holder) != -1) observers.remove(holder);
+        }
     }
 
     /**

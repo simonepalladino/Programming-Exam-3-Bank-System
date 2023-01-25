@@ -48,6 +48,16 @@ public class MovementObserver {
     }
 
     /**
+     * Rimuove più observer dalla lista di observers
+     * @param cards carte che non si vogliono più osservare
+     */
+    public void removeObserver(List<Card> cards) {
+        for (Card card : cards) {
+            if (cards.indexOf(card) != -1) observers.remove(card);
+        }
+    }
+
+    /**
      * Notifica a tutti gli observer che è avvenuta una modifica, per cui è necessario aggiornare i parametri
      * @param card_number card_number della carta che si vuole aggiornare
      */
@@ -75,10 +85,5 @@ public class MovementObserver {
     public void delete(Movement movement) {
         movementOperation.delete(movement);
         notifyObservers(movement.getCard_number_FK());
-    }
-
-    //Per fare le cose senza notificare l'Observer
-    public MovementOperation getMovementOperation() {
-        return movementOperation;
     }
 }

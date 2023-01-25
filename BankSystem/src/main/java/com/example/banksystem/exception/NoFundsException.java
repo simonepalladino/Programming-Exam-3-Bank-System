@@ -17,11 +17,17 @@ public class NoFundsException extends Exception {
         return getMessage() + ": funds exceeded!!";
     }
 
-    /*
-        Una carta Bancomat non può andare sotto lo zero
-        Una persona con contratto Basic e carta di credito non può scendere sotto i -10€
-        Una persona con contratto Premium e carta di credito non può scendere sotto i -100€
-        Una persona con contratto Enterprise e carta di credito non può scendere sotto i -1000€
+    /**
+     * Controlla se il correntista può effettuare il prelievo o l'acquisto secondo alcune regole specifiche del sistema:
+     * non è possibile scendere al di sotto di una determinata soglia sulla tipologia di pagamento specificata.
+     * Una carta Bancomat non può andare sotto lo zero.
+     * Una persona con contratto Basic e carta di credito non può scendere sotto i -10€.
+     * Una persona con contratto Premium e carta di credito non può scendere sotto i -100€.
+     * Una persona con contratto Enterprise e carta di credito non può scendere sotto i -1000€.
+     * @param holder correntista dal quale si vuole leggere la tipologia di contratto
+     * @param card carta sul quale si vogliono effettuare controlli
+     * @param movement movimento che si sta per aggiungere
+     * @throws NoFundsException
      */
     public static void checkWithdrawLimit(Holder holder, Card card, Movement movement) throws NoFundsException {
         if (card.getBalance() + movement.getPrice() < 0) {

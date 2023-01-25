@@ -15,16 +15,28 @@ public class HolderOperation implements Operation<Holder>{
     private List<Holder> holders = new ArrayList<>();
 
 
+    /**
+     * Inizializza la lista di tutti i correntisti
+     */
     public HolderOperation() {
         //Carica tutti gli utenti salvati
         initialization("SELECT * FROM Holders");
     }
 
+
+    /**
+     * Inizializza la lista dei correntisti cercando per nome completo oppure per nome utente (username)
+     * @param toFind username o nome completo che si vuole cercare
+     */
     public HolderOperation(String toFind) {
         //Carica alcuni utenti salvati
         initialization("SELECT * FROM Holders WHERE (firstname || ' ' || lastname) LIKE '" + toFind + "%' OR username LIKE '" + toFind + "%'");
     }
 
+    /**
+     * Aggiunge alla lista di correntisti "holders" il correntista trovato
+     * @param query query che sarà effettuata
+     */
     private void initialization(String query) {
         try {
             try {
@@ -179,6 +191,12 @@ public class HolderOperation implements Operation<Holder>{
         }
     }
 
+
+    /**
+     * Aggiorna la password del correntista specificato
+     * @param holder correntista che necessita di cambio password
+     * @param newPassword nuova password che si vuole impostare al correntista
+     */
     public void updatePassword(Holder holder, String newPassword) {
         try {
             con = DriverManager.getConnection(url);

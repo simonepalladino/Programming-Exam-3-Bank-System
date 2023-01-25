@@ -12,6 +12,9 @@ public class ProductOperation {
     private Connection con;
     private List<Product> products = new ArrayList<>();
 
+    /**
+     * Inizializza la lista di tutti i prodotti
+     */
     public ProductOperation() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -62,6 +65,11 @@ public class ProductOperation {
         }
     }
 
+    /**
+     * Ricerca all'intero della lista di prodotti "products" se è presente il prodotto che si sta cercando
+     * @param toFind id del prodotto che si vuole cercare
+     * @return il prodotto trovato, altrimenti null
+     */
     public Product get(String toFind) {
         for (Product product : products) {
             if (product.getProduct_id().equals(toFind))
@@ -71,10 +79,17 @@ public class ProductOperation {
         return null;
     }
 
+    /**
+     * @return la lista dei prodotti
+     */
     public List getAll() {
         return products;
     }
 
+    /**
+     * Inserisce all'interno della tabella "Products" del database alcuni elementi chiave necessari per il funzionamento
+     * base del software
+     */
     private void initializeDefaults() {
         Connection conn = null;
         PreparedStatement stmt = null;
