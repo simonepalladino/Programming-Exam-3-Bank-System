@@ -1,7 +1,5 @@
 package com.example.banksystem.model;
 
-import java.time.LocalDate;
-
 public class Product {
     private String product_name;
     private String product_id;
@@ -20,6 +18,14 @@ public class Product {
         this.image = "assets/img/" + image;
     }
 
+    /**
+     * Inizializza un prodotto con gli stessi valori delle colonne della tabella "PRODUCTS" presente nel database
+     * @param product_name nome del prodotto
+     * @param product_id id del prodotto
+     * @param price prezzo del prodotto
+     * @param quote descrizione del prodotto
+     * @param type tipo del prodotto
+     */
     public Product(String product_name, String product_id, double price, String quote, String type) {
         this.product_name = product_name;
         this.product_id = product_id;
@@ -29,42 +35,72 @@ public class Product {
         this.image = null;
     }
 
+    /**
+     * @return restituisce il nome del prodotto
+     */
     public String getProduct_name() {
         return product_name;
     }
 
+    /**
+     * @return restituisce l'id del prodotto
+     */
     public String getProduct_id() {
         return product_id;
     }
 
+    /**
+     * @return restituisce il prezzo del prodotto
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * @param price imposta il prezzo del prodotto
+     */
     public void setPrice(double price) {
         this.price = price;
     }
 
+    /**
+     * @return restituisce la descrizione del prodotto
+     */
     public String getQuote() {
         return quote;
     }
 
+    /**
+     * @return restituisce il tipo del prodotto
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * @param type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * @return
+     */
     public String getImage() {
         return image;
     }
 
+    /**
+     * @return
+     */
     public double getDiscountPrice() {
         return discountPrice;
     }
 
+    /**
+     * @param discountPrice
+     */
     public void setDiscountPrice(double discountPrice) {
         this.discountPrice = discountPrice;
     }

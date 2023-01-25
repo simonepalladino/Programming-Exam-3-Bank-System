@@ -45,22 +45,37 @@ public class MovementInfo {
         return price;
     }
 
+    /**
+     * @param price Imposta il prezzo del prodotto
+     */
     public void setPrice(double price) {
         this.price = price;
     }
 
+    /**
+     * @return Restituisce il nome del prodotto
+     */
     public String getProduct_name() {
         return product_name;
     }
 
+    /**
+     * @return Restituisce la descrizione del prodotto
+     */
     public String getQuote() {
         return quote;
     }
 
+    /**
+     * @return Ottiene la tipologia del prodotto impostato
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * @param type Imposta la tipologia del prodotto che si intende visualizzare
+     */
     public void setType(String type) {
         this.type = type;
     }

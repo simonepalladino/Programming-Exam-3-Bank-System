@@ -17,7 +17,6 @@ public class Card implements Observer {
     private String card_name;
     private double balance;
     private MovementOperation movements;
-    private int lastMovementID;
 
     /**
      * Inizializza una carta con gli stessi valori delle colonne della tabella "CARDS" presente nel database.
@@ -47,50 +46,81 @@ public class Card implements Observer {
     }
 
 
+    /**
+     * @return Restituisce il nome della carta
+     */
     public String getCard_name() {
         return card_name;
     }
 
+    /**
+     * @return Restituisce il numero della carta
+     */
     public String getCard_number() {
         return card_number;
     }
 
+    /**
+     * @param number_Card Imposta il numero della carta
+     */
     public void setCard_number(String number_Card) {
         card_number = number_Card;
     }
 
+    /**
+     * @return Restituisce la chiave esterna CF_FK di Holder
+     */
     public String getCF_FK() {
         return CF_FK;
     }
 
+    /**
+     * @return Restituisce il CVV della carta
+     */
     public int getCVV() {
         return CVV;
     }
 
+    /**
+     * @return Restituisce il tipo della carta
+     */
     public String getCard_type() {
         return Card_type;
     }
 
+    /**
+     * @return Restituisce la data di scadenza della carta
+     */
     public LocalDate getDate() {
         return expiration_date;
     }
 
+    /**
+     * @return Restituisce il saldo della carta
+     */
     public double getBalance() {
         return balance;
     }
 
+    /**
+     * Metodo che serve per il prelievo dato il saldo specificato
+     * @param balance Passa come parametro il saldo
+     */
     public void withDraw(double balance){
         this.balance = this.balance - balance;
     }
 
+    /**
+     * Metodo che serve per il deposito dato il saldo specificato
+     * @param balance Passa come parametro il saldo
+     */
     public void deposit(double balance){
         this.balance = this.balance + balance;
     }
 
-    public LocalDate getExpiration_date() {
-        return expiration_date;
-    }
-
+    /**
+     * @return Restituisce l'implementazione dei movimenti della carta (DAO Pattern)
+     */
     public MovementOperation getMovements() {
         return movements;
     }
