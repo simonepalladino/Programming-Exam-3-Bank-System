@@ -20,6 +20,10 @@ public class MovementObserver {
         return instance;
     }
 
+    /**
+     * Imposta le operazioni da fare sulla lista dei movimenti
+     * @param movementOperation lista di operazioni sui movimenti
+     */
     public void setMovementOperation(MovementOperation movementOperation) {
         if (this.movementOperation != null)
             observers.clear();
@@ -27,14 +31,26 @@ public class MovementObserver {
         this.movementOperation = movementOperation;
     }
 
+    /**
+     * Aggiunge un observer alla lista di observers
+     * @param card carta che si vuole osservare
+     */
     public void addObserver(Card card) {
         observers.add(card);
     }
 
+    /**
+     * Rimuove un observer dalla lista di observers
+     * @param card carta che non si vuole più osservare
+     */
     public void removeObserver(Card card) {
         observers.remove(card);
     }
 
+    /**
+     * Notifica a tutti gli observer che è avvenuta una modifica, per cui è necessario aggiornare i parametri
+     * @param card_number card_number della carta che si vuole aggiornare
+     */
     public void notifyObservers(String card_number) {
         for (Card card : observers) {
             if (card_number.equals(card.getCard_number()))
@@ -42,12 +58,20 @@ public class MovementObserver {
         }
     }
 
+    /**
+     * Aggiunge un movimento nella base di dati e notifica agli osservatori della modifica
+     * @param movement movimento che si vuole aggiungere
+     */
     //Notifica l'Observer dopo l'aggiunta di una carta
     public void add(Movement movement) {
         movementOperation.add(movement);
         notifyObservers(movement.getCard_number_FK());
     }
 
+    /**
+     * Rimuove un movimento nella base di dati e notifica agli osservatori della modifica
+     * @param movement movimento che si vuole eliminare
+     */
     public void delete(Movement movement) {
         movementOperation.delete(movement);
         notifyObservers(movement.getCard_number_FK());

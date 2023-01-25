@@ -5,6 +5,9 @@ import com.example.banksystem.operation.MovementOperation;
 
 import java.time.LocalDate;
 
+/**
+ * Classe carta che estende l'interfaccia Observer
+ */
 public class Card implements Observer {
     private String card_number;
     private String CF_FK;
@@ -16,6 +19,17 @@ public class Card implements Observer {
     private MovementOperation movements;
     private int lastMovementID;
 
+    /**
+     * Inizializza una carta con gli stessi valori delle colonne della tabella "CARDS" presente nel database.
+     * Una volta fatto, verifica se aggiungere l'oggetto alla lista di osservatori da dover aggiornare.
+     * @param card_name Nome della carta che si vuole inizializzare
+     * @param cardnumber Numero della carta che si vuole inizializzare
+     * @param CF_FK Chiave esterna del correntista che si vuole inizializzare
+     * @param cvv CVV della carta che si vuole inizializzare
+     * @param card_type Tipo della carta che si vuole inizializzare
+     * @param expiration_date Data di scadenza della carta che si vuole inizializzare
+     * @param balance Saldo della carta che si vuole inizializzare
+     */
     public Card(String card_name, String cardnumber, String CF_FK, int cvv, String card_type, LocalDate expiration_date, double balance) {
         this.card_name = card_name;
         this.card_number = cardnumber;
@@ -82,10 +96,6 @@ public class Card implements Observer {
 
     public double getBalance() {
         return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 
     public void withDraw(double balance){

@@ -77,6 +77,11 @@ public class HolderOperation implements Operation<Holder>{
         }
     }
 
+    /**
+     * Ricerca all'interno della lista di correntisti "holders" se è presente il correntista che si sta cercando
+     * @param toFind il CF del correntista che si vuole cercare
+     * @return il correntista trovato, altrimenti null
+     */
     @Override
     public Holder get(String toFind) {
         for (Holder holder : holders) {
@@ -87,11 +92,18 @@ public class HolderOperation implements Operation<Holder>{
         return null;
     }
 
+    /**
+     * @return l'intera lista dei correntisti
+     */
     @Override
     public List<Holder> getAll() {
         return holders;
     }
 
+    /**
+     * Aggiunge alla lista dei correntisti "holders" e al database il correntista specificato
+     * @param holder correntista che si vuole aggiungere
+     */
     @Override
     public void add(Holder holder) {
         try {
@@ -138,6 +150,10 @@ public class HolderOperation implements Operation<Holder>{
     }
 
 
+    /**
+     * Elimina della lista dei correntisti e dal database il correntista specificato
+     * @param holder correntista che si vuole eliminare
+     */
     @Override
     public void delete(Holder holder) {
         try {
@@ -186,6 +202,12 @@ public class HolderOperation implements Operation<Holder>{
         }
     }
 
+
+    /**
+     * Aggiorna il piano del correntista specificato
+     * @param holder correntista a cui si vuole aggiornare il piano
+     * @param newPlan nuovo piano che si vuole impostare al correntista
+     */
     public void updatePlan(Holder holder, String newPlan) {
         try {
             con = DriverManager.getConnection(url);

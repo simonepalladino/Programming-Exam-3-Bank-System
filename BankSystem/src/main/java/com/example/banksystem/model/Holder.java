@@ -90,10 +90,6 @@ public class Holder implements Observer {
         return residence;
     }
 
-    public void setResidence(String residence) {
-        this.residence = residence;
-    }
-
     public int getContract_cost(){
         return contract_cost;
     }

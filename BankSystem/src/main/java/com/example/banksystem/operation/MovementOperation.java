@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+
 public class MovementOperation implements Operation<Movement> {
     private final String url = "jdbc:sqlite:banksystem.sqlite";
     private Connection con;
@@ -37,6 +38,11 @@ public class MovementOperation implements Operation<Movement> {
             initialization("SELECT * FROM movements JOIN Cards ON movements.card_number_FK = Cards.card_number WHERE Cards.CF_FK = '" + toFind + "' ORDER BY Id_mov");
     }
 
+
+    /**
+     * Aggiunge alla lista di movimenti "movements" i movimenti trovati
+     * @param query query che sarà effettuata
+     */
     private void initialization(String query) {
         try {
             try {
@@ -98,6 +104,11 @@ public class MovementOperation implements Operation<Movement> {
         return null;
     }
 
+    /**
+     * Ricerca la chiave primaria id movimento nella lista di movimenti (movements)
+     * @param toFind id del movimento che si vuole cercare
+     * @return il movimento trovato, altrimenti null
+     */
     public Movement get(int toFind) {
         for (Movement move : movements) {
             if (move.getId_mov() == toFind)
@@ -113,6 +124,11 @@ public class MovementOperation implements Operation<Movement> {
         return movements;
     }
 
+
+    /**
+     * Aggiunge alla lista dei movimenti "movements" e al database il movimento specificato
+     * @param m movimento che si vuole aggiungere
+     */
     @Override
     public void add(Movement m) {
         try {
@@ -160,6 +176,10 @@ public class MovementOperation implements Operation<Movement> {
     }
 
 
+    /**
+     * Elimina della lista dei movimenti e dal database il movimento specificato
+     * @param m movimento che si vuole eliminare
+     */
     @Override
     public void delete(Movement m) {
         try {

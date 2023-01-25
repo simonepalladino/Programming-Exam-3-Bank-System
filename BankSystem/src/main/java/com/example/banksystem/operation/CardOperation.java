@@ -18,6 +18,10 @@ public class CardOperation implements Operation<Card> {
         initialization("SELECT * FROM Cards");
     }
 
+    /**
+     * Inizializza la lista delle carte all'interno del database cercando per CF
+     * @param cf CF dell'utente
+     */
     public CardOperation(String cf) {
         initialization("SELECT * FROM Cards WHERE CF_FK = '" + cf + "'");
     }
@@ -77,6 +81,11 @@ public class CardOperation implements Operation<Card> {
     }
 
 
+    /**
+     * Ricerca all'interno della lista di carte se è presenta la carta che si sta cercando
+     * @param toFind ricerca il numero della carta che si vuole trovare
+     * @return ritorna la carta trovata altrimenti null
+     */
     @Override
     public Card get(String toFind) {
         for (Card card : cards) {
@@ -88,12 +97,20 @@ public class CardOperation implements Operation<Card> {
     }
 
 
+    /**
+     * Ritorna l'intera lista di carte
+     * @return lista di carte
+     */
     @Override
     public List getAll() {
         return cards;
     }
 
 
+    /**
+     * Aggiunge alla lista di carte e al database la carta specificata
+     * @param c carta che si vuole aggiungere
+     */
     @Override
     public void add(Card c) {
         try {
@@ -139,6 +156,10 @@ public class CardOperation implements Operation<Card> {
     }
 
 
+    /**
+     * Elimina dalla lista di carte e dal database la carta specificata
+     * @param c carta che si vuole eliminare
+     */
     @Override
     public void delete(Card c) {
         try {
@@ -165,16 +186,31 @@ public class CardOperation implements Operation<Card> {
         }
     }
 
+    /**
+     * Deposita sulla carta il saldo specificato
+     * @param c carta su cui si vuole depositare
+     * @param money saldo che si vuole depositare
+     */
     public void deposit(Card c, double money) {
         c.deposit(money);
         updateBalance(c, c.getBalance());
     }
 
+    /**
+     * Preleva dalla carta il saldo specificato
+     * @param c carta su cui si vuole prelevare
+     * @param money saldo che si vuole prelevare
+     */
     public void withdraw(Card c, double money) {
         c.withDraw(money);
         updateBalance(c, c.getBalance());
     }
 
+    /**
+     * Aggiorna il saldo della carta specificata
+     * @param c carta su cui si vuole aggiornare il saldo
+     * @param newBalance saldo aggiornato sulla carta specificata
+     */
     public void updateBalance(Card c, double newBalance) {
         try {
             con = DriverManager.getConnection(url);
