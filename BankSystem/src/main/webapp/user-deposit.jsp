@@ -78,7 +78,7 @@
                                             </div>
                                             <div class="col">
                                                 <div class="p-3">
-                                                    <h4 class="display-5 fw-bold text-white mb-0" style="padding-left: 0px;padding-right: 0px;margin-left: -10px;margin-right: -10px;"><c:out value="${requestScope.balance}"/>€</h4>
+                                                    <h4 class="display-5 fw-bold text-white mb-0" style="padding-left: 0px;padding-right: 0px;margin-left: -10px;margin-right: -10px;"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${requestScope.balance}"/>€</h4>
                                                     <p class="mb-0">Total Balance</p>
                                                 </div>
                                             </div>
@@ -115,7 +115,7 @@
                                                         <p style="margin-top: 5px;margin-bottom: 5px;"><strong>CVV</strong>: <c:out value="${cardList.CVV}"/></p>
                                                         <p style="margin-bottom: 5px;margin-top: 0px;"><strong>Expiration</strong>: <c:out value="${datee}"/></p>
                                                         <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
-                                                        <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;"><c:out value="${cardList.balance}"/>€</p>
+                                                        <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${cardList.balance}"/>€</p>
                                                         <form method="get" action="user-depositoncard">
                                                             <button class="btn btn-primary" type="submit" style="margin-bottom: 5px;margin-top: -9px;" name="card" value='<c:out value="${cardList.card_number}"/>'>Deposit</button>
                                                         </form>
@@ -194,10 +194,10 @@
                                                         <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;"><c:out value="${recentMovements.mov_date_string}"/></span>
                                                         <c:choose>
                                                             <c:when test="${recentMovements.price >= 0}">
-                                                                +<c:out value="${recentMovements.price}"/>
+                                                                +<fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${recentMovements.price}"/>
                                                             </c:when>
                                                             <c:otherwise>
-                                                                <c:out value="${recentMovements.price}"/>
+                                                                <fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${recentMovements.price}"/>
                                                             </c:otherwise>
                                                         </c:choose>€</small>
                                                     </div>
@@ -278,10 +278,10 @@
                                                                 <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;"><c:out value="${recentMovements.mov_date_string}"/></span>
                                                                 <c:choose>
                                                                     <c:when test="${recentMovements.price >= 0}">
-                                                                        +<c:out value="${recentMovements.price}"/>
+                                                                        +<fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${recentMovements.price}"/>
                                                                     </c:when>
                                                                     <c:otherwise>
-                                                                        <c:out value="${recentMovements.price}"/>
+                                                                        <fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${recentMovements.price}"/>
                                                                     </c:otherwise>
                                                                 </c:choose>€</small>
                                                             </div>

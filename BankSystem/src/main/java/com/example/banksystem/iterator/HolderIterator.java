@@ -12,9 +12,8 @@ public class HolderIterator implements Iterator<Holder> {
     private int index = 0;
 
     /**
-     * @return
+     * @return crea e ritorna un'istanza della classe HolderIterator
      */
-    //This method creates and returns an instance of the MovementsIterator class
     public Iterator<Holder> iterator() {
         return new HolderIterator(holders);
     }

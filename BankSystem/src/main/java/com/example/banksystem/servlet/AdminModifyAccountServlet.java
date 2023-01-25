@@ -1,5 +1,7 @@
-package com.example.banksystem;
+package com.example.banksystem.servlet;
 
+import com.example.banksystem.Actions;
+import com.example.banksystem.Factory;
 import com.example.banksystem.iterator.Iterator;
 import com.example.banksystem.model.Card;
 import com.example.banksystem.model.Holder;

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en" style="min-height: 100%;">
 
@@ -80,10 +81,10 @@
                                         <div></div><small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center" style="margin-right: 8px;"><span class="fs-6 text-black-50" style="margin-right: 10px;"><c:out value="${recentMovements.mov_date_string}"/></span>
                                         <c:choose>
                                             <c:when test="${recentMovements.price >= 0}">
-                                                +<c:out value="${recentMovements.price}"/>
+                                                +<fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${recentMovements.price}"/>
                                             </c:when>
                                             <c:otherwise>
-                                                <c:out value="${recentMovements.price}"/>
+                                                <fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${recentMovements.price}"/>
                                             </c:otherwise>
                                         </c:choose>€</small>
                                     </div>
@@ -116,7 +117,7 @@
                                     <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"></path>
                                 </svg></div>
                             <div class="px-3">
-                                <h2 class="fw-bold tada animated mb-0"><c:out value="${requestScope.balance}"/>€</h2>
+                                <h2 class="fw-bold tada animated mb-0"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${requestScope.balance}"/>€</h2>
                                 <c:choose>
                                     <c:when test="${requestScope.balance > 0}">
                                         <p class="mb-0">Your account is in order</p>
@@ -148,7 +149,7 @@
                                                     <div class="px-3">
                                                         <h5 class="text-center" style="margin-top: 6px;"><c:out value="${cardList.card_name}"/></h5>
                                                         <p class="fs-6" style="margin-bottom: 0px;"><c:out value="${cardList.card_number}"/><br></p>
-                                                        <p class="fs-6"><strong>Balance</strong>: <c:out value="${cardList.balance}"/>€</p>
+                                                        <p class="fs-6"><strong>Balance</strong>: <fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${cardList.balance}"/>€</p>
                                                     </div>
                                                 </div>
                                             </td>

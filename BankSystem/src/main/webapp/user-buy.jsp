@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en" style="min-height: 100%;">
 
@@ -85,7 +86,7 @@
                                     <small class="fs-5 fw-semibold text-end d-lg-flex flex-fill justify-content-lg-end align-items-lg-center">
                                         <c:choose>
                                             <c:when test="${products.discountPrice != 0}">
-                                                <span style="text-decoration: line-through;"><c:out value="${products.price}"/>€</span>&nbsp;<c:out value="${products.discountPrice}"/>€&nbsp;&nbsp;
+                                                <span style="text-decoration: line-through;"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${products.price}"/>€</span>&nbsp;<fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${products.discountPrice}"/>€&nbsp;&nbsp;
                                             </c:when>
                                             <c:otherwise>
                                                 <c:out value="${products.price}"/>€&nbsp;&nbsp;

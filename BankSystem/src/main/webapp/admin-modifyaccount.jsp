@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en" style="min-height: 100%;">
 
@@ -81,7 +82,7 @@
                                             </div>
                                             <div class="col">
                                                 <div class="p-3">
-                                                    <h4 class="display-5 fw-bold text-white mb-0" style="padding-left: 0px;padding-right: 0px;margin-left: -10px;margin-right: -10px;"><c:out value="${requestScope.balance}"/>€</h4>
+                                                    <h4 class="display-5 fw-bold text-white mb-0" style="padding-left: 0px;padding-right: 0px;margin-left: -10px;margin-right: -10px;"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${requestScope.balance}"/>€</h4>
                                                     <p class="mb-0">Total Balance</p>
                                                 </div>
                                             </div>
@@ -117,7 +118,7 @@
                                                         <h5 class="text-center" style="margin-top: 6px;"><c:out value="${cardList.card_name}"/></h5>
                                                         <p class="fs-6"><c:out value="${cardList.card_number}"/></p>
                                                         <p class="fs-6 fw-semibold" style="margin-bottom: 0px;">Balance</p>
-                                                        <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;"><c:out value="${cardList.balance}"/>€</p>
+                                                        <p class="fs-6" style="margin-bottom: 15px;margin-top: -1px;"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits="2" value = "${cardList.balance}"/>€</p>
                                                         <form method="post">
                                                         <button class="btn btn-danger" type="submit" name="delete" value='<c:out value="${cardList.card_number}"/>' style="margin-bottom: 5px;margin-top: -9px;">Remove card</button>
                                                         </form>

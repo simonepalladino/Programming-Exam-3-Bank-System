@@ -1,5 +1,7 @@
-package com.example.banksystem;
+package com.example.banksystem.servlet;
 
+import com.example.banksystem.Actions;
+import com.example.banksystem.Factory;
 import com.example.banksystem.iterator.Iterator;
 import com.example.banksystem.model.*;
 import com.example.banksystem.observer.MovementObserver;
@@ -71,7 +73,7 @@ public class UserCancelOperationServlet extends HttpServlet {
 
         if (todo.equals("yes")) {
             //Se l'operazione è annullabile, allora...
-            if (!lastProduct.getType().equals("deposit") && !lastProduct.getType().equals("withdraw") && !lastProduct.getType().equals("upgrade")) {
+            if (goRefund(selectedHolder, lastProduct)) {
                 MovementObserver.getInstance().add(new Movement("refund", LocalDate.now(), lastMovement.getCard_number_FK(), -lastMovement.getPrice()));
             } else {
                 //Altrimenti...
@@ -81,5 +83,31 @@ public class UserCancelOperationServlet extends HttpServlet {
         }
 
         response.sendRedirect(backurl);
+    }
+
+    /**
+     * Controlla se il correntista può effettuare il rimborso secondo alcune regole specifiche del sistema.
+     * Una persona con contratto Basic può effettuare il rimborso solo sulle categorie "food" e "coffee"
+     * Una persona con contratto Premium può effettuare il rimborso anche sulle categorie "accessories", "headphones" e "phone".
+     * Una persona con contratto Enterprise può effettuare il rimborso anche sulle categorie "tv" e "pc".
+     * @param holder correntista dal quale si vuole leggere la tipologia di contratto
+     * @param product prodotto sul quale si vuole leggere la tipologia
+     * @return restuisce vero se le caratteristiche vengono rispettate altrimenti falso
+     */
+    public static boolean goRefund(Holder holder, Product product) {
+        if (product.getType().equals("food") || product.getType().equals("coffee"))
+            return true;
+
+        if (holder.getContract_type().equals("Premium") || holder.getContract_type().equals("Enterprise")) {
+            if (product.getType().equals("accessories") || product.getType().equals("headphones") || product.getType().equals("phone"))
+                return true;
+
+            if (holder.getContract_type().equals("Enterprise")) {
+                if (product.getType().equals("tv") || product.getType().equals("pc"))
+                    return true;
+            }
+        }
+
+        return false;
     }
 }

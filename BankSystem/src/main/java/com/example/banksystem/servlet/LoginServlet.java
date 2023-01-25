@@ -1,8 +1,9 @@
-package com.example.banksystem;
+package com.example.banksystem.servlet;
 
 import java.io.*;
 import java.sql.*;
 
+import com.example.banksystem.Actions;
 import com.example.banksystem.operation.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;

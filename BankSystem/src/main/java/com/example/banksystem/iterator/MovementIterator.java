@@ -14,23 +14,23 @@ public class MovementIterator implements Iterator<Movement> {
     private boolean reverse = false;
 
     /**
-     * @return
+     * @return crea e ritorna un'istanza della classe MovementsIterator
      */
-    //This method creates and returns an instance of the MovementsIterator class
     public Iterator<Movement> iterator() {
         return new MovementIterator(movements);
     }
 
     /**
-     * @param movements
+     * @param movements imposta la lista di movimenti dell'iteratore
      */
     public MovementIterator(List<Movement> movements) {
         this.movements = movements;
     }
 
     /**
-     * @param movements
-     * @param reverse
+     * Inizializza MovementIterator
+     * @param movements lista di movimenti dell'iteratore
+     * @param reverse se true l'ordine di iterazione sarà inverso (dall'ultimo al primo)
      */
     public MovementIterator(List<Movement> movements, boolean reverse) {
         this.movements = movements;

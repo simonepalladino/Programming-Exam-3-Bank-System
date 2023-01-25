@@ -1,6 +1,6 @@
-package com.example.banksystem;
+package com.example.banksystem.servlet;
 
-import com.example.banksystem.iterator.Iterator;
+import com.example.banksystem.Actions;
 import com.example.banksystem.model.Card;
 import com.example.banksystem.model.Holder;
 import com.example.banksystem.observer.CardObserver;
@@ -9,20 +9,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 @WebServlet(name = "adminAddCard", value = "/admin-addcard")
 public class AdminAddCardServlet extends HttpServlet {

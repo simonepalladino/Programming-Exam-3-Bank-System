@@ -1,5 +1,6 @@
-package com.example.banksystem;
+package com.example.banksystem.servlet;
 
+import com.example.banksystem.Actions;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

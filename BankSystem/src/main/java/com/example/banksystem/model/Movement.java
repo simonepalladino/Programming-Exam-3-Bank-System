@@ -24,6 +24,10 @@ public class Movement {
 
     /**
      * Inizializzazione dei parametri senza alcun prezzo specificato
+     * @param Id_mov id del movimento (chiave primaria)
+     * @param product_id id del prodotto (chiave esterna di Product)
+     * @param Mov_date data dell'operazione
+     * @param card_number_FK  chiave esterna della tabella CARDS
      */
     public Movement(int Id_mov, String product_id, LocalDate Mov_date, String card_number_FK) {
         this.id_mov = Id_mov;
@@ -36,10 +40,10 @@ public class Movement {
 
     /**
      * Inizializzazione del movimento senza specificarne l'ID (per iterare i movimenti di una singola carta)
-     * @param product_id
-     * @param Mov_date
-     * @param card_number_FK
-     * @param price
+     * @param product_id id del prodotto da inserire
+     * @param Mov_date data movimento
+     * @param card_number_FK chiave esterna della tabella CARDS
+     * @param price prezzo del prodotto
      */
     public Movement(String product_id, LocalDate Mov_date, String card_number_FK, double price) {
         this.id_mov = -1;

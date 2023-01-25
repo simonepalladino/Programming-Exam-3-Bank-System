@@ -12,22 +12,22 @@ public class CardIterator implements Iterator<Card> {
     private int index = 0;
 
     /**
-     * @return
+     * @return crea e ritorna un'istanza della classe CardIterator
      */
-    //This method creates and returns an instance of the MovementsIterator class
     public Iterator<Card> iterator() {
         return new CardIterator(cards);
     }
 
     /**
-     * @param cards
+     * Inizializza MovementIterator
+     * @param cards lista di carte dell'iteratore
      */
     public CardIterator(List<Card> cards) {
         this.cards = cards;
     }
 
     /**
-     * @return
+     * @return restituisce vero se la carta successiva esiste
      */
     @Override
     public boolean hasNext() {
@@ -35,7 +35,8 @@ public class CardIterator implements Iterator<Card> {
     }
 
     /**
-     * @return
+     * Itera alla carta successiva
+     * @return restituisce la carta successiva e aggiorna l'index
      */
     @Override
     public Card next() {
