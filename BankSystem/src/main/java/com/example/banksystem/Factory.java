@@ -9,12 +9,21 @@ import com.example.banksystem.observer.MovementObserver;
 import com.example.banksystem.operation.*;
 
 public class Factory {
+    /**
+     * Tipi enumerativi utilizzati per specificare l'iterazione o l'operazione che si vuole effettuare
+     */
     public enum OperationType {
         HOLDER,
         CARD,
         MOVEMENT
     }
 
+    /**
+     * Ritorna un nuovo oggetto definito dall'implementazione del pattern DAO (Operation) e imposta l'istanza dell'Observer a tale.
+     * Siccome è possibile istanziare un solo Observer per volta (Singleton), allora viene resettato con il metodo "setCardOperation".
+     * @param type tipo enumerativo Factory.OperationType
+     * @return restituisce la nuova istanza di operazione definita
+     */
     public static Operation getNewOperation(OperationType type) {
         switch (type) {
             case HOLDER:
@@ -34,6 +43,11 @@ public class Factory {
         return null;
     }
 
+    /**
+     * Ottiene l'iteratore richiesto (Pattern Iterator)
+     * @param type tipo enumerativo Factory.OperationType
+     * @return restituisce l'istanza temporanea di iterazione
+     */
     public static Iterator getIterator(OperationType type) {
         switch (type) {
             case HOLDER:
@@ -56,6 +70,12 @@ public class Factory {
         return null;
     }
 
+    /**
+     * Ottiene l'iteratore richiesto (Pattern Iterator)
+     * @param type tipo enumerativo Factory.OperationType
+     * @param toFind parametro da ricercare in caso di iterazione su movimento
+     * @return restituisce l'istanza temporanea di iterazione
+     */
     public static Iterator getIterator(OperationType type, String toFind) {
         switch (type) {
             case HOLDER:
@@ -78,10 +98,20 @@ public class Factory {
         return null;
     }
 
+    /**
+     * @param toFind carta da cercare
+     * @param reverse true se iterare dall'ultimo al primo elemento, false se dal primo all'ultimo
+     * @return ritorna un iteratore di movimenti su una carta specificata
+     */
     public static Iterator getMovementCardIterator(String toFind, boolean reverse) {
         return new MovementIterator(new MovementOperation(toFind, true).getAll(), reverse);
     }
 
+    /**
+     * @param toFind carta da cercare
+     * @param reverse true se iterare dall'ultimo al primo elemento, false se dal primo all'ultimo
+     * @return ritorna un iteratore di movimenti di una persona specificata
+     */
     public static Iterator getMovementUserIterator(String toFind, boolean reverse) {
         return new MovementIterator(new MovementOperation(toFind, false).getAll(), reverse);
     }

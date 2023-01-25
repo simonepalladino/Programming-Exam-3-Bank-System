@@ -9,6 +9,15 @@ public class Product {
     private String type;
     private String image;
 
+    /**
+     * Inizializza un prodotto con gli stessi valori delle colonne della tabella "PRODUCTS" presente nel database
+     * @param product_name nome del prodotto
+     * @param product_id id del prodotto
+     * @param price prezzo del prodotto
+     * @param quote descrizione del prodotto
+     * @param type tipo del prodotto
+     * @param image immagine presa dalla cartella assets/img
+     */
     public Product(String product_name, String product_id, double price, String quote, String type, String image) {
         this.product_name = product_name;
         this.product_id = product_id;

@@ -18,49 +18,4 @@ public class Actions {
     public static Actions getInstance() {
         return instance;
     }
-
-
-
-
-    /*
-    public void withDrawCard(String cardNumber, double x) {
-        for (Object cardObject : cards.getAll() ){
-            Card card = (Card) cardObject;
-            if (card.getCard_number().equals(cardNumber)){
-                switch (this.contract_type){
-                    case("Basic"):
-                        card.withDraw(x - 1);
-                        break;
-                    case("Premium"):
-                        card.withDraw(x - 0.50);
-                        break;
-                    case("Enterprise"):
-                        card.withDraw(x - 0.25);
-                        break;
-                }
-            }
-            else
-                System.out.println("There are no cards");
-        }
-    }
-
-    public void depositCard (String cardNumber, double x){
-        for (Object cardObject : cards.getAll() ){
-            Card card = (Card) cardObject;
-            if (card.getCard_number().equals(cardNumber)){
-                switch (this.contract_type){
-                    case ("Basic"):
-                        card.withDraw(x - 1);
-                        break;
-                    case ("Premium"):
-                        card.withDraw(x - 0.50);
-                        break;
-                    case ("Enterprise"):
-                        card.withDraw(x - 0.25);
-                        break;
-                }
-            }
-        }
-    }
-     */
 }

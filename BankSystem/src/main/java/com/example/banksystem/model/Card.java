@@ -5,9 +5,8 @@ import com.example.banksystem.operation.MovementOperation;
 
 import java.time.LocalDate;
 
-/**
- * Classe carta che estende l'interfaccia Observer
- */
+//Classe carta che estende l'interfaccia Observer
+
 public class Card implements Observer {
     private String card_number;
     private String CF_FK;
@@ -123,10 +122,6 @@ public class Card implements Observer {
      */
     public MovementOperation getMovements() {
         return movements;
-    }
-
-    public int getLastMovementID() {
-        return lastMovementID;
     }
 
     /**
