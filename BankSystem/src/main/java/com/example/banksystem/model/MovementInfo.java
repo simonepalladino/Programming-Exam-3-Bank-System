@@ -91,7 +91,7 @@ public class MovementInfo {
     }
 
     /**
-     * @return Ottiene la tipologia del prodotto impostato
+     * @return Restituisce la tipologia del prodotto impostato
      */
     public String getType() {
         return type;

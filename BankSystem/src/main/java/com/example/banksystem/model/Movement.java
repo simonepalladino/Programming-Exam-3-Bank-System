@@ -64,42 +64,72 @@ public class Movement {
         this.price = Actions.getInstance().productOperation.get(product_id).getPrice();
     }
 
+    /**
+     * @param Id_mov imposta l'id del movimento
+     */
     public void setId_mov(int Id_mov){
         this.id_mov = Id_mov;
     }
 
+    /**
+     * @param product_id imposta l'id del prodotto
+     */
     public void setProduct_id(String product_id){
         this.product_id = product_id;
     }
 
+    /**
+     * @param Mov_date imposta la data del movimento
+     */
     public void setMov_date (LocalDate Mov_date){
         this.mov_date = Mov_date;
     }
 
+    /**
+     * @param Number_card imposta il numero della carta
+     */
     public void setCard_number_FK(String Number_card){
         this.card_number_FK = Number_card;
     }
 
+    /**
+     * @return restituisce l'id del movimento
+     */
     public int getId_mov(){
         return this.id_mov;
     }
 
+    /**
+     * @return restituisce l'id del prodotto
+     */
     public String getProduct_id(){
         return this.product_id;
     }
 
+    /**
+     * @return restituisce la data del movimento
+     */
     public LocalDate getMov_date(){
         return this.mov_date;
     }
 
+    /**
+     * @return restituisce la chiave esterna della tabella CARDS presente nel database
+     */
     public String getCard_number_FK(){
         return this.card_number_FK;
     }
 
+    /**
+     * @return restituisce il prezzo del prodotto
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * @param price imposta il prezzo del prodotto
+     */
     public void setPrice(double price) {
         this.price = price;
     }

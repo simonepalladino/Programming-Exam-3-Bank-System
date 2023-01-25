@@ -22,6 +22,15 @@ public class Holder implements Observer {
 
     /**
      * Inizializza un correntista con gli stessi valori delle colonne della tabella "HOLDERS" presente nel database.
+     * @param username username del correntista
+     * @param firstname nome del correntista
+     * @param lastname cognome del correntista
+     * @param cf cf del correntista
+     * @param date_of_birth data di nascita del correntista
+     * @param contract_type tipo del contratto del correntista
+     * @param residence residenza del correntista
+     * @param contract_cost costo del contratto del correntista
+     * @param password password del correntista
      * @see com.example.banksystem.operation.HolderOperation
      */
     public Holder(String username, String firstname, String lastname, String cf, Date date_of_birth, String contract_type, String residence, int contract_cost, String password) {
@@ -42,64 +51,112 @@ public class Holder implements Observer {
         cards = new CardOperation(cf);
     }
 
+    /**
+     * @return restituisce l'username del correntista
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * @return restituisce il nome del correntista
+     */
     public String getFirstname() {
         return firstname;
     }
 
+    /**
+     * @return restituisce il cognome del correntista
+     */
     public String getLastname() {
         return lastname;
     }
 
+    /**
+     * @return restituisce il cf del correntista
+     */
     public String getCf() {
         return cf;
     }
 
+    /**
+     * @param cf imposta il cf del correntista
+     */
     public void setCf(String cf) {
         this.cf = cf;
     }
 
+    /**
+     * @return restituisce la data di nascita del correntista
+     */
     public Date getDate_of_birth() {
         return date_of_birth;
     }
 
+    /**
+     * @return restituisce il tipo contratto del correntista
+     */
     public String getContract_type() {
         return contract_type;
     }
 
+    /**
+     * @param contract_type imposta il tipo contratto del correntista
+     */
     public void setContract_type(String contract_type) {
         this.contract_type = contract_type;
     }
 
+    /**
+     * @return restituisce la residenza del correntista
+     */
     public String getResidence() {
         return residence;
     }
 
+    /**
+     * @return restituisce il costo del contratto del correntista
+     */
     public int getContract_cost(){
         return contract_cost;
     }
 
+    /**
+     * @param contract_cost imposta il costo del contratto del correntista
+     */
     public void setContract_cost(int contract_cost){
         this.contract_cost = contract_cost;
     }
 
+    /**
+     * @return restituisce una lista di carte di tutti i correntisti
+     */
     public List getCards() {
         return cards.getAll();
     }
 
+    /**
+     * @return restituisce le carte
+     */
     public CardOperation getCardOperation() {return cards;}
 
+    /**
+     * @return restituisce la password del correntista
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * @param password imposta la password del correntista
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * @param cards imposta le carta al correntista
+     */
     public void setCards(CardOperation cards) {
         this.cards = cards;
     }

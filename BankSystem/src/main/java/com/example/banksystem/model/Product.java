@@ -87,28 +87,28 @@ public class Product {
     }
 
     /**
-     * @param type
+     * @param type imposta il tipo del prodotto
      */
     public void setType(String type) {
         this.type = type;
     }
 
     /**
-     * @return
+     * @return restituisce l'immagine del prodotto
      */
     public String getImage() {
         return image;
     }
 
     /**
-     * @return
+     * @return restituisce il prezzo scontato del prodotto
      */
     public double getDiscountPrice() {
         return discountPrice;
     }
 
     /**
-     * @param discountPrice
+     * @param discountPrice imposta il prezzo scontato del prodotto
      */
     public void setDiscountPrice(double discountPrice) {
         this.discountPrice = discountPrice;
