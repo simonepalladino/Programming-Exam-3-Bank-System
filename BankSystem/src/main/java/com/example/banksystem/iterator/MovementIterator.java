@@ -39,7 +39,7 @@ public class MovementIterator implements Iterator<Movement> {
     }
 
     /**
-     * @return
+     * @return restituisce vero se il prossimo (o precedente) movimento esiste
      */
     @Override
     public boolean hasNext() {
@@ -51,7 +51,8 @@ public class MovementIterator implements Iterator<Movement> {
     }
 
     /**
-     * @return
+     * Itera al prossimo (o al precedente) movimento
+     * @return restituisce il prossimo (o precedente) movimento e aggiorna l'index
      */
     @Override
     public Movement next() {

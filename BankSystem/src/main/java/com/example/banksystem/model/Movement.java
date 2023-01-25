@@ -51,9 +51,9 @@ public class Movement {
 
     /**
      * Inizializzazione del movimento senza specifica dell'ID e con reperimento automatico del prezzo
-     * @param product_id
-     * @param Mov_date
-     * @param card_number_FK
+     * @param product_id id del prodotto
+     * @param Mov_date data movimento
+     * @param card_number_FK chiave esterna della tabella CARDS
      */
     public Movement(String product_id, LocalDate Mov_date, String card_number_FK) {
         this.id_mov = -1;

@@ -20,14 +20,15 @@ public class HolderIterator implements Iterator<Holder> {
     }
 
     /**
-     * @param holders
+     * @param holders imposta la lista di correntisti dell'iteratore
      */
     public HolderIterator(List<Holder> holders) {
         this.holders = holders;
     }
 
     /**
-     * @return
+     * Controlla se esiste il prossimo correntista
+     * @return restituisce vero se il prossimo correntista esiste
      */
     @Override
     public boolean hasNext() {
@@ -35,7 +36,8 @@ public class HolderIterator implements Iterator<Holder> {
     }
 
     /**
-     * @return
+     * Itera al prossimo correntista
+     * @return restituisce il prossimo correntista e aggiorna l'index
      */
     @Override
     public Holder next() {
