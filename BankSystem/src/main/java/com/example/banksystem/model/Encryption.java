@@ -92,9 +92,6 @@ public class  Encryption {
             stmt.setString(1, encodedKey);
             stmt.setString(2, valore);
             stmt.execute();
-
-
-            //connessione al database
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

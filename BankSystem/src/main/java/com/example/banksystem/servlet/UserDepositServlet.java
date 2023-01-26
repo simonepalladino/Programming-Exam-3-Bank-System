@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Servlet
+ * Servlet per la gestione delle carte del correntista e dei suoi movimenti
  */
 @WebServlet(name = "userDeposit", value = "/user-deposit")
 public class UserDepositServlet extends HttpServlet {

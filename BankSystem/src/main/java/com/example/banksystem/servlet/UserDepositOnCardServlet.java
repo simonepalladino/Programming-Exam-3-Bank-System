@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 /**
- * Servlet per il deposito del saldo sulla carta/e del correntista
+ * Servlet per il deposito del saldo sulla/e carta/e del correntista
  */
 @WebServlet(name = "userDepositOnCard", value = "/user-depositoncard")
 public class UserDepositOnCardServlet extends HttpServlet {

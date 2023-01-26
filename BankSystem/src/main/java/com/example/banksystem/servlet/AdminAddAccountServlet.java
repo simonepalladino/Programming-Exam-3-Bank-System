@@ -92,7 +92,6 @@ public class AdminAddAccountServlet extends HttpServlet {
         String username =  request.getParameter("username");
         String card_type = request.getParameter("cardtype");
 
-        Actions.getInstance().holderOperation.add(new Holder(username, firstname, lastname, cf, null, account_type, residence, 0,cf));
         String password = cf;
         byte[] salt = new String("12345678").getBytes();
         int iterationCount = 40000;
@@ -123,12 +122,13 @@ public class AdminAddAccountServlet extends HttpServlet {
         }
 
 
-        Holder h = new Holder(username, firstname, lastname, cf, null, account_type, residence, 0,encryptedPassword );
+        Holder h = new Holder(username, firstname, lastname, cf, null, account_type, residence, 0, encryptedPassword);
+       // holderOperation.add(h);
         Actions.getInstance().holderOperation.add(h);
         k.put(key,encryptedPassword);
 
         // System.out.println(keyy + "   " + k.get(keyy));
-        addP( key,encryptedPassword);
+        addP(key, encryptedPassword);
 
 
         // System.out.println("k to string = " + k.toString());

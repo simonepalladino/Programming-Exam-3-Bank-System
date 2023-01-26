@@ -161,16 +161,26 @@ public class MovementOperation implements Operation<Movement> {
             stmt = con.createStatement();
 
 
-            pstmt = con.prepareStatement("INSERT INTO movements (product_id, Mov_date, card_number_FK, price) VALUES (?,?,?,?)");
 
-            pstmt.setString(1, m.getProduct_id());
-            pstmt.setDate(2, Date.valueOf(m.getMov_date()));
-            pstmt.setString(3, m.getCard_number_FK());
-            pstmt.setDouble(4, m.getPrice());
-            pstmt.executeUpdate();
 
-            if (m.getId_mov() == -1 && lastMovementID > -1)
+            if (m.getId_mov() == -1 && lastMovementID > -1) {
+                pstmt = con.prepareStatement("INSERT INTO movements (Id_mov, product_id, Mov_date, card_number_FK, price) VALUES (?,?,?,?,?)");
+
                 m.setId_mov(++lastMovementID);
+                pstmt.setInt(1, m.getId_mov());
+                pstmt.setString(2, m.getProduct_id());
+                pstmt.setDate(3, Date.valueOf(m.getMov_date()));
+                pstmt.setString(4, m.getCard_number_FK());
+                pstmt.setDouble(5, m.getPrice());
+            } else {
+                pstmt = con.prepareStatement("INSERT INTO movements (product_id, Mov_date, card_number_FK, price) VALUES (?,?,?,?)");
+                pstmt.setString(1, m.getProduct_id());
+                pstmt.setDate(2, Date.valueOf(m.getMov_date()));
+                pstmt.setString(3, m.getCard_number_FK());
+                pstmt.setDouble(4, m.getPrice());
+            }
+
+            pstmt.executeUpdate();
 
             System.out.println("@+ Movimento aggiunto: " +  m.getId_mov() + " " + m.getCard_number_FK() + " " + m.getProduct_id() + " " + m.getMov_date() + " " + m.getPrice());
             movements.add(m);

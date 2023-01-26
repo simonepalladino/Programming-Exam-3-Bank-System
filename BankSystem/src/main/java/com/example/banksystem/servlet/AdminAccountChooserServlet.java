@@ -28,12 +28,14 @@ public class AdminAccountChooserServlet extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        HttpSession session = request.getSession();
 
+        //Prende in input il nome completo o l'username dell'utente cercato e definisce una lista vuota di correntisti
         String searchname = request.getParameter("searchname");
         List<Holder> holderArrayList = new ArrayList<>();
 
+        //Controlla che l'utente abbia scritto qualcosa di valido nel campo di ricerca
         if (searchname != null && !searchname.replace(" ", "").isEmpty()) {
+            //Definisce un iteratore inizializzato sul nome cercato
             Iterator<Holder> iterator = Factory.getIterator(Factory.OperationType.HOLDER, searchname);
 
             while (iterator.hasNext())
