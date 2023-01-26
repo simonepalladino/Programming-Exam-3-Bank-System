@@ -63,6 +63,7 @@ public class UserCancelOperationServlet extends HttpServlet {
             return;
         }
 
+        //Inizializza la variabile lastProduct per reperire le informazioni da visualizzare
         lastProduct = Actions.getInstance().productOperation.get(lastMovement.getProduct_id());
         String productName = lastProduct.getProduct_name();
         String quote = lastProduct.getQuote();

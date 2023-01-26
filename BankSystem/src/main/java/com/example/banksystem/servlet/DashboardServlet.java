@@ -56,6 +56,7 @@ public class DashboardServlet extends HttpServlet {
             Iterator<Movement> recentMovIterator = Factory.getMovementUserIterator(selectedHolder.getCf(), true);
             List<MovementInfo> recentMovements = new ArrayList<>();
 
+            //Inizializza la lista di movimenti recenti richiamando il costruttore di MovementInfo
             int i = 1;
             while (recentMovIterator.hasNext() && i <= 3) {
                 Movement rec = recentMovIterator.next();

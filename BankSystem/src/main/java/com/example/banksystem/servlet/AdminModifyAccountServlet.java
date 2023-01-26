@@ -53,6 +53,8 @@ public class AdminModifyAccountServlet extends HttpServlet {
             Iterator<Movement> iterator2 = Factory.getIterator(Factory.OperationType.MOVEMENT, card.getCard_number());
             while (iterator2.hasNext()) {
                 Movement movement = iterator2.next();
+
+                //Se il costo del movimento è >0 allora si tratterà di un deposito, altrimenti di un prelievo/acquisto
                 if (movement.getPrice() >= 0)
                     totalDeposits++;
                 else

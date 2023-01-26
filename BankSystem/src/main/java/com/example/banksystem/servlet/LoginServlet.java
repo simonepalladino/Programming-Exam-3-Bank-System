@@ -82,7 +82,6 @@ public class LoginServlet extends HttpServlet {
                 if (rs.next()) {
                     depassword = rs.getString("password");
                     cf = rs.getString("cf");
-                    // System.out.println("passs da db = " + depassword);
                     for (SecretKeySpec keyy : k.keySet()) {
                         if (k.get(keyy).equals(depassword)){
                             keytemp = keyy;

@@ -18,12 +18,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ *
+ */
 public class  Encryption {
 
     public static Map<SecretKeySpec,String> k = new HashMap<SecretKeySpec,String>();
     public static String url = "jdbc:sqlite:banksystem.sqlite";
     public static Connection con;
 
+    /**
+     *
+     */
     public static void getK() {
         try {
         con = DriverManager.getConnection(url);
@@ -61,6 +67,9 @@ public class  Encryption {
 
     }
 
+    /**
+     * @param pass
+     */
     public static void deleteP(String pass) {
         try {
 
@@ -83,6 +92,10 @@ public class  Encryption {
         }
     }
 
+    /**
+     * @param k
+     * @param valore
+     */
     public static void addP(SecretKeySpec k , String valore){
         try {
             con = DriverManager.getConnection(url);
@@ -105,8 +118,15 @@ public class  Encryption {
     }
 
 
-
-
+    /**
+     * @param password
+     * @param salt
+     * @param iterationCount
+     * @param keyLength
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
     public static SecretKeySpec createSecretKey(char[] password, byte[] salt, int iterationCount, int keyLength) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
         PBEKeySpec keySpec = new PBEKeySpec(password, salt, iterationCount, keyLength);
@@ -114,6 +134,13 @@ public class  Encryption {
         return new SecretKeySpec(keyTmp.getEncoded(), "AES");
     }
 
+    /**
+     * @param dataToEncrypt
+     * @param key
+     * @return
+     * @throws GeneralSecurityException
+     * @throws UnsupportedEncodingException
+     */
     public static String encrypt(String dataToEncrypt, SecretKeySpec key) throws GeneralSecurityException, UnsupportedEncodingException {
         Cipher pbeCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         pbeCipher.init(Cipher.ENCRYPT_MODE, key);
@@ -124,10 +151,21 @@ public class  Encryption {
         return base64Encode(iv) + ":" + base64Encode(cryptoText);
     }
 
+    /**
+     * @param bytes
+     * @return
+     */
     private static String base64Encode(byte[] bytes) {
         return Base64.getEncoder().encodeToString(bytes);
     }
 
+    /**
+     * @param string
+     * @param key
+     * @return
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
     public static String decrypt(String string, SecretKeySpec key) throws GeneralSecurityException, IOException {
         String iv = string.split(":")[0];
         String property = string.split(":")[1];
@@ -136,6 +174,11 @@ public class  Encryption {
         return new String(pbeCipher.doFinal(base64Decode(property)), "UTF-8");
     }
 
+    /**
+     * @param property
+     * @return
+     * @throws IOException
+     */
     private static byte[] base64Decode(String property) throws IOException {
         return Base64.getDecoder().decode(property);
     }

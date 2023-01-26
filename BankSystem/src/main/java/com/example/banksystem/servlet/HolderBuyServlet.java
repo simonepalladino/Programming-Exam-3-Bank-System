@@ -135,7 +135,8 @@ public class HolderBuyServlet extends HttpServlet {
     }
 
     /**
-     * Questo metodo è utile per il calcolo del prezzo scontato con un semplice switch
+     * Questo metodo è utile per il calcolo del prezzo scontato con un semplice switch. Se l'utente possiede un piano Basic non ha diritto a nessuno sconto
+     * mentre se l'utente ha un piano Premium oppure un piano Enterprise ha diritto a sconti che si differenziano tra di loro in base alla tipologia di prodotto.
      * @param price passo come parametro il prezzo del prodotto
      * @param contract_type passo come parametro il tipo di contratto
      * @param product_type passo come parametro il tipo di prodotto
