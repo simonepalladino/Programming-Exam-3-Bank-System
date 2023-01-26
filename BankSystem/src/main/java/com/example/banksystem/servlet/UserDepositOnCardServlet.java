@@ -15,11 +15,20 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Servlet per il deposito del saldo sulla carta/e del correntista
+ */
 @WebServlet(name = "userDepositOnCard", value = "/user-depositoncard")
 public class UserDepositOnCardServlet extends HttpServlet {
     Holder selectedHolder;
     String selectedCard;
 
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
@@ -32,6 +41,12 @@ public class UserDepositOnCardServlet extends HttpServlet {
         request.getRequestDispatcher("user-depositoncard.jsp").forward(request, response);
     }
 
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 

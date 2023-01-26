@@ -29,6 +29,9 @@ public class AdminAddAccountServlet extends HttpServlet {
     String url;
     Connection con;
 
+    /**
+     * @return Restituisce un array che contiene la carta
+     */
     public static String[] generateCard() {
         String[] results = new String[2];
 
@@ -52,12 +55,24 @@ public class AdminAddAccountServlet extends HttpServlet {
         return results;
     }
 
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
 
         request.getRequestDispatcher("admin-addaccount.jsp").forward(request, response);
     }
 
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         HttpSession session = request.getSession();

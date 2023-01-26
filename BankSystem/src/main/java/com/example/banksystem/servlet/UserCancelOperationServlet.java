@@ -15,6 +15,9 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Servlet per l'annullamento delle operazioni dei correntisti
+ */
 @WebServlet(name = "userCancelOperation", value = "/user-canceloperation")
 public class UserCancelOperationServlet extends HttpServlet {
     Holder selectedHolder;
@@ -22,6 +25,12 @@ public class UserCancelOperationServlet extends HttpServlet {
     Product lastProduct;
     String backurl;
 
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
@@ -66,6 +75,12 @@ public class UserCancelOperationServlet extends HttpServlet {
         request.getRequestDispatcher("user-canceloperation.jsp").forward(request, response);
     }
 
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         String todo = request.getParameter("todo");

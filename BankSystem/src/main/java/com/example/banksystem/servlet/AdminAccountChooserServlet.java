@@ -20,6 +20,12 @@ import java.util.List;
  */
 @WebServlet(name = "adminAccountChooser", value = "/admin-accountchooser")
 public class AdminAccountChooserServlet extends HttpServlet {
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
