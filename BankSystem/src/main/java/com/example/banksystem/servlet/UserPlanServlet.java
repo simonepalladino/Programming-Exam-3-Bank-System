@@ -79,7 +79,7 @@ public class UserPlanServlet extends HttpServlet {
             }
 
             if (selectedCard == null) {
-                response.sendRedirect("user-errorpage.jsp?error=nofund&backurl=dashboard?logintype=user");
+                response.sendRedirect("user-errorpage.jsp?error=nofund&backurl=dashboard?logintype=holder");
                 return;
             }
 
@@ -88,6 +88,6 @@ public class UserPlanServlet extends HttpServlet {
 
         Actions.getInstance().holderOperation.updatePlan(selectedHolder, selected);
 
-        response.sendRedirect("dashboard?logintype=user");
+        response.sendRedirect("dashboard?logintype=holder");
     }
 }

@@ -28,7 +28,7 @@
                         <form method="get" action="user-deposit">
                             <input type="submit" value="Deposit" style="background:none; border-width:0px;" class="nav-link"/></form></li>
                     <li class="nav-item">
-                        <form method="get" action="user-buy">
+                        <form method="get" action="holder-buy">
                             <input type="submit" value="Withdraw or Buy" style="background:none; border-width:0px;" class="nav-link"/></form></li>
                     <li class="nav-item"></li>
                 </ul><small class="fs-6" style="margin-right: 18px;"><c:out value="${sessionScope.usertext}"/></small>
@@ -96,7 +96,7 @@
                                 <div class="row">
                                     <div class="col text-center" style="border-style: none;">
                                         <form method="get" action="user-canceloperation">
-                                            <button class="btn btn-primary text-center" type="submit" style="width: 80%;background: var(--bs-danger);border-color: var(--bs-danger);" name="backurl" value="dashboard?logintype=user">Cancel latest operation</button></form>
+                                            <button class="btn btn-primary text-center" type="submit" style="width: 80%;background: var(--bs-danger);border-color: var(--bs-danger);" name="backurl" value="dashboard?logintype=holder">Cancel latest operation</button></form>
                                     </div>
                                     <div class="col text-center" style="border-style: none;">
                                         <form method="get" action="user-deposit">

@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Servlet per impostare la password ai correntisti
+ * Servlet utilizzata per impostare la password ai correntisti
  */
 @WebServlet(name = "userSetPassword", value = "/user-setpassword")
 public class UserSetPasswordServlet extends HttpServlet {
@@ -58,7 +58,7 @@ public class UserSetPasswordServlet extends HttpServlet {
             System.out.println("prova post pass = " + depassword);
 
             Actions.getInstance().holderOperation.updatePassword(Actions.getInstance().holderOperation.get(cf), password1,depassword);
-            response.sendRedirect("dashboard?logintype=user");
+            response.sendRedirect("dashboard?logintype=holder");
         }
     }
 }

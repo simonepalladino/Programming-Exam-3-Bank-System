@@ -11,7 +11,7 @@ import com.example.banksystem.model.Product;
 import java.lang.annotation.*;
 
 /**
- * @exception WithdrawExceedException Questa eccezione consente di impostare delle limitazioni sui prelievi
+ * @exception WithdrawExceedException Questa eccezione consente d'impostare delle limitazioni sui prelievi
  */
 
 public class WithdrawExceedException extends Exception {

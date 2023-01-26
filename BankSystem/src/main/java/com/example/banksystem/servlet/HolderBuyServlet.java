@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * Servlet per l'acquisto dei prodotti da parte del correntista
  */
-@WebServlet(name = "userBuy", value = "/user-buy")
-public class UserBuyServlet extends HttpServlet {
+@WebServlet(name = "holderBuy", value = "/holder-buy")
+public class HolderBuyServlet extends HttpServlet {
     Holder selectedHolder;
 
     /**
@@ -49,12 +49,13 @@ public class UserBuyServlet extends HttpServlet {
         for (Object prodObject : Actions.getInstance().productOperation.getAll()) {
             Product prod = (Product) prodObject;
 
-            //Aggiunge solo i "prodotti" che non sono corrispondenti alla descrizione del deposito e del ritiro
+            //Aggiunge solo i "prodotti" che non sono corrispondenti alla descrizione del deposito, del ritiro e del cambio piano
             if (!prod.getType().equals("deposit") && !prod.getType().equals("withdraw") && !prod.getType().equals("upgrade")) {
-                //imposta il prezzo di sconto
+                //Imposta il prezzo di sconto (resettandolo prima a zero nel caso sia già stato impostato)
                 prod.setDiscountPrice(0);
                 double discountPrice = getDiscountPrice(prod.getPrice(), selectedHolder.getContract_type(), prod.getType());
 
+                //Verifica se effettivamente il prezzo è scontato
                 if (discountPrice < prod.getPrice())
                     prod.setDiscountPrice(getDiscountPrice(prod.getPrice(), selectedHolder.getContract_type(), prod.getType()));
                 productList.add(prod);
@@ -64,7 +65,7 @@ public class UserBuyServlet extends HttpServlet {
         request.setAttribute("products", productList);
         request.setAttribute("cards", selectedHolder.getCards());
 
-        request.getRequestDispatcher("user-buy.jsp").forward(request, response);
+        request.getRequestDispatcher("holder-buy.jsp").forward(request, response);
     }
 
     /**
@@ -78,26 +79,30 @@ public class UserBuyServlet extends HttpServlet {
         String action = request.getParameter("buy");
         String selectedcard = request.getParameter("selectedcard");
 
+        //Ottiene la carta selezionata e definisce un movimento nullo che dovrà essere inizializzato
         Card selectedCard = selectedHolder.getCardOperation().get(selectedcard);
         Movement movement = null;
 
+        //Se si tratta di un prelievo, allora esegui questo blocco di codice
         if (action.equals("withdraw") || action == null) {
             double money = 0;
 
+            //Cerca di convertire dai parametri l'importo immesso; se errato, allora rimanda alla pagina di errore
             try {
                 money = Double.parseDouble(request.getParameter("withdraw"));
 
                 movement = new Movement("withdraw", LocalDate.now(), selectedcard, -money);
-            } //catch di un'altra espressione (riguardo i fondi non disponibili)
+            }
             catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Si è verificato un errore durante la lettura del prelievo!");
 
-                response.sendRedirect("user-errorpage.jsp?error=withdrawmoney&backurl=user-buy");
+                response.sendRedirect("user-errorpage.jsp?error=withdrawmoney&backurl=holder-buy");
                 return;
             }
         } else {
-            //Calcolo automatico del prezzo fatto in movements
+            //Se si tratta dell'acquisto di uno degli oggetti, allora esegue questo blocco di codice
+            //Il calcolo automatico del prezzo viene fatto in getDiscountPrice
             Product selectedProduct = Actions.getInstance().productOperation.get(action);
             double price = getDiscountPrice(selectedProduct.getPrice(), selectedHolder.getContract_type(), selectedProduct.getType());
 
@@ -105,25 +110,28 @@ public class UserBuyServlet extends HttpServlet {
         }
 
         try {
-            //Controlla se l'utente può permettersi di effettuare il deposito
+            //Controlla se l'utente può permettersi di effettuare il prelievo o l'acquisto
             NoFundsException.checkWithdrawLimit(selectedHolder, selectedCard, movement);
             WithdrawExceedException.checkWithdrawLimit(selectedHolder, selectedCard, movement);
 
             MovementObserver.getInstance().add(movement);
         } catch (NoFundsException noFundsException) {
+            //Gestione dell'eccezione nel caso non ci sono fondi a sufficienza
             System.out.println(noFundsException.toString());
             response.sendRedirect("user-errorpage.jsp?error=nofund&backurl=user-deposit");
             return;
         } catch (WithdrawExceedException withdrawExceedException) {
+            //Gestione dell'eccezione nel caso l'importo superi i limiti previsti dal piano
             System.out.println(withdrawExceedException.toString());
             response.sendRedirect("user-errorpage.jsp?error=nowithdraw&backurl=user-deposit");
             return;
         } catch (Exception e) {
+            //Gestione dell'eccezione nel caso si sia verificato un errore generico
             response.sendRedirect("user-errorpage.jsp?backurl=user-deposit");
             return;
         }
 
-        response.sendRedirect("dashboard?logintype=user");
+        response.sendRedirect("dashboard?logintype=holder");
     }
 
     /**

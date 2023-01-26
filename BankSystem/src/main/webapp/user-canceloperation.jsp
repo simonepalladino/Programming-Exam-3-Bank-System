@@ -31,7 +31,7 @@
                         <form method="get" action="user-deposit">
                             <input type="submit" value="Deposit" style="background:none; border-width:0px;" class="nav-link active"/></form></li>
                     <li class="nav-item">
-                        <form method="get" action="user-buy">
+                        <form method="get" action="holder-buy">
                             <input type="submit" value="Withdraw or Buy" style="background:none; border-width:0px;" class="nav-link"/></form></li>
                     <li class="nav-item"></li>
                 </ul><small class="fs-6" style="margin-right: 18px;"><c:out value="${sessionScope.usertext}"/></small>

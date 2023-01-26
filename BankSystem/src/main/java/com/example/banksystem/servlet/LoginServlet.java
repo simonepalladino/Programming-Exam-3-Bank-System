@@ -23,6 +23,7 @@ public class LoginServlet extends HttpServlet {
     String error;
 
     public void init() {
+        //Codice necessario per il funzionamento delle query su database
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
@@ -43,10 +44,6 @@ public class LoginServlet extends HttpServlet {
         logintype = request.getParameter("logintype");
         error = request.getParameter("error");
 
-        session.setAttribute("holderOperation", Actions.getInstance().holderOperation);
-        session.setAttribute("cardOperation", Actions.getInstance().cardOperation);
-        session.setAttribute("movementOperation", Actions.getInstance().movementOperation);
-
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
@@ -60,13 +57,16 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html");
         Boolean done = false;
 
+        //Imposta l'username immesso come attributo di sessione per visualizzarlo nella barra in alto
         HttpSession session = request.getSession();
         session.setAttribute("usertext", request.getParameter("username").toString());
         String username = null, password = null, cf = null;
         String depassword =null;
 
 
-        if (logintype.equals("user")) {
+        //Codice relativo al login del correntista
+        //Controlla se l'username e la password sono presenti nella tabella "Holders"
+        if (logintype.equals("holder")) {
             try {
                 con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
                 Statement stmt = con.createStatement();
@@ -91,13 +91,8 @@ public class LoginServlet extends HttpServlet {
                             if (decryptedPassword.equals(password))
                                 done = true;
                         }
-
-
                     }
-
                 }
-
-
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (GeneralSecurityException e) {
@@ -117,11 +112,13 @@ public class LoginServlet extends HttpServlet {
                 if (password.equals(cf))
                     response.sendRedirect("user-setpassword?cf=" + cf +"&depassword="+ depassword);
                 else
-                    response.sendRedirect("dashboard?logintype=user");
+                    response.sendRedirect("dashboard?logintype=holder");
             } else {
-                response.sendRedirect("login?logintype=user&error=errore");
+                response.sendRedirect("login?logintype=holder&error=errore");
             }
         } else {
+            //Codice relativo al login admin
+            //Controlla se l'username e la password sono presenti nella tabella "Admins"
             try {
                 con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
                 Statement stmt = con.createStatement();

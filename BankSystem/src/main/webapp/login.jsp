@@ -17,8 +17,8 @@
 </c:url>
 
 <c:choose>
-    <c:when test="${param.logintype == 'user'}">
-        <c:set var = "grandtext" scope = "session" value = "User Log in"/>
+    <c:when test="${param.logintype == 'holder'}">
+        <c:set var = "grandtext" scope = "session" value = "Holder Log in"/>
         <c:set var = "logincolor" scope = "session" value = "--bs-blue"/>
     </c:when>
     <c:otherwise>
