@@ -10,6 +10,9 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 
+/**
+ * Servlet per il login sia per i correntisti che per gli admin
+ */
 @WebServlet(name = "login", value = "/login")
 public class LoginServlet extends HttpServlet {
     Connection con;
@@ -24,6 +27,12 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
@@ -38,6 +47,12 @@ public class LoginServlet extends HttpServlet {
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         Boolean done = false;

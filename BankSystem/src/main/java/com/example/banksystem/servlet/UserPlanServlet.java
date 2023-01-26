@@ -15,10 +15,19 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Servlet
+ */
 @WebServlet(name = "userPlan", value = "/user-plan")
 public class UserPlanServlet extends HttpServlet {
     Holder selectedHolder;
 
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
@@ -28,6 +37,12 @@ public class UserPlanServlet extends HttpServlet {
         request.getRequestDispatcher("user-plan.jsp").forward(request, response);
     }
 
+    /**
+     * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
+     * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         String selected = request.getParameter("selected");
