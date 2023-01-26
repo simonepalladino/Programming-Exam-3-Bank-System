@@ -100,9 +100,9 @@ public class HolderPlanServlet extends HttpServlet {
 
             //Se la carta è stata trovata, allora aggiungi il prodotto alla lista dei movimenti
             MovementObserver.getInstance().add(new Movement(prodID, LocalDate.now(), selectedCard.getCard_number(), -price));
-            Actions.getInstance().holderOperation.updatePlan(selectedHolder, selected);
         }
 
+        Actions.getInstance().holderOperation.updatePlan(selectedHolder, selected);
         response.sendRedirect("dashboard?logintype=holder");
     }
 }
