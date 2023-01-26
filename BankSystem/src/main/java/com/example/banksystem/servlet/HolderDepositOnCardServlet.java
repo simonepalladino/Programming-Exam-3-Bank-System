@@ -2,7 +2,6 @@ package com.example.banksystem.servlet;
 
 import com.example.banksystem.model.Holder;
 import com.example.banksystem.model.Movement;
-import com.example.banksystem.observer.CardObserver;
 import com.example.banksystem.observer.MovementObserver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,8 +17,8 @@ import java.time.LocalDate;
 /**
  * Servlet per il deposito del saldo sulla/e carta/e del correntista
  */
-@WebServlet(name = "userDepositOnCard", value = "/user-depositoncard")
-public class UserDepositOnCardServlet extends HttpServlet {
+@WebServlet(name = "holderDepositOnCard", value = "/holder-depositoncard")
+public class HolderDepositOnCardServlet extends HttpServlet {
     Holder selectedHolder;
     String selectedCard;
 
@@ -33,12 +32,13 @@ public class UserDepositOnCardServlet extends HttpServlet {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
 
+        //Recupera i parametri dall'URL per scopi di visualizzazione grafica e futuri calcoli nella doPost
         selectedHolder = (Holder) session.getAttribute("selectedHolder");
         selectedCard = request.getParameter("card");
 
         request.setAttribute("card", selectedCard);
 
-        request.getRequestDispatcher("user-depositoncard.jsp").forward(request, response);
+        request.getRequestDispatcher("holder-depositoncard.jsp").forward(request, response);
     }
 
     /**
@@ -50,6 +50,7 @@ public class UserDepositOnCardServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
+        //Tentativo di recuperare il quantitativo di soldi. Se fallisce, allora imposta la variabile cancel a true
         String moneyString = "";
         double moneyDouble = 0;
         boolean cancel = false;
@@ -66,23 +67,27 @@ public class UserDepositOnCardServlet extends HttpServlet {
 
                 try {
                     //Controlla se l'utente può permettersi di effettuare il deposito
+                    //secondo i limiti imposti dal suo piano
                     DepositExceedException.checkDepositLimit(selectedHolder, deposit);
 
                     MovementObserver.getInstance().add(deposit);
                 } catch (DepositExceedException depositExceedException) {
+                    //Se viene restituita questa eccezione, allora viene caricata la pagina di errore relativa al problema
                     System.out.println(depositExceedException.toString());
-                    response.sendRedirect("user-errorpage.jsp?error=nodeposit&backurl=user-deposit");
+                    response.sendRedirect("errorpage.jsp?error=nodeposit&backurl=holder-deposit");
                     return;
                 } catch (Exception e) {
-                    response.sendRedirect("user-errorpage.jsp?backurl=user-deposit");
+                    //Altrimenti si carica una pagina di errore generica
+                    response.sendRedirect("errorpage.jsp?backurl=holder-deposit");
                     return;
                 }
             } else {
-                response.sendRedirect("user-depositoncard?error=input&card=" + selectedCard);
+                //Se l'input non è valido, allora si ricarica la pagina mostrando un messaggio di errore
+                response.sendRedirect("holder-depositoncard?error=input&card=" + selectedCard);
                 return;
             }
         }
 
-        response.sendRedirect("user-deposit");
+        response.sendRedirect("holder-deposit");
     }
 }

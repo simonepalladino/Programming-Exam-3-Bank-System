@@ -44,6 +44,7 @@ public class AdminAccountChooserServlet extends HttpServlet {
             holderArrayList = Actions.getInstance().holderOperation.getAll();
         }
 
+        //Imposta l'attributo dei correntisti trovati per visualizzarli nella pagina
         request.setAttribute("accounts", holderArrayList);
 
         request.getRequestDispatcher("admin-accountchooser.jsp").forward(request, response);

@@ -16,10 +16,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 /**
- * Servlet per l'annullamento delle operazioni dei correntisti
+ * Servlet per l'annullamento dell'ultima operazione effettuata da un correntista
  */
-@WebServlet(name = "userCancelOperation", value = "/user-canceloperation")
-public class UserCancelOperationServlet extends HttpServlet {
+@WebServlet(name = "holderCancelOperation", value = "/holder-canceloperation")
+public class HolderCancelOperationServlet extends HttpServlet {
     Holder selectedHolder;
     Movement lastMovement;
     Product lastProduct;
@@ -35,31 +35,32 @@ public class UserCancelOperationServlet extends HttpServlet {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
 
+        //Recupera i parametri che riguardano il correntista selezionato e l'indirizzo di ritorno
         selectedHolder = (Holder) session.getAttribute("selectedHolder");
         backurl = request.getParameter("backurl");
 
-        //Ottiene una lista di tutti i movimenti effettuati dall'utente
         lastMovement = null;
 
-        //Itera per selezionare l'ultimo acquisto effettuato (si tratta di un rimborso!)
+        //Itera per selezionare l'ultimo acquisto effettuato (si tratta di un rimborso!)...
+        //... ottenendo una lista di tutti i movimenti effettuati dall'utente
         Iterator<Movement> recentMovIterator = Factory.getMovementUserIterator(selectedHolder.getCf(), true);
         while (recentMovIterator.hasNext()) {
             Movement rec = recentMovIterator.next();
             String type = Actions.getInstance().productOperation.get(rec.getProduct_id()).getType();
 
+            //Un movimento rimborsabile non deve essere né di tipologia deposito, né come prelievo, né come cambio di piano
             if (!type.equals("deposit") && !type.equals("withdraw") && !type.equals("upgrade")) {
                 lastMovement = Actions.getInstance().movementOperation.get(rec.getId_mov());
                 break;
             }
-            /* Si ferma immediatamente se trova un rimborso, per non ricorrere a eventuali
-                    rimborsi duplicati */
+            /* Si ferma immediatamente se trova un rimborso, per non ricorrere a eventuali rimborsi duplicati */
             if (rec.getProduct_id().equals("refund"))
                 break;
         }
 
         if (lastMovement == null) {
-            //Non è stato trovato alcun valido movimento annullabile
-            response.sendRedirect("user-errorpage.jsp?error=nooperation&backurl=" + backurl);
+            //Se non è stato trovato alcun valido movimento annullabile, allora rimanda alla pagina di errore
+            response.sendRedirect("errorpage.jsp?error=nooperation&backurl=" + backurl);
             return;
         }
 
@@ -69,11 +70,11 @@ public class UserCancelOperationServlet extends HttpServlet {
         String quote = lastProduct.getQuote();
         String type = lastProduct.getType();
 
+        //Passa l'oggetto al requestScope per la lettura delle info
         MovementInfo movInfo = new MovementInfo(lastMovement.getMov_date(), lastMovement.getCard_number_FK(), lastMovement.getPrice(), productName, quote, type);
-
         request.setAttribute("movement", movInfo);
 
-        request.getRequestDispatcher("user-canceloperation.jsp").forward(request, response);
+        request.getRequestDispatcher("holder-canceloperation.jsp").forward(request, response);
     }
 
     /**
@@ -88,12 +89,12 @@ public class UserCancelOperationServlet extends HttpServlet {
         if (todo == null) todo = "";
 
         if (todo.equals("yes")) {
-            //Se l'operazione è annullabile, allora...
+            //Se l'operazione è annullabile (goRefund == true), allora effettua un rimborso!
             if (goRefund(selectedHolder, lastProduct)) {
                 MovementObserver.getInstance().add(new Movement("refund", LocalDate.now(), lastMovement.getCard_number_FK(), -lastMovement.getPrice()));
             } else {
-                //Altrimenti...
-                response.sendRedirect("user-errorpage.jsp?error=canceloperation&backurl=" + backurl);
+                //Altrimenti visualizza un errore apposito
+                response.sendRedirect("errorpage.jsp?error=canceloperation&backurl=" + backurl);
                 return;
             }
         }

@@ -13,8 +13,8 @@ import java.io.IOException;
 /**
  * Servlet utilizzata per impostare la password ai correntisti
  */
-@WebServlet(name = "userSetPassword", value = "/user-setpassword")
-public class UserSetPasswordServlet extends HttpServlet {
+@WebServlet(name = "userSetPassword", value = "/holder-setpassword")
+public class HolderSetPasswordServlet extends HttpServlet {
     String cf;
     String depassword;
 
@@ -30,9 +30,7 @@ public class UserSetPasswordServlet extends HttpServlet {
         cf = request.getParameter("cf");
         depassword = request.getParameter("depassword");
 
-        System.out.println(depassword);
-
-        request.getRequestDispatcher("user-setpassword.jsp").forward(request, response);
+        request.getRequestDispatcher("holder-setpassword.jsp").forward(request, response);
     }
 
     /**
@@ -48,15 +46,17 @@ public class UserSetPasswordServlet extends HttpServlet {
         String password1 = request.getParameter("password1");
         String password2 = request.getParameter("password2");
 
+        //Se le password non corrispondono, allora ricarica la pagina mostrando l'errore di non corrispondenza
         if (!password1.equals(password2)) {
-            response.sendRedirect("user-setpassword?passerror=nomatch&cf=" + cf +"&pass= " +depassword);
+            response.sendRedirect("holder-setpassword?passerror=nomatch&cf=" + cf +"&pass= " +depassword);
         } else {
+            //Se le password corrispondono ma sono identiche al CF del correntista, allora rimanda all'errore appropriato
             if (password1.equals(cf)) {
-                response.sendRedirect("user-setpassword?passerror=same&cf=" + cf+"&pass= " +depassword);
+                response.sendRedirect("holder-setpassword?passerror=same&cf=" + cf+"&pass= " +depassword);
                 return;
             }
-            System.out.println("prova post pass = " + depassword);
 
+            //Se i controlli vanno a buon fine, allora aggiorna la password
             Actions.getInstance().holderOperation.updatePassword(Actions.getInstance().holderOperation.get(cf), password1,depassword);
             response.sendRedirect("dashboard?logintype=holder");
         }

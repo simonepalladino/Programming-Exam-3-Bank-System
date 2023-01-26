@@ -34,12 +34,14 @@ public class AdminModifyAccountServlet extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        HttpSession session = request.getSession();
 
+        //Recupera l'account selezionato dai parametri
         selectedAccount = request.getParameter("selectedAccount");
         selectedHolder = Actions.getInstance().holderOperation.get(selectedAccount);
         request.setAttribute("selectedHolder", selectedHolder);
 
+        //Definisce un iteratore per calcolare informazioni da visualizzare:
+        // bilancio totale, numero di depositi totali e numero di spese totali
         List<Card> cardArrayList = new ArrayList<>();
         Iterator<Card> iterator = Factory.getIterator(Factory.OperationType.CARD, selectedAccount);
         int totalWithdrawals = 0, totalDeposits = 0;
@@ -62,6 +64,7 @@ public class AdminModifyAccountServlet extends HttpServlet {
             }
         }
 
+        //Imposta gli attributi nel requestScope da visualizzare
         request.setAttribute("cardList", cardArrayList);
         request.setAttribute("balance", totalBalance);
         request.setAttribute("withdrawals", totalWithdrawals);
@@ -83,11 +86,11 @@ public class AdminModifyAccountServlet extends HttpServlet {
 
         String toDelete = request.getParameter("delete");
         if (toDelete.equals("account")) {
-            //Elimina l'account visualizzato
+            //Elimina l'account visualizzato dall'istanza singleton e ritorna alla pagina precedente
             Actions.getInstance().holderOperation.delete(selectedHolder);
             response.sendRedirect("admin-accountchooser");
         } else {
-            //Elimina la carta selezionata
+            //Elimina la carta selezionata dall'istanza singleton e ricarica la pagina
             CardObserver.getInstance().delete(Actions.getInstance().cardOperation.get(toDelete));
             doGet(request, response);
         }

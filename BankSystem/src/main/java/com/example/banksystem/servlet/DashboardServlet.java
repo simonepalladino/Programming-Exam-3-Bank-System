@@ -70,7 +70,7 @@ public class DashboardServlet extends HttpServlet {
             }
             request.setAttribute("recentMovements", recentMovements);
 
-            request.getRequestDispatcher("user-dashboard.jsp").forward(request, response);
+            request.getRequestDispatcher("holder-dashboard.jsp").forward(request, response);
         }
     }
 }

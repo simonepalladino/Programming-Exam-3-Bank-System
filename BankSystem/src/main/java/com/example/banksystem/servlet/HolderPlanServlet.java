@@ -1,6 +1,7 @@
 package com.example.banksystem.servlet;
 
 import com.example.banksystem.Actions;
+import com.example.banksystem.exception.NoFundsException;
 import com.example.banksystem.model.Card;
 import com.example.banksystem.model.Holder;
 import com.example.banksystem.model.Movement;
@@ -18,8 +19,8 @@ import java.time.LocalDate;
 /**
  * Servlet
  */
-@WebServlet(name = "userPlan", value = "/user-plan")
-public class UserPlanServlet extends HttpServlet {
+@WebServlet(name = "holderPlan", value = "/holder-plan")
+public class HolderPlanServlet extends HttpServlet {
     Holder selectedHolder;
 
     /**
@@ -34,7 +35,7 @@ public class UserPlanServlet extends HttpServlet {
 
         selectedHolder = (Holder) session.getAttribute("selectedHolder");
 
-        request.getRequestDispatcher("user-plan.jsp").forward(request, response);
+        request.getRequestDispatcher("holder-plan.jsp").forward(request, response);
     }
 
     /**
@@ -50,7 +51,11 @@ public class UserPlanServlet extends HttpServlet {
         String prodID = null;
         double price = 0;
 
-        //Decisioni riguardo i costi di cambio programma
+        /*  Decisioni riguardo i costi di cambio programma:
+            Se l'utente è Basic allora pagherà 100€ per aggiornare al piano Premium o 1000€ per quello Enterprise;
+            se l'utente è Premium allora pagherà 900€ per aggiornare al piano Enterprise.
+            Il downgrade a qualsiasi piano non costa.
+         */
         switch (selected) {
             case "Premium":
                 if (selectedHolder.getContract_type().equals("Basic")) {
@@ -69,24 +74,32 @@ public class UserPlanServlet extends HttpServlet {
                 break;
         }
 
+        //Se l'utente ha effettuato un upgrade
         if (price > 0) {
-            //Scegli la prima carta con fondi disponibili
             Card selectedCard = null;
+
+            //Ciclo che cerca di scegliere la prima carta con fondi disponibili
             for (Object cardObject : selectedHolder.getCards()) {
-                selectedCard = (Card) cardObject;
-                if (selectedCard.getBalance() >= price)
-                    break;
+                try {
+                    Movement movement = new Movement(prodID, LocalDate.now(), selectedCard.getCard_number(), -price);
+                    NoFundsException.checkWithdrawLimit(selectedHolder, (Card) cardObject, movement);
+
+                    selectedCard = (Card) cardObject;
+                } catch (NoFundsException nf) {
+                    //Non è la carta giusta.
+                }
             }
 
+            //Se la carta giusta non è stata trovata, allora rimanda alla pagina di errore
             if (selectedCard == null) {
-                response.sendRedirect("user-errorpage.jsp?error=nofund&backurl=dashboard?logintype=holder");
+                response.sendRedirect("errorpage.jsp?error=nofund&backurl=dashboard?logintype=holder");
                 return;
             }
 
+            //Se la carta è stata trovata, allora aggiungi il prodotto alla lista dei movimenti
             MovementObserver.getInstance().add(new Movement(prodID, LocalDate.now(), selectedCard.getCard_number(), -price));
+            Actions.getInstance().holderOperation.updatePlan(selectedHolder, selected);
         }
-
-        Actions.getInstance().holderOperation.updatePlan(selectedHolder, selected);
 
         response.sendRedirect("dashboard?logintype=holder");
     }

@@ -40,7 +40,7 @@ public class HolderBuyServlet extends HttpServlet {
 
         //Se l'utente non ha carte, esci!
         if (selectedHolder.getCards().size() == 0) {
-            response.sendRedirect("user-errorpage.jsp?error=nocards");
+            response.sendRedirect("errorpage.jsp?error=nocards");
             return;
         }
 
@@ -97,7 +97,7 @@ public class HolderBuyServlet extends HttpServlet {
                 e.printStackTrace();
                 System.out.println("Si è verificato un errore durante la lettura del prelievo!");
 
-                response.sendRedirect("user-errorpage.jsp?error=withdrawmoney&backurl=holder-buy");
+                response.sendRedirect("errorpage.jsp?error=withdrawmoney&backurl=holder-buy");
                 return;
             }
         } else {
@@ -118,16 +118,16 @@ public class HolderBuyServlet extends HttpServlet {
         } catch (NoFundsException noFundsException) {
             //Gestione dell'eccezione nel caso non ci sono fondi a sufficienza
             System.out.println(noFundsException.toString());
-            response.sendRedirect("user-errorpage.jsp?error=nofund&backurl=user-deposit");
+            response.sendRedirect("errorpage.jsp?error=nofund&backurl=holder-deposit");
             return;
         } catch (WithdrawExceedException withdrawExceedException) {
             //Gestione dell'eccezione nel caso l'importo superi i limiti previsti dal piano
             System.out.println(withdrawExceedException.toString());
-            response.sendRedirect("user-errorpage.jsp?error=nowithdraw&backurl=user-deposit");
+            response.sendRedirect("errorpage.jsp?error=nowithdraw&backurl=holder-deposit");
             return;
         } catch (Exception e) {
             //Gestione dell'eccezione nel caso si sia verificato un errore generico
-            response.sendRedirect("user-errorpage.jsp?backurl=user-deposit");
+            response.sendRedirect("errorpage.jsp?backurl=holder-deposit");
             return;
         }
 

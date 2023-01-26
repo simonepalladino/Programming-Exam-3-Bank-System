@@ -12,15 +12,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Servlet per la gestione delle carte del correntista e dei suoi movimenti
  */
-@WebServlet(name = "userDeposit", value = "/user-deposit")
-public class UserDepositServlet extends HttpServlet {
+@WebServlet(name = "hoderDeposit", value = "/holder-deposit")
+public class HolderDepositServlet extends HttpServlet {
     Holder selectedHolder;
     String view;
 
@@ -34,6 +33,8 @@ public class UserDepositServlet extends HttpServlet {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
 
+        //Se il parametro URL "view" è "all", allora la visualizzazione sarà basata sul caricare i movimenti
+        //di tutte le carte; altrimenti, sarà creato un pannello di movimenti per carta.
         selectedHolder = (Holder) session.getAttribute("selectedHolder");
         view = request.getParameter("view");
         if (view == null) view = "cards";
@@ -63,12 +64,13 @@ public class UserDepositServlet extends HttpServlet {
             }
         }
 
+        //Passa al requestScope le informazioni calcolate
         request.setAttribute("cardList", cardArrayList);
         request.setAttribute("balance", totalBalance);
         request.setAttribute("withdrawals", totalWithdrawals);
         request.setAttribute("deposits", totalDeposits);
 
-        //Se l'utente visualizza i movimenti di tutte le carte
+        //Se l'utente visualizza i movimenti di tutte le carte esegui il blocco di codice
         if (view.equals("all")) {
             Iterator<Movement> recentMovIterator = Factory.getMovementUserIterator(selectedHolder.getCf(), true);
             List<MovementInfo> recentMovements = new ArrayList<>();
@@ -85,7 +87,7 @@ public class UserDepositServlet extends HttpServlet {
 
             request.setAttribute("recentMovements", recentMovements);
         } else {
-            //Se l'utente visualizza i movimenti separati per ciascuna carta
+            //Se l'utente visualizza i movimenti separati per ciascuna carta, allora esegue questo blocco di codice
             iterator = Factory.getIterator(Factory.OperationType.CARD, selectedHolder.getCf());
             List<CardMovementInfo> cardRecentMovements = new ArrayList<>();
 
@@ -103,18 +105,18 @@ public class UserDepositServlet extends HttpServlet {
                     String quote = temp.getQuote();
                     String type = temp.getType();
 
-                    //Aggiungi alla lista di movimenti
+                    //Aggiunge alla lista di movimenti
                     recentMovements.add(new MovementInfo(rec.getMov_date(), rec.getCard_number_FK(), rec.getPrice(), productName, quote, type));
                 }
 
-                //Aggiungi alla lista di movimenti-carta (necessario alla View per visualizzare il nome della carta)
+                //Aggiunge alla lista di movimenti-carta (necessario alla View per visualizzare il nome della carta)
                 cardRecentMovements.add(new CardMovementInfo(card.getCard_name(), recentMovements));
             }
 
             request.setAttribute("cardRecentMovements", cardRecentMovements);
         }
 
-        request.getRequestDispatcher("user-deposit.jsp").forward(request, response);
+        request.getRequestDispatcher("holder-deposit.jsp").forward(request, response);
     }
 
 
@@ -124,7 +126,7 @@ public class UserDepositServlet extends HttpServlet {
 
 
         /**
-         * Classe necessaria a puro scopo visivo per il file "user-deposit.jsp"
+         * Classe necessaria a puro scopo visivo per il file "holder-deposit.jsp"
          * quando si desidera visualizzare i movimenti per carta
          * @param card_name nome della carta che si vuole visualizzare
          * @param movementsInfo lista dei movimenti della carta associata

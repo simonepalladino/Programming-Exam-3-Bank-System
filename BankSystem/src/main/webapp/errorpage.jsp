@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="assets/css/Pricing-Free-Paid-badges.css">
 </head>
 
-<c:url value="user-errorpage.jsp" var="displayURL">
+<c:url value="errorpage.jsp" var="displayURL">
     <c:param name="error"   value="${param.error}" />
     <c:param name="backurl"   value="${param.backurl}" />
 </c:url>
@@ -28,15 +28,15 @@
                         <form method="get" action="dashboard">
                             <input type="submit" value="Home" style="background:none; border-width:0px;" class="nav-link" name="logintype"/></form></li>
                     <li class="nav-item">
-                        <form method="get" action="user-deposit">
+                        <form method="get" action="holder-deposit">
                             <input type="submit" value="Deposit" style="background:none; border-width:0px;" class="nav-link active"/></form></li>
                     <li class="nav-item">
                         <form method="get" action="holder-buy">
                             <input type="submit" value="Withdraw or Buy" style="background:none; border-width:0px;" class="nav-link"/></form></li>
                     <li class="nav-item"></li>
                 </ul><small class="fs-6" style="margin-right: 18px;"><c:out value="${sessionScope.usertext}"/></small>
-                <form method="get" action="user-plan">
-                    <button type="submit" class="btn btn-primary" role="button" href="user-plan.jsp" style="margin-right: 10px;background: rgb(253,186,13);border-style: none;box-shadow: 0px 0px 5px 2px var(--bs-orange);">Change plan</button>
+                <form method="get" action="holder-plan">
+                    <button type="submit" class="btn btn-primary" role="button" href="holder-plan.jsp" style="margin-right: 10px;background: rgb(253,186,13);border-style: none;box-shadow: 0px 0px 5px 2px var(--bs-orange);">Change plan</button>
                 </form>
                 <a class="btn btn-primary" role="button" href="index.html">Logout</a>
             </div>

@@ -109,7 +109,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("selectedHolder", Actions.getInstance().holderOperation.get(cf));
 
                 if (password.equals(cf))
-                    response.sendRedirect("user-setpassword?cf=" + cf +"&depassword="+ depassword);
+                    response.sendRedirect("holder-setpassword?cf=" + cf +"&depassword="+ depassword);
                 else
                     response.sendRedirect("dashboard?logintype=holder");
             } else {
