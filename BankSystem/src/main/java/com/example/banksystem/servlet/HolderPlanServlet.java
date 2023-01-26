@@ -81,10 +81,12 @@ public class HolderPlanServlet extends HttpServlet {
             //Ciclo che cerca di scegliere la prima carta con fondi disponibili
             for (Object cardObject : selectedHolder.getCards()) {
                 try {
-                    Movement movement = new Movement(prodID, LocalDate.now(), selectedCard.getCard_number(), -price);
-                    NoFundsException.checkWithdrawLimit(selectedHolder, (Card) cardObject, movement);
+                    Card tempCard = (Card) cardObject;
+                    Movement movement = new Movement(prodID, LocalDate.now(), tempCard.getCard_number(), -price);
+                    NoFundsException.checkWithdrawLimit(selectedHolder, tempCard, movement);
 
-                    selectedCard = (Card) cardObject;
+                    selectedCard = tempCard;
+                    break;
                 } catch (NoFundsException nf) {
                     //Non è la carta giusta.
                 }
