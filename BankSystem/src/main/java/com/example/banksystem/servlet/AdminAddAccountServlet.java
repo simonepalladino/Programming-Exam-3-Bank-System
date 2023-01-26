@@ -13,13 +13,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Random;
+
+import static com.example.banksystem.model.Encryption.*;
 
 /**
  * Servlet per l'aggiunta degli account nel database, automaticamente genera anche la carta per ciascun utente creato
@@ -73,35 +79,75 @@ public class AdminAddAccountServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        HttpSession session = request.getSession();
-        HolderOperation holderOperation = (HolderOperation) session.getAttribute("holderOperation");
 
-        String cf = request.getParameter("cf");
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String account_type = request.getParameter("accounttype");
-        String residence = request.getParameter("address");
-        String username =  request.getParameter("username");
-        String card_type = request.getParameter("cardtype");
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            response.setContentType("text/html");
+            HttpSession session = request.getSession();
+            HolderOperation holderOperation = (HolderOperation) session.getAttribute("holderOperation");
 
-        holderOperation.add(new Holder(username, firstname, lastname, cf, null, account_type, residence, 0,cf));
+            String cf = request.getParameter("cf");
+            String firstname = request.getParameter("firstname");
+            String lastname = request.getParameter("lastname");
+            String account_type = request.getParameter("accounttype");
+            String residence = request.getParameter("address");
+            String username =  request.getParameter("username");
+            String card_type = request.getParameter("cardtype");
 
-        String[] randomCard = generateCard();
-        LocalDate carddeadline = LocalDate.now().plusYears(10);
-        CardObserver.getInstance().add(new Card(card_type + " of " + firstname, randomCard[0], cf, Integer.valueOf(randomCard[1]),card_type, carddeadline, 0));
+            String password = cf;
+            byte[] salt = new String("12345678").getBytes();
+            int iterationCount = 40000;
+            int keyLength = 128;
+            SecretKeySpec key ;
+            try {
+                key = createSecretKey(password.toCharArray(), salt, iterationCount, keyLength);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (InvalidKeySpecException e) {
+                throw new RuntimeException(e);
+            }
 
-        switch (account_type) {
-            case "Premium" :
-                MovementObserver.getInstance().add(new Movement("welcomepremium", LocalDate.now(), randomCard[0]));
-                break;
-            case "Enterprise":
-                MovementObserver.getInstance().add(new Movement("welcomeenterprise", LocalDate.now(), randomCard[0]));
-                break;
+            String originalPassword = password;
+
+            String encryptedPassword = null;
+            try {
+                encryptedPassword = encrypt(originalPassword, key);
+            } catch (GeneralSecurityException e) {
+                throw new RuntimeException(e);
+            }
+
+            String decryptedPassword = null;
+            try {
+                decryptedPassword = decrypt(encryptedPassword, key);
+            } catch (GeneralSecurityException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            Holder h = new Holder(username, firstname, lastname, cf, null, account_type, residence, 0,encryptedPassword );
+            holderOperation.add(h);
+            k.put(key,encryptedPassword);
+
+            // System.out.println(keyy + "   " + k.get(keyy));
+            addP( key,encryptedPassword);
+
+
+            // System.out.println("k to string = " + k.toString());
+            //add((SecretKeySpec) k,encryptedPassword);
+
+            String[] randomCard = generateCard();
+            LocalDate carddeadline = LocalDate.now().plusYears(10);
+            CardObserver.getInstance().add(new Card(card_type + " of " + firstname, randomCard[0], cf, Integer.valueOf(randomCard[1]),card_type, carddeadline, 0));
+
+            switch (account_type) {
+                case "Premium" :
+                    MovementObserver.getInstance().add(new Movement("welcomepremium", LocalDate.now(), randomCard[0]));
+                    break;
+                case "Enterprise":
+                    MovementObserver.getInstance().add(new Movement("welcomeenterprise", LocalDate.now(), randomCard[0]));
+                    break;
+            }
+
+            request.getRequestDispatcher("admin-dashboard.jsp").forward(request, response);
         }
 
-        request.getRequestDispatcher("admin-dashboard.jsp").forward(request, response);
     }
-
-}

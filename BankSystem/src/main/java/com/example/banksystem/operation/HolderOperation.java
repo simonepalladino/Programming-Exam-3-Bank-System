@@ -2,10 +2,17 @@ package com.example.banksystem.operation;
 
 import com.example.banksystem.model.Holder;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
-
+import static com.example.banksystem.model.Encryption.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -197,19 +204,47 @@ public class HolderOperation implements Operation<Holder>{
      * @param holder correntista che necessita di cambio password
      * @param newPassword nuova password che si vuole impostare al correntista
      */
-    public void updatePassword(Holder holder, String newPassword) {
+    public void updatePassword(Holder holder, String newPassword, String pas) {
+
+
+
+        System.out.println("prova pass = " + pas);
         try {
             con = DriverManager.getConnection(url);
+            byte[] salt = new String("12345678").getBytes();
+            int iterationCount = 40000;
+            int keyLength = 128;
+
+           // SecretKeySpec ky= createSecretKey(newPassword.toCharArray(), salt, iterationCount, keyLength);
+            SecretKeySpec ky = (SecretKeySpec) KeyGenerator.getInstance("AES").generateKey();
+            String encodedKey = Base64.getEncoder().encodeToString(ky.getEncoded());
+            System.out.println("prova encodekey" + encodedKey);
+            String originalPassword = newPassword;
+            String encryptedPassword = null;
+            encryptedPassword = encrypt(originalPassword, ky);
+            // k.put(key,encryptedPassword);
+            //updatePasswordP(ky,encryptedPassword,pas);
             PreparedStatement stmt = con.prepareStatement("UPDATE Holders SET password=(?) WHERE CF=(?)");
 
-            stmt.setString(1, newPassword);
+            stmt.setString(1, encryptedPassword );
             stmt.setString(2, holder.getCf());
             stmt.execute();
+
+            addP(ky,encryptedPassword);
+
 
             System.out.println("!# Aggiornata password utente: " + holder.getCf());
             holder.setPassword(newPassword);
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (con != null)
@@ -218,6 +253,8 @@ public class HolderOperation implements Operation<Holder>{
                 e.printStackTrace();
             }
         }
+
+
     }
 
 

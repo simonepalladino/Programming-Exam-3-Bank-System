@@ -16,6 +16,7 @@ import java.io.IOException;
 @WebServlet(name = "userSetPassword", value = "/user-setpassword")
 public class UserSetPasswordServlet extends HttpServlet {
     String cf;
+    String depassword;
 
     /**
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
@@ -27,6 +28,9 @@ public class UserSetPasswordServlet extends HttpServlet {
         response.setContentType("text/html");
 
         cf = request.getParameter("cf");
+        depassword = request.getParameter("depassword");
+
+        System.out.println(depassword);
 
         request.getRequestDispatcher("user-setpassword.jsp").forward(request, response);
     }
@@ -45,15 +49,17 @@ public class UserSetPasswordServlet extends HttpServlet {
         String password2 = request.getParameter("password2");
 
         if (!password1.equals(password2)) {
-            response.sendRedirect("user-setpassword?passerror=nomatch&cf=" + cf);
+            response.sendRedirect("user-setpassword?passerror=nomatch&cf=" + cf +"&pass= " +depassword);
         } else {
             if (password1.equals(cf)) {
-                response.sendRedirect("user-setpassword?passerror=same&cf=" + cf);
+                response.sendRedirect("user-setpassword?passerror=same&cf=" + cf+"&pass= " +depassword);
                 return;
             }
+            System.out.println("prova post pass = " + depassword);
 
-            Actions.getInstance().holderOperation.updatePassword(Actions.getInstance().holderOperation.get(cf), password1);
+            Actions.getInstance().holderOperation.updatePassword(Actions.getInstance().holderOperation.get(cf), password1,depassword);
             response.sendRedirect("dashboard?logintype=user");
         }
     }
 }
+

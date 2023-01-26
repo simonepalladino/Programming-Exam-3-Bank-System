@@ -1,6 +1,7 @@
 package com.example.banksystem.servlet;
 
 import java.io.*;
+import java.security.GeneralSecurityException;
 import java.sql.*;
 
 import com.example.banksystem.Actions;
@@ -8,6 +9,8 @@ import com.example.banksystem.operation.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import static com.example.banksystem.model.Encryption.*;
+import javax.crypto.spec.SecretKeySpec;
 
 
 /**
@@ -60,23 +63,45 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("usertext", request.getParameter("username").toString());
         String username = null, password = null, cf = null;
+        String depassword =null;
+
 
         if (logintype.equals("user")) {
             try {
                 con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
+
+                String key = null;
+                SecretKeySpec keytemp ;
+                getK();
                 username = request.getParameter("username");
                 password = request.getParameter("password");
-                rs = stmt.executeQuery("SELECT * FROM Holders WHERE username='" + username + "' AND password='" + password + "'");
-
+                rs = stmt.executeQuery("SELECT * FROM Holders WHERE username='" + username +"'");
+                String decryptedPassword = null;
                 if (rs.next()) {
+                    depassword = rs.getString("password");
                     cf = rs.getString("cf");
-                    done = true;
+                    // System.out.println("passs da db = " + depassword);
+                    for (SecretKeySpec keyy : k.keySet()) {
+                        if (k.get(keyy).equals(depassword)){
+                            keytemp = keyy;
+                            decryptedPassword =  decrypt(depassword,keytemp);
+                            System.out.println(decryptedPassword);
+                            if (decryptedPassword.equals(password))
+                                done = true;
+                        }
+
+
+                    }
+
                 }
+
 
             } catch (SQLException e) {
                 e.printStackTrace();
+            } catch (GeneralSecurityException e) {
+                throw new RuntimeException(e);
             } finally {
                 try {
                     if (con != null)
@@ -90,7 +115,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("selectedHolder", Actions.getInstance().holderOperation.get(cf));
 
                 if (password.equals(cf))
-                    response.sendRedirect("user-setpassword?cf=" + cf);
+                    response.sendRedirect("user-setpassword?cf=" + cf +"&depassword="+ depassword);
                 else
                     response.sendRedirect("dashboard?logintype=user");
             } else {
@@ -98,17 +123,17 @@ public class LoginServlet extends HttpServlet {
             }
         } else {
             try {
-                    con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
-                    Statement stmt = con.createStatement();
-                    ResultSet rs;
+                con = DriverManager.getConnection("jdbc:sqlite:banksystem.sqlite");
+                Statement stmt = con.createStatement();
+                ResultSet rs;
 
-                    username = request.getParameter("username");
-                    password = request.getParameter("password");
-                    rs = stmt.executeQuery("SELECT * FROM Admins WHERE username='" + username + "' AND password='" + password + "'");
+                username = request.getParameter("username");
+                password = request.getParameter("password");
+                rs = stmt.executeQuery("SELECT * FROM Admins WHERE username='" + username + "' AND password='" + password + "'");
 
-                    if (rs.next()) {
-                        done = true;
-                    }
+                if (rs.next()) {
+                    done = true;
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
