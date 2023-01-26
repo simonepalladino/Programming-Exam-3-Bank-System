@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Servlet per la modifica degli account dei correntisti
+ */
 @WebServlet(name = "adminModifyAccount", value = "/admin-modifyaccount")
 public class AdminModifyAccountServlet extends HttpServlet {
     String selectedAccount;

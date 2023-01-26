@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Servlet per la scelta degli account
+ */
 @WebServlet(name = "adminAccountChooser", value = "/admin-accountchooser")
 public class AdminAccountChooserServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

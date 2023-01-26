@@ -17,6 +17,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * Servlet per l'aggiunta di una o più carte ad un correntista
+ */
 @WebServlet(name = "adminAddCard", value = "/admin-addcard")
 public class AdminAddCardServlet extends HttpServlet {
     String selectedAccount;

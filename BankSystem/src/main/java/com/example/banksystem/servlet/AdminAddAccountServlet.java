@@ -21,6 +21,9 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * Servlet per l'aggiunta degli account nel database, automaticamente genera anche la carta per ciascun utente creato
+ */
 @WebServlet(name = "adminAddAccount", value = "/admin-addaccount")
 public class AdminAddAccountServlet extends HttpServlet {
     String url;
