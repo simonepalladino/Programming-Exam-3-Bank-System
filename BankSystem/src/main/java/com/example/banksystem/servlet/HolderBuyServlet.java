@@ -104,6 +104,13 @@ public class HolderBuyServlet extends HttpServlet {
             }
         } else {
             //Se si tratta dell'acquisto di uno degli oggetti, allora esegue questo blocco di codice
+
+            //Controlla anzitutto se la carta è scaduta
+            if (selectedCard.getDate().compareTo(LocalDate.now()) <= 0) {
+                response.sendRedirect("errorpage.jsp?error=expiredcard&backurl=holder-buy");
+                return;
+            }
+
             //Il calcolo automatico del prezzo viene fatto in getDiscountPrice
             Product selectedProduct = Actions.getInstance().productOperation.get(action);
             double price = getDiscountPrice(selectedProduct.getPrice(), selectedHolder.getContract_type(), selectedProduct.getType());

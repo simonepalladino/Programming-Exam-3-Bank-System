@@ -40,7 +40,7 @@ public class HolderPlanServlet extends HttpServlet {
     }
 
     /**
-     * Metodo per la gestione dei vari cambiamenti di piano del contocorrente, seguendo delle regole impostate dagli autori del progetto
+     * Metodo per la gestione dei vari cambiamenti di piano del conto corrente, seguendo delle regole impostate dagli autori del progetto
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws ServletException
@@ -84,11 +84,15 @@ public class HolderPlanServlet extends HttpServlet {
             for (Object cardObject : selectedHolder.getCards()) {
                 try {
                     Card tempCard = (Card) cardObject;
-                    Movement movement = new Movement(prodID, LocalDate.now(), tempCard.getCard_number(), -price);
-                    NoFundsException.checkWithdrawLimit(selectedHolder, tempCard, movement);
 
-                    selectedCard = tempCard;
-                    break;
+                    //Verifica che la carta non sia scaduta
+                    if (tempCard.getDate().compareTo(LocalDate.now()) > 0) {
+                        Movement movement = new Movement(prodID, LocalDate.now(), tempCard.getCard_number(), -price);
+                        NoFundsException.checkWithdrawLimit(selectedHolder, tempCard, movement);
+
+                        selectedCard = tempCard;
+                        break;
+                    }
                 } catch (NoFundsException nf) {
                     //Non è la carta giusta.
                 }

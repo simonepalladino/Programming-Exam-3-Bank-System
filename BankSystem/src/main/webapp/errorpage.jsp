@@ -76,6 +76,9 @@
                                         <c:when test="${param.error == 'nowithdraw'}">
                                             <sub>The user has exceeded the withdrawal limit for his account type</sub>
                                         </c:when>
+                                        <c:when test="${param.error == 'expiredcard'}">
+                                            <sub>The selected card has expired</sub>
+                                        </c:when>
                                         <c:otherwise>
                                             <sub>There was an error while doing latest operation</sub>
                                         </c:otherwise>
