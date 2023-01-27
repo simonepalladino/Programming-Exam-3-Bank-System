@@ -8,7 +8,7 @@ import com.example.banksystem.model.Movement;
 import com.example.banksystem.model.Product;
 
 /**
- * @exception DepositExceedException Questa eccezione permette di impostare delle limitazioni sul deposito.
+ * @exception DepositExceedException Questa eccezione permette di impostare delle limitazioni sui depositi.
  */
 public class DepositExceedException extends Exception {
     public DepositExceedException() {
