@@ -24,6 +24,7 @@ public class DashboardServlet extends HttpServlet {
     Holder selectedHolder;
 
     /**
+     * Metodo per il controllo del logintype con relativo inirizzamento della dashboard coerente.
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws IOException

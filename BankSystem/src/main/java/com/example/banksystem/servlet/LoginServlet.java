@@ -14,7 +14,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 
 /**
- * Servlet per il login sia per i correntisti che per gli admin
+ * Servlet per la creazione della pagina iniziale in cui vengono caricati i dati.
+ * La servlet "login" viene inoltre utilizzata per analizzare la scelta dell'utente
+ * a seconda del logintype che puo essere settato uguale ad utente oppure uguale ad admin.
+ *
  */
 @WebServlet(name = "login", value = "/login")
 public class LoginServlet extends HttpServlet {
@@ -32,6 +35,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     /**
+     * Metodo per l'inizializzazione del logintype e il caricamento della pagina jsp associata.
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws IOException
@@ -47,7 +51,12 @@ public class LoginServlet extends HttpServlet {
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
-    /**
+    /** Metodo all'interno del quale viene controllato come è stato settato il logintype, se quest'ultimo
+     * è uguale a holder viene caricato il form per accedere alla sua area personale.
+     * Si effettuano successivamente i relativi controlli sulla correttezza dei dati inseriti
+     * utilizzando la tabella "cripted" e l'attributo password nella tabella "Holders".
+     * Se il logintype risulta uguale ad admin si effettuano le stesse operazioni sulla tabella "admins"
+     *
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws ServletException
@@ -74,11 +83,12 @@ public class LoginServlet extends HttpServlet {
 
                 String key = null;
                 SecretKeySpec keytemp ;
-                getK();
+                getK(); //caricamento della struttura dati hashmap(chiave,valore)
                 username = request.getParameter("username");
                 password = request.getParameter("password");
                 rs = stmt.executeQuery("SELECT * FROM Holders WHERE username='" + username +"'");
                 String decryptedPassword = null;
+                //controllo della correttezza della password
                 if (rs.next()) {
                     depassword = rs.getString("password");
                     cf = rs.getString("cf");
@@ -105,6 +115,7 @@ public class LoginServlet extends HttpServlet {
                 }
             }
 
+            //se il controllo avviene con successo l'utente viene reindirizzto sulla servlet "holder-set-pass"
             if (done) {
                 session.setAttribute("selectedHolder", Actions.getInstance().holderOperation.get(cf));
 

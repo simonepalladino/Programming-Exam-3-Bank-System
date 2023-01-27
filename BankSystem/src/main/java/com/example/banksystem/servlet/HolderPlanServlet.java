@@ -17,13 +17,14 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 /**
- * Servlet
+ * Servlet per la gestione dei piani di abbonamento dei conticorenti
  */
 @WebServlet(name = "holderPlan", value = "/holder-plan")
 public class HolderPlanServlet extends HttpServlet {
     Holder selectedHolder;
 
     /**
+     * Metodo per richiamare l'utente su cui si opera e che reindirizza alla pagina jsp associata per le varie operazioni
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws IOException
@@ -39,6 +40,7 @@ public class HolderPlanServlet extends HttpServlet {
     }
 
     /**
+     * Metodo per la gestione dei vari cambiamenti di piano del contocorrente, seguendo delle regole impostate dagli autori del progetto
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws ServletException

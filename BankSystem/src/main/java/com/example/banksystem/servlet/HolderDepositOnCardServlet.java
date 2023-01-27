@@ -23,6 +23,8 @@ public class HolderDepositOnCardServlet extends HttpServlet {
     String selectedCard;
 
     /**
+     * Metodo per il recupero dell'utente su cui effettuare l'operazione di deposito con il reindirizzamento
+     * alla pagina jsp associata
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws IOException
@@ -42,6 +44,8 @@ public class HolderDepositOnCardServlet extends HttpServlet {
     }
 
     /**
+     * Metodo per il deposito su una carta selezionata usando il parametro money inserito dall'utente
+     * all'interno del form di deposito all'interno del file jsp associato.
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws ServletException

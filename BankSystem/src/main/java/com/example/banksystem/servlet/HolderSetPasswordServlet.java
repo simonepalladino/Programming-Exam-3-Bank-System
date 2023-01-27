@@ -19,6 +19,8 @@ public class HolderSetPasswordServlet extends HttpServlet {
     String depassword;
 
     /**
+     * Metodo per il salvataggio delle stringhe inserite in input con il reindirizzamento al file jsp
+     * contenente il form per settare una nuova password
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws ServletException
@@ -34,6 +36,8 @@ public class HolderSetPasswordServlet extends HttpServlet {
     }
 
     /**
+     * In questo metodo dopo la compilazione del form avvengono i vari controlli sulla coerenza dei dati per poi
+     * richiamare la funzione di aggiunta della nuova password all'interno del database.
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws IOException

@@ -19,7 +19,10 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- *
+ * Classe utilizzata per criptare/decriptare le password degli utenti
+ * all'interno del database.
+ * Viene utilizata una struttura dati Hashmap per la conservazione
+ * delle coppie chiave valore per criptare le password dell'utente.
  */
 public class  Encryption {
 
@@ -28,7 +31,9 @@ public class  Encryption {
     public static Connection con;
 
     /**
-     *
+     * Metodo per l'inizializzazione dell' hashmap k
+     * utilizzando la tabella cripted in cui sono
+     * salvate le coppie chiave valore
      */
     public static void getK() {
         try {
@@ -47,13 +52,8 @@ public class  Encryption {
             byte[] decodedKey = Base64.getDecoder().decode(temp);
             SecretKeySpec originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
             k.put(originalKey,depassword);
-           // System.out.println("chiave string = " + temp);
-          // System.out.println("chiave chave = " + originalKey);
         }
 
-            for (SecretKeySpec keyyy : k.keySet()) {
-               // System.out.println(keyyy + "   " + k.get(keyyy));
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -68,7 +68,8 @@ public class  Encryption {
     }
 
     /**
-     * @param pass
+     * Metodo per l'eliminazione di una coppia chiave valore nella tabella
+     * cripted
      */
     public static void deleteP(String pass) {
         try {
@@ -93,8 +94,11 @@ public class  Encryption {
     }
 
     /**
-     * @param k
+     * Metodo per l'inserimento di una coppia chiave valore
+     * all'interno della tabella cripted
+     * @param k chiave
      * @param valore
+     *
      */
     public static void addP(SecretKeySpec k , String valore){
         try {
@@ -119,13 +123,14 @@ public class  Encryption {
 
 
     /**
-     * @param password
-     * @param salt
-     * @param iterationCount
-     * @param keyLength
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
+     * Metodo per creazione di una chiave associata ad un password passata in input.
+     * @param password : password associata alla chiave.
+     * @param salt :  è un dato casuale che utilizziamo come input aggiuntivo che esegue l’hashing dei dati
+     * @param iterationCount : numero di iterazioni dell' algoritmo. Usato per prevenire attacchi di bruteforce
+     * @param keyLength : lunghezza della chiave
+     * @return una nuova chiave
+     * @throws NoSuchAlgorithmException generata se una modifica è nulla, vuota oppure in un formato non valido
+     * @throws InvalidKeySpecException se la chiave fornita è inappropriata
      */
     public static SecretKeySpec createSecretKey(char[] password, byte[] salt, int iterationCount, int keyLength) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
@@ -135,36 +140,37 @@ public class  Encryption {
     }
 
     /**
-     * @param dataToEncrypt
-     * @param key
-     * @return
+     * Metodo per criptare la password passata in input con una determinata chiave.
+     * @param dataToEncrypt : stringa da criptare
+     * @param key : chiave con cui deve essere criptata la stringa
+     * @return la stringa passata in input come stringa criptata
      * @throws GeneralSecurityException
      * @throws UnsupportedEncodingException
      */
     public static String encrypt(String dataToEncrypt, SecretKeySpec key) throws GeneralSecurityException, UnsupportedEncodingException {
-        Cipher pbeCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        pbeCipher.init(Cipher.ENCRYPT_MODE, key);
+        Cipher pbeCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");  //attraversa la lista dei provider di sicurezza registrati
+        pbeCipher.init(Cipher.ENCRYPT_MODE, key); //inizializzazione per l'encrypt_mode
         AlgorithmParameters parameters = pbeCipher.getParameters();
         IvParameterSpec ivParameterSpec = parameters.getParameterSpec(IvParameterSpec.class);
         byte[] cryptoText = pbeCipher.doFinal(dataToEncrypt.getBytes("UTF-8"));
         byte[] iv = ivParameterSpec.getIV();
-        return base64Encode(iv) + ":" + base64Encode(cryptoText);
+        return base64Encode(iv) + ":" + base64Encode(cryptoText); // conversione dell'array di byte in stringa
     }
 
     /**
-     * @param bytes
-     * @return
+     * Metodo di conversione
+     * @param bytes : array di byte da convertire in stinga
+     * @return stringa convertita
      */
     private static String base64Encode(byte[] bytes) {
         return Base64.getEncoder().encodeToString(bytes);
     }
 
     /**
-     * @param string
-     * @param key
-     * @return
-     * @throws GeneralSecurityException
-     * @throws IOException
+     * Metodo per decriptare una password passata in input con la chiave ad essa associata
+     * @param string: password da decriptare
+     * @param key: chiave associata alla password
+     * @return la password decriptata
      */
     public static String decrypt(String string, SecretKeySpec key) throws GeneralSecurityException, IOException {
         String iv = string.split(":")[0];
@@ -175,9 +181,9 @@ public class  Encryption {
     }
 
     /**
-     * @param property
-     * @return
-     * @throws IOException
+     * Metodo per la conversione da striga a secretkey
+     * @param property : stringa da convertire
+     * @return stringa convertita
      */
     private static byte[] base64Decode(String property) throws IOException {
         return Base64.getDecoder().decode(property);

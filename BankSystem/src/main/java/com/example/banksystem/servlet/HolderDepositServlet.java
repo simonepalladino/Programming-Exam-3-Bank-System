@@ -24,6 +24,8 @@ public class HolderDepositServlet extends HttpServlet {
     String view;
 
     /**
+     * Metodo per la visualizzazione e l'inizializzazione delle oeprazioni fatte dall'utente, sia su una carta
+     * singola che l'insieme di operazione fatte.
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws IOException

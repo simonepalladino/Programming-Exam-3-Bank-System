@@ -26,6 +26,8 @@ public class HolderCancelOperationServlet extends HttpServlet {
     String backurl;
 
     /**
+     * Metodo per i controllo sulle operazioni effettivamente cancellabili con il reindirizzamento alla pagina
+     * jsp associata
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws IOException

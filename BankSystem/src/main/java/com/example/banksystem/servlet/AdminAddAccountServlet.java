@@ -29,7 +29,10 @@ import java.util.Random;
 import static com.example.banksystem.model.Encryption.*;
 
 /**
- * Servlet per l'aggiunta degli account nel database, automaticamente genera anche la carta per ciascun utente creato
+ * Servlet per l'aggiunta degli account nel database con la generazione
+ * automatica di una carta per ciascun utente creato.
+ * La servlet richiama un file jsp contente il form di inserimento per i dati dell'utente.
+ * (al primo inserimento la password coincide con il codice fiscale inserito in input)
  */
 @WebServlet(name = "adminAddAccount", value = "/admin-addaccount")
 public class AdminAddAccountServlet extends HttpServlet {
@@ -37,7 +40,8 @@ public class AdminAddAccountServlet extends HttpServlet {
     Connection con;
 
     /**
-     * @return Restituisce un array di stringhe che contiene la carta
+     *
+     * @return Restituisce un array di stringhe contenete la carta.
      * Il primo elemento [0] sarà il numero della carta, il secondo elemento [1] sarà il CVV
      */
     public static String[] generateCard() {
@@ -64,6 +68,8 @@ public class AdminAddAccountServlet extends HttpServlet {
     }
 
     /**
+     * Richiamiamo all'interno del metodo una request per il reindirizzamento alla pagina contenente
+     * il form di inserimento di un nuovo utente
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws IOException
@@ -76,6 +82,8 @@ public class AdminAddAccountServlet extends HttpServlet {
     }
 
     /**
+     * Metodo nel quale salviamo i parametri inseriti dall'admin per la creazione di un nuovo utente
+     * con relativa associazione di una carta e la tipologia di contratto associato al conto.
      * @param request  an {@link HttpServletRequest} oggetto che contiene la richiesta che il client ha fatto alla servlet
      * @param response an {@link HttpServletResponse} oggetto che contiene la risposta che la servlet invia al client
      * @throws ServletException
@@ -84,6 +92,8 @@ public class AdminAddAccountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
+        //parametri presi in input dal form di inserimento nella sezione admin
+        //la prima password dell'utente viene
         String cf = request.getParameter("cf");
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
@@ -97,6 +107,7 @@ public class AdminAddAccountServlet extends HttpServlet {
         int iterationCount = 40000;
         int keyLength = 128;
         SecretKeySpec key ;
+        //creazione della chiave associta alla password da criptare
         try {
             key = createSecretKey(password.toCharArray(), salt, iterationCount, keyLength);
         } catch (NoSuchAlgorithmException e) {
@@ -114,26 +125,14 @@ public class AdminAddAccountServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        String decryptedPassword = null;
-        try {
-            decryptedPassword = decrypt(encryptedPassword, key);
-        } catch (GeneralSecurityException e) {
-            throw new RuntimeException(e);
-        }
-
-
         Holder h = new Holder(username, firstname, lastname, cf, null, account_type, residence, 0, encryptedPassword);
-       // holderOperation.add(h);
+
         Actions.getInstance().holderOperation.add(h);
         k.put(key,encryptedPassword);
 
-        // System.out.println(keyy + "   " + k.get(keyy));
-        addP(key, encryptedPassword);
+        addP(key, encryptedPassword); //funzione per l'aggiunta della coppia chiave valore alla tabella cripted
 
-
-        // System.out.println("k to string = " + k.toString());
-        //add((SecretKeySpec) k,encryptedPassword);
-
+        //generazione della prima carta da associare alla creazione
         String[] randomCard = generateCard();
         LocalDate carddeadline = LocalDate.now().plusYears(10);
         CardObserver.getInstance().add(new Card(card_type + " of " + firstname, randomCard[0], cf, Integer.valueOf(randomCard[1]),card_type, carddeadline, 0));
