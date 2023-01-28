@@ -52,7 +52,7 @@ public class HolderDepositOnCardServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
 
         //Tentativo di recuperare il quantitativo di soldi. Se fallisce, allora imposta la variabile cancel a true
