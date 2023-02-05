@@ -24,7 +24,7 @@ import java.util.Properties;
  * Viene utilizata una struttura dati Hashmap per la conservazione
  * delle coppie chiave valore per criptare le password dell'utente.
  */
-public class  Encryption {
+public class Encryption {
 
     public static Map<SecretKeySpec,String> k = new HashMap<SecretKeySpec,String>();
     public static String url = "jdbc:sqlite:banksystem.sqlite";
